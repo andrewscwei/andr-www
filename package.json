@@ -47,6 +47,7 @@
     "requiem": "^0.51.3",
     "supertest": "^1.2.0",
     "three": "^0.77.1",
+    "webcomponents.js": "^0.7.22",
     "webfontloader": "^1.6.24"
   }
 }

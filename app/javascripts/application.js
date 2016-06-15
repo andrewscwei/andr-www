@@ -2,10 +2,11 @@
 
 'use strict';
 
+import 'webcomponents.js/webcomponents-lite';
 import $ from '../../config';
 import _ from 'lodash';
 import pm from 'page-manager';
-import requiem from 'requiem';
+import requiem, { dom } from 'requiem';
 import WebFont from 'webfontloader';
 
 // Register all components.
@@ -15,16 +16,20 @@ req.keys().forEach((path) => requiem(req(path).default));
 pm.locales = $.locales;
 pm.autoRouting = $.autoRouting;
 
-// Put page routing/transitioning/loading logic here.
-// pm.transition('in', (next) => {
-//   // Transition-in behavior for all paths.
-//   next();
-// });
+pm.transition('in', '/', (next) => {
+  dom.getChild('bio').in();
+  dom.getChild('bio').show();
+  next();
+});
 
-// pm.transition('out', '/about', (next) => {
-//   // Transition-out behavior of the '/about' page into any other page.
-//   next();
-// });
+pm.transition('in', '/log/', (next) => {
+  dom.getChild('bio').in();
+  dom.getChild('bio').hide();
+})
+
+pm.transition('out', (next) => {
+  next();
+});
 
 // pm.transition('out', '/', '/about', (next) => {
 //   // Transition-out behavior specifically for '/' going into '/about'.
@@ -58,5 +63,3 @@ if ($.webFont) {
 else {
   pm.startRouting();
 }
-
-console.log('Hello, world!');

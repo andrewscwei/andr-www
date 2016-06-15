@@ -1,7 +1,12 @@
 //- (c) Andrew Wei
 
 extends /layouts/base
+include /includes/common/button
+include /includes/components/name-card
 
 block body
+  div(is='page-bio' name='bio')
+    +name-card()(name='name-card')
+
   main(id='page')
     block page

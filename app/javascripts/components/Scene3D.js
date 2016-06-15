@@ -34,7 +34,7 @@ class Scene3D extends ui.Element(HTMLCanvasElement) {
   get renderer() {
     if (this.__private__.renderer) return this.__private__.renderer;
     this.__private__.renderer = new THREE.WebGLRenderer({ canvas: this, antialias: true });
-    this.__private__.renderer.setClearColor(0x111111, 1);
+    this.__private__.renderer.setClearColor(0x000000, 1);
     this.__private__.renderer.setPixelRatio(window.devicePixelRatio);
     this.__private__.renderer.sortObjects = false;
     return this.__private__.renderer;
@@ -42,7 +42,7 @@ class Scene3D extends ui.Element(HTMLCanvasElement) {
 
   get directionalLight() {
     if (this.__private__.directionalLight) return this.__private__.directionalLight;
-    this.__private__.directionalLight = new THREE.DirectionalLight(0x111111, 5);
+    this.__private__.directionalLight = new THREE.DirectionalLight(0xffffff, 5);
     this.__private__.directionalLight.castShadow = false;
     return this.__private__.directionalLight;
   }
@@ -57,7 +57,7 @@ class Scene3D extends ui.Element(HTMLCanvasElement) {
 
   get cubeGeometry() {
     if (this.__private__.cubeGeometry) return this.__private__.cubeGeometry;
-    this.__private__.cubeGeometry = new THREE.CubeGeometry(CUBE_SIZE, CUBE_SIZE, CUBE_SIZE);
+    this.__private__.cubeGeometry = new THREE.CylinderGeometry(CUBE_SIZE, CUBE_SIZE, CUBE_SIZE, 32);
     return this.__private__.cubeGeometry;
   }
 
@@ -174,9 +174,9 @@ class Scene3D extends ui.Element(HTMLCanvasElement) {
 
     for (let x = 0; x < map.x; x++) {
       for (let y = 0; y < map.y; y++) {
-        let cube = this.generateCube();
-        cube.position.x = (CUBE_SIZE * x) + (CUBE_GAP * x) - rect.width/2;
-        cube.position.y = (CUBE_SIZE * y) + (CUBE_GAP * y) - rect.height/2;
+        let cube = this.generateCylinder();
+        cube.position.x = (CUBE_SIZE * 2 * x) + (CUBE_GAP * x) - rect.width/2;
+        cube.position.y = (CUBE_SIZE * 2* y) + (CUBE_GAP * y) - rect.height/2;
         cube.position.z = 0;
         this.grid.add(cube);
       }
@@ -192,7 +192,7 @@ class Scene3D extends ui.Element(HTMLCanvasElement) {
     }
   }
 
-  generateCube() {
+  generateCylinder() {
     let cube = new THREE.Mesh(this.cubeGeometry, this.cubeMaterial);
     cube.tl = new TimelineLite();
     return cube;
@@ -240,8 +240,9 @@ class Scene3D extends ui.Element(HTMLCanvasElement) {
 
   _updateCamera() {
     this.camera.position.x = 0;
-    this.camera.position.y = 0;
-    this.camera.position.z = 600;
+    this.camera.position.y = 1000;
+    this.camera.position.z = 0;
+    this.camera.rotation.x = 90;
 
     TweenLite.to(this.camera.rotation, .5, { x: -this.angle.x, y: -this.angle.y });
   }
