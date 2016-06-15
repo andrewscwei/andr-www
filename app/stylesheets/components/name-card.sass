@@ -1,0 +1,40 @@
+// (c) Andrew Wei
+
++element('name-card')
+  +min-size(250px 0)
+
+  section.logo
+    +padding(10px 0)
+    +icons()
+      +size(50px)
+
+  section.name
+    +labels()
+      +display('(block)')
+
+      &.codename
+        +margin($left:5px)
+        +font('ss', 's', 'n')
+        color: get-color('dark-grey')
+
+  section.position
+    +labels()
+      +font('ss', 'xs', 'n')
+      color: get-color('dark-grey')
+
+  section.connect
+    +padding(20px 0)
+    +buttons()
+      +size(20px)
+      +space-between(10px)
+      background: transparent
+
+      +transition(transform opacity, .8s, cubic-bezier(.29,1.48,.24,.96))
+        transform: rotateY(0deg)
+
+        +state('hover')
+          opacity: .6
+          transform: rotateY(-10deg)
+
+
+

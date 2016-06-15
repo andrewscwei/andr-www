@@ -1,0 +1,14 @@
+{
+	"404": "404 not found",
+	"500": "500 internal error",
+	"hello": {
+		"world": "Hello, world!"
+	},
+	"full-name": "Andrew Wei",
+	"codename": "mu",
+	"software-engineer": "Software Engineer",
+	"experience-designer": "Experience Designer",
+	"illustrator": "Illustrator",
+	"last-name": "Wei",
+	"first-name": "Andrew"
+}
