@@ -24,3 +24,8 @@ deployment:
     commands:
       - "[[ ! -s \"$(git rev-parse --git-dir)/shallow\" ]] || git fetch --unshallow"
       - git push -f git@heroku.com:verb-studio-stage.git ${CIRCLE_BRANCH}:master
+  release:
+    tag: /^v(\d+\.)?(\d+\.)?(\*|\d+)$/
+    commands:
+      - chmod +x ./scripts/release.sh
+      - ./scripts/release.sh
