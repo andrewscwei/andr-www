@@ -1,0 +1,22 @@
+// (c) Andrew Wei
+
+$font-family-sans-serif: 'proxima-nova', sans-serif
+
+$font-size-extra-small: 14px
+$font-size-small: 18px
+$font-size-medium: 24px
+$font-size-large: 34px
+$font-size-extra-large: 56px
+
+$font-weight-sans-serif-light: 100
+$font-weight-sans-serif-normal: 300
+$font-weight-sans-serif-bold: 400
+
++labels()
+  +font('ss', null, 'l')
+  color: get-color('white')
+
+h1
+  +font('ss', 'l', 'l')
+  letter-spacing: 2px
+  text-transform: uppercase

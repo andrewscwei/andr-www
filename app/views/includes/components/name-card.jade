@@ -1,0 +1,20 @@
+//- (c) Andrew Wei
+
+include /includes/common/button
+
+mixin name-card()
+  div(is='name-card')&attributes(attributes)
+    section.logo
+      span.mu(type='icon')
+    section.name
+      h1.full-name #{__('full-name')}
+      //- span.codename(type='label') #{__('codename')}
+    section.position
+      p.position #{__('software-engineer')}
+      p.position #{__('experience-designer')}
+      p.position #{__('illustrator')}
+    section.connect
+      if data.identity.length
+        each identity in data.identity
+          +button({ iconClass: _.toLower(identity.medium), href: identity.link })
+

@@ -1,0 +1,25 @@
+{
+  "title": "mu",
+  "description": "Andrew Wei, codenamed mu, is a software engineer and experience designer.",
+  "keywords": "",
+  "url": "https://www.andr.mu",
+  "locales": ["en"],
+  "autoRouting": true,
+  "sourceDir": "app",
+  "buildDir": "public",
+  "configDir": "config",
+  "viewsDir": "app/views",
+  "cms": "prismic",
+  "webFont": {
+    "typekit": {
+      "id": "tof7bnk"
+    }
+  },
+  "documents": {
+    "identity": {
+      "sortBy": "title",
+      "reverse": false,
+      "permalink": "/"
+    }
+  }
+}

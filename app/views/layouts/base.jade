@@ -1,0 +1,61 @@
+//- (c) Andrew Wei
+
+block vars
+
+doctype html
+html
+  head
+    title= (title || _.get($, 'title'))
+
+    meta(charset='utf-8')
+    meta(name='description' content=(description || _.get($, 'description')))
+    meta(name='keywords' content=(keywords || _.get($, 'keywords')))
+    meta(name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no')
+    meta(property='og:url' content=url)
+    meta(property='og:image' content='/og-image.png')
+    meta(property='og:title' content=(title || _.get($, 'title')))
+    meta(property='og:description' content=(description || _.get($, 'description')))
+
+    link(rel='shortcut icon' href=p('/favicon.png'))
+    link(rel='manifest' href=p('/manifest.json'))
+
+    meta(name='mobile-web-app-capable' content='yes')
+    meta(name='apple-mobile-web-app-capable' content='yes')
+    meta(name='apple-mobile-web-app-title' content=(title || _.get($, 'title')))
+
+    link(href=p('/apple-touch-icon-180x180-precomposed.png') sizes='180x180' rel='apple-touch-icon')
+    link(href=p('/apple-touch-icon-152x152-precomposed.png') sizes='152x152' rel='apple-touch-icon')
+    link(href=p('/apple-touch-icon-144x144-precomposed.png') sizes='144x144' rel='apple-touch-icon')
+    link(href=p('/apple-touch-icon-120x120-precomposed.png') sizes='120x120' rel='apple-touch-icon')
+    link(href=p('/apple-touch-icon-114x114-precomposed.png') sizes='114x114' rel='apple-touch-icon')
+    link(href=p('/apple-touch-icon-76x76-precomposed.png') sizes='76x76' rel='apple-touch-icon')
+    link(href=p('/apple-touch-icon-72x72-precomposed.png') sizes='72x72' rel='apple-touch-icon')
+    link(href=p('/apple-touch-icon-60x60-precomposed.png') sizes='60x60' rel='apple-touch-icon')
+    link(href=p('/apple-touch-icon-57x57-precomposed.png') sizes='57x57' rel='apple-touch-icon')
+    link(href=p('/apple-touch-icon-precomposed.png') rel='apple-touch-icon')
+
+    meta(name='msapplication-config' content=p('/browserconfig.xml'))
+    meta(name='application-name' content=(title || _.get($, 'title')))
+    meta(name='msapplication-tooltip' content='Get the latest updates!')
+    meta(name='msapplication-window' content='width=1024;height=768')
+    meta(name='msapplication-navbutton-color' content='#ff3300')
+    meta(name='msapplication-starturl' content='/')
+
+    if _.get(env, 'GOOGLE_ANALYTICS_ID')
+      script.
+        (function(e,t,n,r,i,s){e.GoogleAnalyticsObject=r;e[r]||(e[r]=function(){(e[r].q=e[r].q||[]).push(arguments)});e[r].l=+(new Date);i=t.createElement(n);s=t.getElementsByTagName(n)[0];i.src='//www.google-analytics.com/analytics.js';s.parentNode.insertBefore(i,s)})(window,document,'script','ga');ga('create','#{env.GOOGLE_ANALYTICS_ID}');ga('send','pageview')
+
+    block styles
+      link(rel='stylesheet' href=p('/assets/stylesheets/application.css'))
+
+    if (_.get($, 'cms') === 'prismic') && _.get(env, 'PRISMIC_API_ENDPOINT') && _.get(env, 'PRISMIC_PREVIEWS_ENABLED')
+      script.
+        window.prismic = { endpoint: '#{env.PRISMIC_API_ENDPOINT}' };
+      script(type='text/javascript' src='//static.cdn.prismic.io/prismic.min.js')
+    script(src=p('/assets/javascripts/common.js'))
+
+  body(class=(_.join(bodyClass, ' ')))
+    block body
+
+    block scripts
+      script(src=p('/assets/javascripts/application.js'))
