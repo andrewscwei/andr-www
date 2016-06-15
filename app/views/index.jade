@@ -1,13 +1,11 @@
 //- (c) Andrew Wei
 
 extends /layouts/page
-include /includes/components/name-card
 
 append vars
 
 block page
-  div(is='page-welcome' name='page')
-    canvas(is='scene-3d' name='scene')
-    +name-card()
+  div(is='page-lab', name='page')
+    //- canvas(is='scene-3d' name='scene')
 
 

@@ -1,0 +1,18 @@
+// (c) Andrew Wei
+
++element('page-bio')
+  +align()
+  +overflow(hidden)
+  +padding(150px 10%)
+  +size(100vw 100vh)
+  +transition(opacity transform background, .4s, ease-out)
+  background: transparent
+  perspective: 800px
+  transform: translate3d(0, 0, 0)
+  z-index: 100
+
+  +state('hidden')
+    +pointable(false)
+    background: get-color('black')
+    opacity: .4
+    transform: translate3d(0, 0, -800px)

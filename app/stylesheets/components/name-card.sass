@@ -3,8 +3,16 @@
 +element('name-card')
   +min-size(250px 0)
 
+  +transition(opacity transform, .4s, ease-out)
+    +state('none', true)
+      opacity: 0
+
+    +state('active')
+      opacity: 1
+
   section.logo
     +padding(10px 0)
+
     +icons()
       +size(50px)
 
@@ -27,6 +35,7 @@
     +buttons()
       +size(20px)
       +space-between(10px)
+      backface-visibility: hidden
       background: transparent
 
       +transition(transform opacity, .8s, cubic-bezier(.29,1.48,.24,.96))
