@@ -1,0 +1,8 @@
+//- (c) Andrew Wei
+
+include /includes/common/button
+
+mixin global-nav()
+  nav(is='global-nav')&attributes(attributes)
+    +button({ href: '/' })(name='lab-button')
+    +button({ href: '/logs/' })(name='logs-button')

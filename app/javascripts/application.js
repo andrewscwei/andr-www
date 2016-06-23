@@ -17,14 +17,14 @@ pm.locales = $.locales;
 pm.autoRouting = $.autoRouting;
 
 pm.transition('in', '/', (next) => {
-  dom.getChild('bio').in();
-  dom.getChild('bio').show();
+  dom.getChild('profile').in();
+  dom.getChild('profile').show();
   next();
 });
 
-pm.transition('in', '/log/', (next) => {
-  dom.getChild('bio').in();
-  dom.getChild('bio').hide();
+pm.transition('in', '/logs/', (next) => {
+  dom.getChild('profile').in();
+  dom.getChild('profile').hide();
 })
 
 pm.transition('out', (next) => {
