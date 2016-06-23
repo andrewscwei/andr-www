@@ -1,5 +1,8 @@
 // (c) Andrew Wei
 
 body
-  perspective: 800px
   background: get-color('grey')
+  perspective: 800px
+
+  &.scroll-lock
+    +overflow(hidden)

@@ -4,6 +4,7 @@ import 'gsap';
 import _ from 'lodash';
 import THREE from 'three';
 import { enums, ui, utils } from 'requiem';
+import TCC from 'three-camera-controller';
 
 const CUBE_SIZE = 100;
 const CUBE_GAP = 0;
@@ -113,6 +114,8 @@ class Scene3D extends ui.Element(HTMLCanvasElement) {
     this.scene.add(this.directionalLight);
     this.scene.add(this.hemisphereLight);
 
+    this.controls = new TCC(this.camera);
+
     super.init();
   }
 
@@ -137,8 +140,10 @@ class Scene3D extends ui.Element(HTMLCanvasElement) {
     if (this.isDirty(enums.DirtyType.INPUT|enums.DirtyType.ORIENTATION))
       this._updateControls();
 
-    if (this.isDirty(enums.DirtyType.FRAME))
+    if (this.isDirty(enums.DirtyType.FRAME)) {
       this._updateRenderer();
+      this.controls.update();
+    }
 
     if (this.isDirty(enums.DirtyType.DATA))
       if (this.activeCube) this.pulse(this.activeCube);
@@ -232,7 +237,7 @@ class Scene3D extends ui.Element(HTMLCanvasElement) {
 
   _updateRenderer() {
     this._updateLighting();
-    this._updateCamera();
+    // this._updateCamera();
     this._updateRaycaster();
 
     this.renderer.render(this.scene, this.camera);
@@ -240,9 +245,8 @@ class Scene3D extends ui.Element(HTMLCanvasElement) {
 
   _updateCamera() {
     this.camera.position.x = 0;
-    this.camera.position.y = 1000;
-    this.camera.position.z = 0;
-    this.camera.rotation.x = 90;
+    this.camera.position.y = 0;
+    this.camera.position.z = 600;
 
     TweenLite.to(this.camera.rotation, .5, { x: -this.angle.x, y: -this.angle.y });
   }

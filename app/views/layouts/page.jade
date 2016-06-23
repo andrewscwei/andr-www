@@ -2,10 +2,13 @@
 
 extends /layouts/base
 include /includes/common/button
+include /includes/components/global-nav
 include /includes/components/name-card
 
 block body
-  div(is='page-bio' name='bio')
+  +global-nav()(name='global-nav')
+
+  div(is='page-profile' name='profile')
     +name-card()(name='name-card')
 
   main(id='page')

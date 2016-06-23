@@ -1,0 +1,25 @@
+// (c) Andrew Wei
+
++element('global-nav')
+  +buttons()
+    +size(0px)
+    +transition(transform opacity, .4s, ease-out)
+    background: transparent
+    border: 20px solid transparent
+    z-index: 1000
+
+  +button('lab-button')
+    +align(top center fixed)
+    border-top-color: get-color('white')
+    transform-origin: top center
+
+    +state('hover')
+      transform: rotateX(-80deg)
+
+  +button('logs-button')
+    +align(bottom center fixed)
+    border-bottom-color: get-color('white')
+    transform-origin: bottom center
+
+    +state('hover')
+      transform: rotateX(-80deg)

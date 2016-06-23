@@ -3,8 +3,8 @@
 import { ui } from 'requiem';
 import 'gsap';
 
-class Bio extends ui.Element() {
-  static get tag() { return 'page-bio'; }
+class Profile extends ui.Element() {
+  static get tag() { return 'page-profile'; }
   static get extends() { return 'div'; }
 
   in(done) {
@@ -24,4 +24,4 @@ class Bio extends ui.Element() {
   }
 }
 
-export default Bio;
+export default Profile;
