@@ -2,7 +2,6 @@
 
 import _ from 'lodash';
 import { dom, enums, events, ui, utils } from 'requiem';
-import Hammer from 'hammerjs';
 import 'gsap';
 
 const DirtyType = enums.DirtyType;
@@ -34,9 +33,11 @@ class Home extends ui.Element() {
 
   /** @inheritdoc */
   destroy() {
+    this.timeline.kill();
     super.destroy();
   }
 
+  /** @inheritdoc */
   update() {
     if (this.isDirty(enums.DirtyType.STATE)) {
       const playground = this.getChild('playground');
@@ -49,25 +50,30 @@ class Home extends ui.Element() {
   in(done) {
     let nameCard = this.getChild('name-card');
 
+    this.state = 'active';
     this.timeline = new TimelineLite();
-    this.timeline.add(TweenLite.to(this, .4, { z: 0, opacity: 1, ease: 'Expo.easeOut' }));
+    this.timeline.add(TweenLite.to(this, .8, { z: 0, opacity: 1, ease: 'Expo.easeOut' }));
     this.timeline.add(() => {
-      this.state = 'active';
       dom.setState(nameCard, 'active');
       if (done) done();
     });
   }
 
   out(done) {
-    let nameCard = this.getChild('name-card');
-    dom.setState(nameCard, 'active');
+    if (this.state !== 'none') {
+      let nameCard = this.getChild('name-card');
+      dom.setState(nameCard, 'active');
 
-    this.state = 'none';
-    this.timeline = new TimelineLite();
-    this.timeline.add(TweenLite.to(this, .4, { z: -600, opacity: .1, ease: 'Expo.easeOut' }));
-    this.timeline.add(() => {
+      this.timeline = new TimelineLite();
+      this.timeline.add(TweenLite.to(this, .8, { z: -600, opacity: .1, ease: 'Expo.easeOut' }));
+      this.timeline.add(() => {
+        if (done) done();
+        this.state = 'none';
+      });
+    }
+    else {
       if (done) done();
-    });
+    }
   }
 }
 

@@ -10,7 +10,10 @@ const CUBE_SIZE = 100;
 const CUBE_GAP = 0;
 
 class Playground extends ui.Element(HTMLCanvasElement) {
+  /** @inheritdoc */
   static get tag() { return 'x-playground'; }
+
+  /** @inheritdoc */
   static get extends() { return 'canvas'; }
 
   get paused() { return this.__private__.paused; }

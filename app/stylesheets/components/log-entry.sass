@@ -1,0 +1,22 @@
+// (c) Andrew Wei
+
++element('log-entry')
+  +transition(background, .4s, ease-out)
+  background: #888//get-color('grey')
+
+  .wrapper
+    +padding(40px 30px)
+    +size(100%)
+
+  +labels()
+    &.title
+      color: get-color('white')
+
+    &.date
+      +align(bottom left)
+      +edge(null null 40px 30px)
+      +font('ss', 'd', 'n')
+      color: get-color('dark-grey')
+
+  +state('hover')
+    background: #000

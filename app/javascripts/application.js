@@ -24,13 +24,23 @@ pm.transition('in', '/', (next) => {
 
 pm.transition('out', '/', (next) => {
   dom.getChild('home').out(next);
-})
+});
 
 pm.transition('in', '/logs/', (next) => {
   dom.sightread();
-  dom.getChild('home').out(next);
   dom.getChild('global-nav').state = 'logs';
-})
+
+  dom.getChild('home').out(dom.getChild('page').in(next));
+});
+
+pm.transition('out', '/logs/', (next) => {
+  const page = dom.getChild('page');
+
+  if (page && page.out)
+    page.out(next);
+  else
+    next();
+});
 
 // pm.transition('out', '/', '/about', (next) => {
 //   // Transition-out behavior specifically for '/' going into '/about'.

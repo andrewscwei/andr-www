@@ -14,15 +14,14 @@
   +button('home-button')
     +align(top center fixed)
     border-top-color: get-color('white')
+    transform: rotateX(90deg)
     transform-origin: top center
 
   +button('logs-button')
     +align(bottom center fixed)
     border-bottom-color: get-color('white')
+    transform: rotateX(-90deg)
     transform-origin: bottom center
-
-    +state('hover')
-      transform: rotateX(-80deg)
 
   +state('home')
     +button('home-button')
