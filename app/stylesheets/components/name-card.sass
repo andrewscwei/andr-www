@@ -3,18 +3,20 @@
 +element('name-card')
   +min-size(250px 0)
 
-  +transition(opacity transform, .4s, ease-out)
-    +state('none', true)
+  section
+    +transition(opacity transform, .8s, cubic-bezier(.17,.67,.17,1.2))
       opacity: 0
+      transform: translate3d(-100px, 0px, 0px)
 
-    +state('active')
-      opacity: 1
+      @for $i from 1 through 4
+        &:nth-of-type(#{$i})
+          transition-delay: #{.1 * ($i - 1)}s
 
   section.logo
     +padding(10px 0)
 
     +icons()
-      +size(50px)
+      +size(70px)
 
   section.name
     +labels()
@@ -27,14 +29,14 @@
 
   section.position
     +labels()
-      +font('ss', 'xs', 'n')
+      +font('ss', 'd', 'n')
       color: get-color('dark-grey')
 
   section.connect
     +padding(20px 0)
     +buttons()
       +size(20px)
-      +space-between(10px)
+      +space-between(12px)
       backface-visibility: hidden
       background: transparent
 
@@ -43,7 +45,13 @@
 
         +state('hover')
           opacity: .6
-          transform: rotateY(-10deg)
+          transform: rotateY(-20deg)
+
+  +state('active')
+    section
+      opacity: 1
+      transform: translate3d(0, 0, 0)
+
 
 
 
