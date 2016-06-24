@@ -9,9 +9,12 @@ import TCC from 'three-camera-controller';
 const CUBE_SIZE = 100;
 const CUBE_GAP = 0;
 
-class Scene3D extends ui.Element(HTMLCanvasElement) {
-  static get tag() { return 'scene-3d'; }
+class Playground extends ui.Element(HTMLCanvasElement) {
+  static get tag() { return 'x-playground'; }
   static get extends() { return 'canvas'; }
+
+  get paused() { return this.__private__.paused; }
+  set paused(val) { this.__private__.paused = val; }
 
   get raycaster() {
     if (this.__private__.raycaster) return this.__private__.raycaster;
@@ -141,8 +144,10 @@ class Scene3D extends ui.Element(HTMLCanvasElement) {
       this._updateControls();
 
     if (this.isDirty(enums.DirtyType.FRAME)) {
-      this._updateRenderer();
-      this.controls.update();
+      if (!this.paused) {
+        this._updateRenderer();
+        this.controls.update();
+      }
     }
 
     if (this.isDirty(enums.DirtyType.DATA))
@@ -264,4 +269,4 @@ class Scene3D extends ui.Element(HTMLCanvasElement) {
   }
 }
 
-export default Scene3D;
+export default Playground;

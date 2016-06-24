@@ -17,19 +17,20 @@ pm.locales = $.locales;
 pm.autoRouting = $.autoRouting;
 
 pm.transition('in', '/', (next) => {
-  dom.getChild('profile').in();
-  dom.getChild('profile').show();
-  next();
+  dom.sightread();
+  dom.getChild('home').in(next);
+  dom.getChild('global-nav').state = 'home';
 });
 
-pm.transition('in', '/logs/', (next) => {
-  dom.getChild('profile').in();
-  dom.getChild('profile').hide();
+pm.transition('out', '/', (next) => {
+  dom.getChild('home').out(next);
 })
 
-pm.transition('out', (next) => {
-  next();
-});
+pm.transition('in', '/logs/', (next) => {
+  dom.sightread();
+  dom.getChild('home').out(next);
+  dom.getChild('global-nav').state = 'logs';
+})
 
 // pm.transition('out', '/', '/about', (next) => {
 //   // Transition-out behavior specifically for '/' going into '/about'.

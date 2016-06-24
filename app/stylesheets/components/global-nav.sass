@@ -1,20 +1,20 @@
 // (c) Andrew Wei
 
 +element('global-nav')
+  +display('block')
+  +size(100%)
+
   +buttons()
     +size(0px)
     +transition(transform opacity, .4s, ease-out)
     background: transparent
-    border: 20px solid transparent
+    border: 15px solid transparent
     z-index: 1000
 
-  +button('lab-button')
+  +button('home-button')
     +align(top center fixed)
     border-top-color: get-color('white')
     transform-origin: top center
-
-    +state('hover')
-      transform: rotateX(-80deg)
 
   +button('logs-button')
     +align(bottom center fixed)
@@ -23,3 +23,15 @@
 
     +state('hover')
       transform: rotateX(-80deg)
+
+  +state('home')
+    +button('home-button')
+      transform: rotateX(90deg)
+    +button('logs-button')
+      transform: rotateX(0deg)
+
+  +state('logs')
+    +button('home-button')
+      transform: rotateX(0deg)
+    +button('logs-button')
+      transform: rotateX(-90deg)
