@@ -84,7 +84,8 @@ class GlobalNav extends ui.Element() {
         else {
           switch (this.state) {
             case 'logs':
-              this.getChild('home-button').click();
+              if (utils.getRect(page).top >= 0)
+                this.getChild('home-button').click();
               break;
           }
         }
