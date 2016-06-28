@@ -17,7 +17,7 @@ block page
         if tags && tags.length
           div(name='tags')
             each tag in tags
-              +button({ href: `/logs/${tag}` }).tag= tag
+              +button({ label: tag, href: `/logs/${tag}/` }).tag
     div(name='contents')
       != body
       div(name='footer')

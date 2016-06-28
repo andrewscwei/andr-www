@@ -1,6 +1,9 @@
 // (c) Andrew Wei
 
 +buttons()
+  &[disabled]
+    pointer-events: none
+
   &.home
     +size(30px)
 
@@ -24,16 +27,21 @@
       transform-origin: bottom center
 
   &.tag
-    +font('Roboto Slab', 'xs', 'l')
     +padding(3px 12px)
-    +transition(backgorund color, .3s, ease-out)
+    +transition(backgorund, .3s, ease-out)
     background: #fff
     border-radius: 4px
-    color: get-color('black')
+
+    +labels()
+      +font('Roboto Slab', 'xs', 'l')
+      +transition(color, .3s, ease-out)
+      color: get-color('black')
 
     +state('hover')
       background: #000
-      color: get-color('white')
+
+      +labels()
+        color: get-color('white')
 
   &.dot
     +size(5px, true)
