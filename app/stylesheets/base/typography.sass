@@ -6,7 +6,7 @@ $font-size-extra-small: 14px
 $font-size-small: 18px
 $font-size-medium: 24px
 $font-size-large: 42px
-$font-size-extra-large: 56px
+$font-size-extra-large: 60px
 
 $font-weight-sans-serif-light: 100
 $font-weight-sans-serif-normal: 300
@@ -16,10 +16,33 @@ $font-weight-sans-serif-bold: 400
   +font('ss', null, 'l')
   color: get-color('white')
 
++list-items()
+  +font('ss', null, 'l')
+  color: get-color('white')
+
+  ol &
+    list-style: decimal
+
+ol
+  +padding(null null null 30px)
+
++links()
+  +transition(opacity, .3s, ease-out)
+  color: #5de9ff
+
+  +state('hover')
+    opacity: .6
+
 h1
   +font('ss', 'l', 'l')
-  letter-spacing: 2px
+  letter-spacing: 1px
+  line-height: 1em
   text-transform: uppercase
 
 h2
   +font('ss', 'm', 'n')
+
+  p + &,
+  ol + &,
+  ul + &
+    margin-top: 40px

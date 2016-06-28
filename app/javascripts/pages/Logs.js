@@ -41,9 +41,11 @@ class Logs extends ui.Element() {
     let entries = this.getChild('entry');
 
     this.timeline = new TimelineLite();
-    entries.forEach(entry => {
-      this.timeline.add(TweenLite.to(entry, .2, { opacity: 1, y: 0, ease: 'Expo.easeOut' }), `-=${.13}`);
-    });
+    if (entries && entries.length) {
+      entries.forEach(entry => {
+        this.timeline.add(TweenLite.to(entry, .2, { opacity: 1, y: 0, ease: 'Expo.easeOut' }), `-=${.13}`);
+      });
+    }
     this.timeline.add(() => {
       if (done) done();
     });
@@ -53,9 +55,11 @@ class Logs extends ui.Element() {
     let entries = this.getChild('entry');
 
     this.timeline = new TimelineLite();
-    entries.forEach(entry => {
-      this.timeline.add(TweenLite.to(entry, .2, { opacity: 0, y: 100, ease: 'Expo.easeInOut' }), `-=${.15}`);
-    });
+    if (entries && entries.length) {
+      entries.forEach(entry => {
+        this.timeline.add(TweenLite.to(entry, .2, { opacity: 0, y: 100, ease: 'Expo.easeInOut' }), `-=${.15}`);
+      });
+    }
     this.timeline.add(() => {
       if (done) done();
     });

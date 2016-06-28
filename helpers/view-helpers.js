@@ -43,6 +43,15 @@ exports.documents = function() {
 }
 
 /**
+ * Gets the tags from config.
+ *
+ * @return {Object}
+ */
+exports.tags = function() {
+  return $.tags;
+}
+
+/**
  * Gets the path to the document under the given options.
  *
  * @param {Object} doc

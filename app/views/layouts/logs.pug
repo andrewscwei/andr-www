@@ -5,6 +5,7 @@ include /includes/button
 include /includes/log-entry
 
 append vars
+  - title = 'Logs'
   -
     nav = {
       up: '/',
@@ -14,9 +15,13 @@ append vars
 
 block page
   div(is='page-logs' name='page')
-    div.grid
-      each entry in pagination.files
-        +log-entry(entry)(name='entry')
+    if tag
+      +button({ href: `/logs/${tag}`}).tag= tag
+
+    if pagination && pagination.files && pagination.files.length
+      div.grid
+        each entry in pagination.files
+          +log-entry(entry)(name='entry')
 
     if pagination && pagination.pages && pagination.pages.length
       div.paginator
