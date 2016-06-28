@@ -26,9 +26,23 @@
         content: ''
         opacity: .3
 
+    +state('hidden')
+      +name('background')
+        transform: translate3d(0, 0, -300px)
+
+        &::before
+          opacity: 0
+
+  +name('blank')
+    +display('boxv')
+    +size(100% 100vh)
+
     +name('title')
       +max-size(450px none)
       +size(100% auto)
+
+      h1
+        +font('Roboto Slab', 'xl', 500)
 
     +name('date')
       +display('block')
@@ -41,20 +55,6 @@
 
       +buttons()
         +space-between(7px)
-
-    +state('hidden')
-      +name('background')
-        transform: translate3d(0, 0, -300px)
-
-        &::before
-          opacity: 0
-
-    h1
-      +font('Roboto Slab', 'xl', 500)
-
-  +name('blank')
-    +pointable(false)
-    +size(100% 100vh)
 
   +name('contents')
     +padding(100px 0)

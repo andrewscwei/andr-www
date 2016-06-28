@@ -9,6 +9,7 @@ append vars
   -
     nav = {
       up: '/',
+      home: true,
       left: pagination.previous && pagination.previous.path,
       right: pagination.next && pagination.next.path
     }
@@ -16,7 +17,9 @@ append vars
 block page
   div(is='page-logs' name='page')
     if tag
-      +button({ href: `/logs/${tag}`}).tag= tag
+      div.tags
+        +button({ href: `/logs/${tag}`}).tag= tag
+        +button({ iconClass: 'cancel', href: `/logs/` }).cancel
 
     if pagination && pagination.files && pagination.files.length
       div.grid

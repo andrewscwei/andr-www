@@ -1,6 +1,16 @@
 // (c) Andrew Wei
 
 +buttons()
+  &.home
+    +size(30px)
+
+  &.cancel
+    +size(20px)
+    +transition(opacity, .3s, ease-out)
+
+    +state('hover')
+      opacity: .6
+
   &.triangle
     +size(0px)
     background: transparent
