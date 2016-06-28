@@ -10,6 +10,7 @@ block page
     div(name='cover')
       if cover
         figure(name='background' style=`background-image:url(${cover})`)
+    div(name='blank')
       div(name='title')
         h1= title
         span(name='date' type='label')= m(date).format('MMM DD YYYY')
@@ -17,7 +18,6 @@ block page
           div(name='tags')
             each tag in tags
               +button({ href: `/logs/${tag}` }).tag= tag
-    div(name='blank')
     div(name='contents')
       != body
       div(name='footer')

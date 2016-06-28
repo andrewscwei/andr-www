@@ -4,6 +4,8 @@ include /includes/button
 
 mixin global-nav($nav)
   nav(is='global-nav')&attributes(attributes)
+    if $nav.home
+      +button({ iconClass: 'mu', href: '/' })(name='home-button').home
     if $nav.up
       +button({ href: $nav.up })(name='up-button').triangle.up
     if $nav.down
