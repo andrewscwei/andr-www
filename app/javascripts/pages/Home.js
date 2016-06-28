@@ -4,10 +4,6 @@ import _ from 'lodash';
 import { dom, enums, events, ui, utils } from 'requiem';
 import 'gsap';
 
-const DirtyType = enums.DirtyType;
-const EventType = enums.EventType;
-const EventTimer = events.EventTimer;
-
 class Home extends ui.Element() {
   /** @inheritdoc */
   static get tag() { return 'page-home'; }
@@ -61,6 +57,7 @@ class Home extends ui.Element() {
 
   out(done) {
     if (this.state !== 'none') {
+      this.state = 'none';
       let nameCard = this.getChild('name-card');
       dom.setState(nameCard, 'active');
 
@@ -68,7 +65,6 @@ class Home extends ui.Element() {
       this.timeline.add(TweenLite.to(this, .8, { z: -600, opacity: .1, ease: 'Expo.easeOut' }));
       this.timeline.add(() => {
         if (done) done();
-        this.state = 'none';
       });
     }
     else {

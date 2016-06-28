@@ -13,3 +13,24 @@
     +element('log-entry')
       opacity: 0
       transform: translate3d(0, 100px, 0)
+
+  .paginator
+    +align(bottom center)
+    +display('box>')
+    +padding(30px)
+    +size(100% auto)
+
+    +buttons()
+      +space-between(5px)
+      +transition(opacity transform, .4s, ease-out)
+
+      +state('none', true)
+        opacity: .6
+        transform: scale(1)
+
+      +state('hover' 'active')
+        opacity: 1
+        transform: scale(1.1)
+
+      +state('active')
+        pointer-events: none

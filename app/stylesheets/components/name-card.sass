@@ -37,15 +37,11 @@
     +buttons()
       +size(20px)
       +space-between(12px)
-      backface-visibility: hidden
       background: transparent
 
       +transition(transform opacity, .8s, cubic-bezier(.29,1.48,.24,.96))
-        transform: rotateY(0deg)
-
         +state('hover')
           opacity: .6
-          transform: rotateY(-20deg)
 
   +state('active')
     section

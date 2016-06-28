@@ -23,7 +23,7 @@ const view = require('./helpers/view-helpers');
 const app = express();
 app.set('port', process.env.PORT || 3000);
 app.set('views', task.views());
-app.set('view engine', 'jade');
+app.set('view engine', 'pug');
 app.locals.basedir = task.views();
 
 // Localization setup.

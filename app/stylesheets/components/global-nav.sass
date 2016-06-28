@@ -1,36 +1,29 @@
 // (c) Andrew Wei
 
 +element('global-nav')
+  +align(fixed)
   +display('block')
+  +pointable(false)
   +size(100%)
+  z-index: 1000
 
   +buttons()
-    +size(0px)
-    +transition(transform opacity, .4s, ease-out)
-    background: transparent
-    border: 15px solid transparent
-    z-index: 1000
+    +pointable(true)
 
-  +button('home-button')
-    +align(top center fixed)
-    border-top-color: get-color('white')
+  +button('up-button')
+    +align(top center)
     transform: rotateX(90deg)
-    transform-origin: top center
 
-  +button('logs-button')
-    +align(bottom center fixed)
-    border-bottom-color: get-color('white')
+  +button('down-button')
+    +align(bottom center)
     transform: rotateX(-90deg)
-    transform-origin: bottom center
 
-  +state('home')
-    +button('home-button')
-      transform: rotateX(90deg)
-    +button('logs-button')
-      transform: rotateX(0deg)
+  +button('right-button')
+    +align(right center)
+    +edge(null 10px null null)
+    transform: translate3d(100px, 0, 0)
 
-  +state('logs')
-    +button('home-button')
-      transform: rotateX(0deg)
-    +button('logs-button')
-      transform: rotateX(-90deg)
+  +button('left-button')
+    +align(left center)
+    +edge(null null null 10px)
+    transform: translate3d(-100px, 0, 0)
