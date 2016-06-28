@@ -1,24 +1,83 @@
 // (c) Andrew Wei
 
-
 +element('page-log')
   +min-size(100%)
   +size(100% auto)
 
   +name('cover')
     +align(fixed)
+    +display('boxv')
     +size(100% 100vh)
+    perspective: 800px
 
     +name('background')
+      +align()
       +size(100%)
+      +transition(transform opacity, .4s, ease-out)
       background-position: center
       background-repeat: no-repeat
       background-size: cover
 
-  +name('foo')
+      &::before
+        +align()
+        +size(100%)
+        +transition(opacity, .3s, ease-out)
+        background: get-color('dark-grey')
+        content: ''
+        opacity: .3
+
+    +name('title')
+      +max-size(450px none)
+      +size(100% auto)
+
+    +name('date')
+      +display('block')
+      +margin(10px 0)
+
+    +name('tags')
+      +display('box>', left center)
+      +margin(10px 0)
+      +size(100% auto)
+
+      +buttons()
+        +space-between(7px)
+
+    +state('hidden')
+      +name('background')
+        transform: translate3d(0, 0, -300px)
+
+        &::before
+          opacity: 0
+
+    h1
+      +font('Roboto Slab', 'xl', 500)
+
+  +name('blank')
+    +pointable(false)
     +size(100% 100vh)
 
   +name('contents')
+    +padding(100px 0)
     +size(100% auto)
     background: get-color('black')
+
+    .slice
+      +data('slicetype', 'left-aligned-text')
+        +padding(50px 20%)
+
+      p, li
+        line-height: 1.5em
+
+        & + p
+          margin-top: 30px
+
+      h2
+        & + p,
+        & + ul,
+        & + ol
+          margin-top: 10px
+
+
+  +name('footer')
+    +size(100% 100px)
 

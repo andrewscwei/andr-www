@@ -23,6 +23,7 @@ class Log extends ui.Element() {
 
   /** @inheritdoc */
   init() {
+    this.respondsTo(document.getElementById('page'), 10.0, enums.EventType.OBJECT.SCROLL, enums.EventType.OBJECT.RESIZE);
     super.init();
   }
 
@@ -34,6 +35,35 @@ class Log extends ui.Element() {
 
   /** @inheritdoc */
   update() {
+    if (this.isDirty(enums.DirtyType.POSITION|enums.DirtyType.SIZE)) {
+      let rect = utils.getRect(this);
+
+      if (rect.top < -100) {
+        dom.setState(this.getChild('cover'), 'hidden');
+      }
+      else {
+        dom.setState(this.getChild('cover'), 'none');
+      }
+
+      let contentNodes = this.getChild('contents').querySelectorAll('[data-field="image"]');
+      let n = contentNodes.length;
+      let d = 0;
+
+      for (let i = 0; i < n; i++) {
+        let node = contentNodes[i];
+
+        if ((node.nodeType !== Node.ELEMENT_NODE) || (node.tagName.toLowerCase() === 'hr') || (node.isIn)) continue;
+
+        if (utils.getIntersectRect(node).height > 0) {
+          node.isIn = true;
+          dom.setStyle(node, 'opacity', 1);
+          dom.setStyle(node, 'transform', 'translate3d(0, 0, 0)');
+          dom.setStyle(node, 'transition-delay', `${d*.1}s`);
+          d++;
+        }
+      }
+    }
+
     super.update();
   }
 

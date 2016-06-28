@@ -13,6 +13,18 @@
       border-bottom-color: get-color('white')
       transform-origin: bottom center
 
+  &.tag
+    +font('Roboto Slab', 'xs', 'l')
+    +padding(3px 12px)
+    +transition(backgorund color, .3s, ease-out)
+    background: #fff
+    border-radius: 4px
+    color: get-color('black')
+
+    +state('hover')
+      background: #000
+      color: get-color('white')
+
   &.dot
     +size(5px, true)
     background: get-color('white')
