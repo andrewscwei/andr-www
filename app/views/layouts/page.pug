@@ -1,15 +1,15 @@
 //- (c) Andrew Wei
 
 extends /layouts/base
-include /includes/components/global-nav
-include /includes/components/name-card
+include /includes/global-nav
+include /includes/name-card
 
 block body
-  +global-nav()(name='global-nav')
-
   div(is='page-home' name='home')
     //- canvas(is='x-playground' name='playground')
     +name-card()(name='name-card')
 
   main(id='page')
+    if nav
+      +global-nav(nav)(name='global-nav')
     block page

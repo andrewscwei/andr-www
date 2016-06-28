@@ -1,0 +1,24 @@
+// (c) Andrew Wei
+
+
++element('page-log')
+  +min-size(100%)
+  +size(100% auto)
+
+  +name('cover')
+    +align(fixed)
+    +size(100% 100vh)
+
+    +name('background')
+      +size(100%)
+      background-position: center
+      background-repeat: no-repeat
+      background-size: cover
+
+  +name('foo')
+    +size(100% 100vh)
+
+  +name('contents')
+    +size(100% auto)
+    background: get-color('black')
+

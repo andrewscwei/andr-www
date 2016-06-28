@@ -1,6 +1,29 @@
 // (c) Andrew Wei
 
 +buttons()
-  &.nav
-    +size(50px)
-    background: get-color('black')
+  &.triangle
+    +size(0px)
+    background: transparent
+    border: 15px solid transparent
+
+    &.up
+      border-top-color: get-color('white')
+      transform-origin: top center
+    &.down
+      border-bottom-color: get-color('white')
+      transform-origin: bottom center
+
+  &.dot
+    +size(5px, true)
+    background: get-color('white')
+    overflow: visible
+
+    // +animation(dot-pulse, 1s, ease-out, 0s, infinite)
+    //   @keyframes dot-pulse
+    //     0%
+    //       transform: scale(1)
+    //     50%
+    //       transform: scale(1.2)
+    //     100%
+    //       transform: scale(1)
+

@@ -12,21 +12,13 @@ gulp.init({
   base: task.src(),
   dest: task.dest(),
   scripts: {
-    entry: {
-      application: 'application.js'
-    },
-    resolve: {
-      root: [
-        task.config('data')
-      ]
-    }
+    entry: { application: 'application.js' },
+    resolve: { root: [task.config('data')] }
   },
   views: {
     i18n: view.i18n(),
     metadata: view.metadata(),
     collections: view.documents(),
-    watch: {
-      files: [task.config('**/*')]
-    }
+    watch: { files: [task.config('**/*')] }
   }
 });

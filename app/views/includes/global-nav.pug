@@ -1,0 +1,14 @@
+//- (c) Andrew Wei
+
+include /includes/button
+
+mixin global-nav($nav)
+  nav(is='global-nav')&attributes(attributes)
+    if $nav.up
+      +button({ href: $nav.up })(name='up-button').triangle.up
+    if $nav.down
+      +button({ href: $nav.down })(name='down-button').triangle.down
+    if $nav.right
+      +button({ href: $nav.right })(name='right-button').dot.right
+    if $nav.left
+      +button({ href: $nav.left })(name='left-button').dot.left

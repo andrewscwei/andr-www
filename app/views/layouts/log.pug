@@ -1,0 +1,17 @@
+//- (c) Andrew Wei
+
+extends /layouts/page
+
+append vars
+  -
+    nav = {
+      up: '/logs/'
+    }
+block page
+  div(is='page-log' name='page')
+    div(name='cover')
+      if cover
+        figure(name='background' style=`background-image:url(${cover})`)
+    div(name='foo')
+    div(name='contents')
+      != body

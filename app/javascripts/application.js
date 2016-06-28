@@ -6,7 +6,7 @@ import 'webcomponents.js/webcomponents-lite';
 import $ from '../../config';
 import _ from 'lodash';
 import pm from 'page-manager';
-import requiem, { dom } from 'requiem';
+import requiem, { dom, enums } from 'requiem';
 import WebFont from 'webfontloader';
 
 // Register all components.
@@ -18,49 +18,26 @@ pm.autoRouting = $.autoRouting;
 
 pm.transition('in', '/', (next) => {
   dom.sightread();
-  dom.getChild('home').in(next);
-  dom.getChild('global-nav').state = 'home';
+  transitionIn(dom.getChild('global-nav'));
+  transitionIn(dom.getChild('home'), next);
 });
 
 pm.transition('out', '/', (next) => {
-  dom.getChild('home').out(next);
+  transitionOut(dom.getChild('global-nav'));
+  transitionOut(dom.getChild('home'), next);
 });
 
-pm.transition('in', '/logs/', (next) => {
+pm.transition('in', '*', (next) => {
   dom.sightread();
-  dom.getChild('global-nav').state = 'logs';
-
-  dom.getChild('home').out(dom.getChild('page').in(next));
+  transitionOut(dom.getChild('home'));
+  transitionIn(dom.getChild('global-nav'));
+  transitionIn(dom.getChild('page'), next);
 });
 
-pm.transition('out', '/logs/', (next) => {
-  const page = dom.getChild('page');
-
-  if (page && page.out)
-    page.out(next);
-  else
-    next();
+pm.transition('out', '*', (next) => {
+  transitionOut(dom.getChild('global-nav'));
+  transitionOut(dom.getChild('page'), next);
 });
-
-// pm.transition('out', '/', '/about', (next) => {
-//   // Transition-out behavior specifically for '/' going into '/about'.
-//   next();
-// });
-
-// pm.on('beforeLoad', (next) => {
-//   // Do something before image preloading for all pages.
-//   next();
-// });
-
-// pm.on('loading', '/gallery', (loaded, total) => {
-//   // Do something while images are preloading only in the '/gallery' page.
-//   console.log(`Loading: ${Math.round(loaded*100)}/${total*100}`);
-// });
-
-// pm.on('afterLoad', '/gallery', (next) => {
-//   // Do something when images are done preloading in the '/gallery' page.
-//   next();
-// });
 
 // Begin routing after all requirements are defined. Comment out this line if
 // you do not want routing enabled.
@@ -73,4 +50,22 @@ if ($.webFont) {
 }
 else {
   pm.startRouting();
+}
+
+function transitionIn(element, next) {
+  if (!element) { if (next) next(); return; }
+
+  if (element.in && (element.nodeState === enums.NodeState.UPDATED))
+    element.in(next);
+  else
+    element.addEventListener(enums.EventType.NODE.UPDATE, event => { if (element.in) element.in(next); else if (next) next(); });
+}
+
+function transitionOut(element, next) {
+  if (!element) { if (next) next(); return; }
+
+  if (element.out && (element.nodeState === enums.NodeState.UPDATED))
+    element.out(next);
+  else
+    element.addEventListener(enums.EventType.NODE.UPDATE, event => { if (element.out) element.out(next); else if (next) next(); });
 }

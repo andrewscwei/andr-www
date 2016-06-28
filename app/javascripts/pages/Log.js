@@ -3,9 +3,9 @@
 import { dom, enums, events, ui, utils } from 'requiem';
 import 'gsap';
 
-class Logs extends ui.Element() {
+class Log extends ui.Element() {
   /** @inheritdoc */
-  static get tag() { return 'page-logs'; }
+  static get tag() { return 'page-log'; }
 
   /** @inheritdoc */
   static get extends() { return 'div'; }
@@ -38,28 +38,14 @@ class Logs extends ui.Element() {
   }
 
   in(done) {
-    let entries = this.getChild('entry');
-
     this.timeline = new TimelineLite();
-    entries.forEach(entry => {
-      this.timeline.add(TweenLite.to(entry, .2, { opacity: 1, y: 0, ease: 'Expo.easeOut' }), `-=${.13}`);
-    });
-    this.timeline.add(() => {
-      if (done) done();
-    });
+    this.timeline.add(() => { if (done) done(); });
   }
 
   out(done) {
-    let entries = this.getChild('entry');
-
     this.timeline = new TimelineLite();
-    entries.forEach(entry => {
-      this.timeline.add(TweenLite.to(entry, .2, { opacity: 0, y: 100, ease: 'Expo.easeInOut' }), `-=${.15}`);
-    });
-    this.timeline.add(() => {
-      if (done) done();
-    });
+    this.timeline.add(() => { if (done) done(); });
   }
 }
 
-export default Logs;
+export default Log;
