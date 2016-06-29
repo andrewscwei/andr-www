@@ -4,17 +4,28 @@
   +align()
   +display('boxv')
   +min-size(100%)
+  +padding(50px 0)
   +size(100% auto)
 
   .tags
     +display('box>')
+    opacity: 0
+    transform: translate3d(0, -20px, 0)
 
     +buttons()
       +space-between(10px)
 
   .grid
-    +display('grid>3@100%/270px|[30px]')
-    +max-size(900px none)
+    +display('grid>1@100%/270px|[30px]')
+    +max-size(350px none)
+
+    +screen('>%s', 650px)
+      +display('grid>2@100%/270px|[30px]')
+      +max-size(650px none)
+
+    +screen('>%s', 900px)
+      +display('grid>3@100%/270px|[30px]')
+      +max-size(900px none)
 
     +element('log-entry')
       opacity: 0
@@ -25,6 +36,8 @@
     +display('box>')
     +padding(30px)
     +size(100% auto)
+    opacity: 0
+    transform: translate3d(0, -20px, 0)
 
     +buttons()
       +space-between(5px)

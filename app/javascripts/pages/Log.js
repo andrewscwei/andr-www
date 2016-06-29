@@ -68,12 +68,32 @@ class Log extends ui.Element() {
   }
 
   in(done) {
+    const cover = this.getChild('cover');
+    const title = this.getChild('header.info.title');
+    const date = this.getChild('header.info.date');
+    const tags = this.getChild('header.info.tags');
+    const contents = this.getChild('contents');
+
     this.timeline = new TimelineLite();
+    if (contents) this.timeline.add(TweenLite.to(contents, 0, { opacity: 1 }));
+    if (cover) this.timeline.add(TweenLite.to(cover, 1, { z: 0, opacity: 1, ease: 'Expo.easeOut' }));
+    if (title) this.timeline.add(TweenLite.to(title, .3, { y: 0, opacity: 1, ease: 'Expo.easeOut' }), `-=.2`);
+    if (date) this.timeline.add(TweenLite.to(date, .3, { y: 0, opacity: 1, ease: 'Expo.easeOut' }), `-=.2`);
+    if (tags) this.timeline.add(TweenLite.to(tags, .3, { y: 0, opacity: 1, ease: 'Expo.easeOut' }), `-=.2`);
     this.timeline.add(() => { if (done) done(); });
   }
 
   out(done) {
+    const cover = this.getChild('cover');
+    const title = this.getChild('header.info.title');
+    const date = this.getChild('header.info.date');
+    const tags = this.getChild('header.info.tags');
+
     this.timeline = new TimelineLite();
+    if (title) this.timeline.add(TweenLite.to(title, .3, { y: 40, opacity: 0, ease: 'Expo.easeIn' }));
+    if (date) this.timeline.add(TweenLite.to(date, .3, { y: 40, opacity: 0, ease: 'Expo.easeIn' }), `-=.2`);
+    if (tags) this.timeline.add(TweenLite.to(tags, .3, { y: 40, opacity: 0, ease: 'Expo.easeIn' }), `-=.2`);
+    if (cover) this.timeline.add(TweenLite.to(cover, .3, { z: 300, opacity: 0, ease: 'Expo.easeIn' }));
     this.timeline.add(() => { if (done) done(); });
   }
 }

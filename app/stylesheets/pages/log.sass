@@ -8,7 +8,9 @@
     +align(fixed)
     +display('boxv')
     +size(100% 100vh)
+    opacity: 0
     perspective: 800px
+    transform: translate3d(0, 0, 300px)
 
     +name('background')
       +align()
@@ -33,25 +35,39 @@
         &::before
           opacity: 0
 
-  +name('blank')
+  +name('header')
     +display('boxv')
     +size(100% 100vh)
 
-    +name('title')
+    +name('info')
       +max-size(450px none)
+      +padding(10%)
       +size(100% auto)
 
-      h1
-        +font('Roboto Slab', 'xl', 500)
+      +screen('>mobile')
+        +padding(0)
+
+    +name('title')
+      +font('s', 'l', 'n')
+      opacity: 0
+      transform: translate3d(0, 40px, 0)
+
+      +screen('>mobile')
+        +font('s', 'xl', 'n')
 
     +name('date')
       +display('block')
+      +font('m', 'd', 'n')
       +margin(10px 0)
+      opacity: 0
+      transform: translate3d(0, 40px, 0)
 
     +name('tags')
       +display('box>', left center)
       +margin(10px 0)
       +size(100% auto)
+      opacity: 0
+      transform: translate3d(0, 40px, 0)
 
       +buttons()
         +space-between(7px)
@@ -60,6 +76,7 @@
     +padding(100px 0)
     +size(100% auto)
     background: get-color('black')
+    opacity: 0
 
     .slice
       +data('slicetype', 'left-aligned-text')

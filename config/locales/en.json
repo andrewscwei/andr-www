@@ -11,5 +11,7 @@
 	"illustrator": "Illustrator",
 	"last-name": "Wei",
 	"first-name": "Andrew",
-	"log": "log"
+	"log": "log",
+	"next": "next",
+	"prev": "prev"
 }

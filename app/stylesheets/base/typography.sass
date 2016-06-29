@@ -1,6 +1,8 @@
 // (c) Andrew Wei
 
 $font-family-sans-serif: 'proxima-nova', sans-serif
+$font-family-serif: 'roboto-slab', serif
+$font-family-monospace: 'inconsolata', monospace
 
 $font-size-extra-small: 14px
 $font-size-small: 18px
@@ -11,6 +13,12 @@ $font-size-extra-large: 60px
 $font-weight-sans-serif-light: 100
 $font-weight-sans-serif-normal: 300
 $font-weight-sans-serif-bold: 400
+$font-weight-serif-light: 300
+$font-weight-serif-normal: 400
+$font-weight-serif-bold: 700
+$font-weight-monospace-light: 500
+$font-weight-monospace-normal: 500
+$font-weight-monospace-bold: 500
 
 +labels()
   +font('ss', null, 'l')
@@ -28,7 +36,7 @@ ol
 
 +links()
   +transition(opacity, .3s, ease-out)
-  color: #5de9ff
+  color: get-color('blue');
 
   +state('hover')
     opacity: .6

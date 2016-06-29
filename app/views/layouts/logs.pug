@@ -8,16 +8,22 @@ append vars
   - title = 'Logs'
   -
     nav = {
-      up: '/',
+      up: !tag && '/',
       home: true,
-      left: pagination.previous && pagination.previous.path,
-      right: pagination.next && pagination.next.path
+      left: pagination.previous && {
+        label: __('prev'),
+        href: pagination.previous.path
+      },
+      right: pagination.next && {
+        label: __('next'),
+        href: pagination.next.path
+      }
     }
 
 block page
   div(is='page-logs' name='page')
     if tag
-      div.tags
+      div.tags(name='tags')
         +button({ label: tag, href: `/logs/${tag}/`})(disabled=true).tag
         +button({ iconClass: 'cancel', href: `/logs/` }).cancel
 
@@ -27,6 +33,6 @@ block page
           +log-entry(entry)(name='entry')
 
     if pagination && pagination.pages && pagination.pages.length
-      div.paginator
+      div.paginator(name='paginator')
         each page, i in pagination.pages
           +button({ href: page.path })(state=(i === pagination.index) && 'active').dot
