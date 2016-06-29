@@ -4,6 +4,8 @@ import { dom, enums, events, ui, utils } from 'requiem';
 import Hammer from 'hammerjs';
 import 'gsap';
 
+const INPUT_DELAY = 200;
+
 class GlobalNav extends ui.Element() {
   /** @inheritdoc */
   static get tag() { return 'global-nav'; }
@@ -63,9 +65,10 @@ class GlobalNav extends ui.Element() {
 
   /** @inheritdoc */
   in(done) {
-    const duration = .4;
+    const duration = .2;
 
     this.timeline = new TimelineLite();
+    if (this.getChild('home-button')) this.timeline.add(TweenLite.to(this.getChild('home-button'), duration, { y: 0, ease: 'Expo.easeOut' }));
     if (this.getChild('up-button')) this.timeline.add(TweenLite.to(this.getChild('up-button'), duration, { rotationX: 0, ease: 'Expo.easeOut' }));
     if (this.getChild('right-button')) this.timeline.add(TweenLite.to(this.getChild('right-button'), duration, { x: 0, ease: 'Expo.easeOut' }));
     if (this.getChild('down-button')) this.timeline.add(TweenLite.to(this.getChild('down-button'), duration, { rotationX: 0, ease: 'Expo.easeOut' }));
@@ -75,9 +78,10 @@ class GlobalNav extends ui.Element() {
 
   /** @inheritdoc */
   out(done) {
-    const duration = .4;
+    const duration = .2;
 
     this.timeline = new TimelineLite();
+    if (this.getChild('home-button')) this.timeline.add(TweenLite.to(this.getChild('home-button'), duration, { y: -100, ease: 'Expo.easeOut' }));
     if (this.getChild('up-button')) this.timeline.add(TweenLite.to(this.getChild('up-button'), duration, { rotationX: 90, ease: 'Expo.easeOut' }));
     if (this.getChild('right-button')) this.timeline.add(TweenLite.to(this.getChild('right-button'), duration, { x: 100, ease: 'Expo.easeOut' }));
     if (this.getChild('down-button')) this.timeline.add(TweenLite.to(this.getChild('down-button'), duration, { rotationX: -90, ease: 'Expo.easeOut' }));
@@ -109,7 +113,7 @@ class GlobalNav extends ui.Element() {
 
     if (direction !== 'neutral') {
       this.locked = true;
-      events.EventTimer.addEvent('unlock', () => { this.locked = false; }, 500);
+      events.EventTimer.addEvent('unlock', () => { this.locked = false; }, INPUT_DELAY);
     }
 
     switch (direction) {
