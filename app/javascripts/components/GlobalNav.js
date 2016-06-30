@@ -46,7 +46,8 @@ class GlobalNav extends ui.Element() {
 
   /** @inheritdoc */
   init() {
-    this.respondsTo(10.0, enums.EventType.OBJECT.SCROLL, enums.EventType.MISC.WHEEL, enums.EventType.KEYBOARD.KEY_UP);
+    this.respondsTo(100.0, enums.EventType.MISC.WHEEL);
+    this.respondsTo(10.0, enums.EventType.KEYBOARD.KEY_UP);
     this.hammer.get('swipe').set({ direction: Hammer.DIRECTION_ALL });
     this.hammer.on('swipe', event => { this.processInput(event); });
     super.init();
@@ -102,31 +103,46 @@ class GlobalNav extends ui.Element() {
 
     let direction = 'neutral';
 
-    console.log(this.updateDelegate.mouse.wheelY);
-
     if ((_.get(event, 'direction') === Hammer.DIRECTION_UP) || (_.get(this.updateDelegate.mouse, 'wheelY') > threshold) || (this.updateDelegate.keyCode.up && ~this.updateDelegate.keyCode.up.indexOf(enums.KeyCode.DOWN_ARROW))) direction = 'up';
     if ((_.get(event, 'direction') === Hammer.DIRECTION_DOWN) || (_.get(this.updateDelegate.mouse, 'wheelY') < threshold*-1) || (this.updateDelegate.keyCode.up && ~this.updateDelegate.keyCode.up.indexOf(enums.KeyCode.UP_ARROW))) direction = 'down';
     if ((_.get(event, 'direction') === Hammer.DIRECTION_LEFT) || (_.get(this.updateDelegate.mouse, 'wheelX') > threshold) || (this.updateDelegate.keyCode.up && ~this.updateDelegate.keyCode.up.indexOf(enums.KeyCode.RIGHT_ARROW))) direction = 'left';
     if ((_.get(event, 'direction') === Hammer.DIRECTION_RIGHT) || (_.get(this.updateDelegate.mouse, 'wheelX') < threshold*-1) || (this.updateDelegate.keyCode.up && ~this.updateDelegate.keyCode.up.indexOf(enums.KeyCode.LEFT_ARROW))) direction = 'right';
 
-    if (direction !== 'neutral') this.locked = true;
-
     switch (direction) {
       case 'up':
-        if ((!rect || ((rect.height + rect.top - vrect.height) <= 0)) && this.getChild('down-button'))
+        if ((!rect || ((rect.height + rect.top - vrect.height) <= 0)) && this.getChild('down-button')) {
           this.getChild('down-button').click();
+          this.locked = true;
+        }
+        else {
+          events.EventTimer.addEvent('unlock', () => this.locked = false, INPUT_DELAY);
+        }
         break;
       case 'down':
-        if ((!rect || (rect.top >= 0)) && this.getChild('up-button'))
+        if ((!rect || (rect.top >= 0)) && this.getChild('up-button')) {
           this.getChild('up-button').click();
+          this.locked = true;
+        }
+        else {
+          events.EventTimer.addEvent('unlock', () => this.locked = false, INPUT_DELAY);
+        }
         break;
       case 'right':
-        if ((!rect || (rect.left >= 0)) && this.getChild('left-button'))
+        if ((!rect || (rect.left >= 0)) && this.getChild('left-button')) {
           this.getChild('left-button').click();
+          this.locked = true;
+        }
+        else
+          events.EventTimer.addEvent('unlock', () => this.locked = false, INPUT_DELAY);
         break;
       case 'left':
-        if ((!rect || ((rect.width + rect.left - vrect.width) <= 0)) && this.getChild('right-button'))
+        if ((!rect || ((rect.width + rect.left - vrect.width) <= 0)) && this.getChild('right-button')) {
           this.getChild('right-button').click();
+          this.locked = true;
+        }
+        else
+          events.EventTimer.addEvent('unlock', () => this.locked = false, INPUT_DELAY);
+        break;
       default:
         // Do nothing
     }
