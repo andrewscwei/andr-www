@@ -9,15 +9,9 @@ append vars
   -
     nav = {
       up: !tag && '/',
-      home: true,
-      left: pagination.previous && {
-        label: __('prev'),
-        href: pagination.previous.path
-      },
-      right: pagination.next && {
-        label: __('next'),
-        href: pagination.next.path
-      }
+      home: '/',
+      left: pagination.previous && pagination.previous.path,
+      right: pagination.next && pagination.next.path
     }
 
 block page
@@ -34,5 +28,7 @@ block page
 
     if pagination && pagination.pages && pagination.pages.length
       div.paginator(name='paginator')
+        +button({ iconClass: 'prev', href: pagination.previous && pagination.previous.path })(style=!pagination.previous && 'visibility:hidden').arrow
         each page, i in pagination.pages
-          +button({ href: page.path })(state=(i === pagination.index) && 'active').dot
+          +button({ href: page.path })(state=((i === pagination.index) || (pagination.pages.length === 1)) && 'active').dot
+        +button({ iconClass: 'next', href: pagination.next && pagination.next.path })(style=!pagination.next && 'visibility:hidden').arrow

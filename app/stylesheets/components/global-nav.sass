@@ -15,6 +15,11 @@
     +edge(10px null null null)
     transform: translate3d(0, -100px, 0)
 
+  +button('mouse-button')
+    +align(bottom center)
+    +edge(null null 10px null)
+    transform: translate3d(0, 100px, 0)
+
   +button('up-button')
     +align(top center)
     display: none
@@ -22,14 +27,14 @@
   +button('down-button')
     +align(bottom center)
     +edge(null null 10px null)
-    transform: rotateX(-90deg)
+    display: none
 
   +button('right-button')
     +align(right center)
     +edge(null 10px null null)
-    transform: translate3d(100px, 0, 0)
+    display: none
 
   +button('left-button')
     +align(left center)
     +edge(null null null 10px)
-    transform: translate3d(-100px, 0, 0)
+    display: none

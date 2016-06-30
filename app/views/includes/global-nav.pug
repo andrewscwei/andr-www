@@ -2,17 +2,21 @@
 
 include /includes/button
 include /includes/monogram
+include /includes/mouse-icon
 
 mixin global-nav($nav)
   nav(is='global-nav')&attributes(attributes)
-    if $nav.home
-      +button({ href: '/' })(name='home-button').home
-        +monogram()
     if $nav.up
       +button({ href: $nav.up })(name='up-button').triangle.up
     if $nav.down
-      +button({ label: $nav.down.label, href: $nav.down.href })(name='down-button').triangle.down
+      +button({ href: $nav.down })(name='down-button').triangle.down
     if $nav.right
-      +button({ label: $nav.right.label, href: $nav.right.href })(name='right-button').triangle.right
+      +button({ href: $nav.right })(name='right-button').triangle.right
     if $nav.left
-      +button({ label: $nav.left.label, href: $nav.left.href })(name='left-button').triangle.left
+      +button({ href: $nav.left })(name='left-button').triangle.left
+    if $nav.home
+      +button({ href: $nav.home })(name='home-button').home
+        +monogram()
+    if $nav.mouse
+      +button({ label: $nav.mouse.label, href: $nav.mouse.href })(name='mouse-button').mouse
+        +mouse-icon()

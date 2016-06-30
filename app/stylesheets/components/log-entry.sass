@@ -2,7 +2,7 @@
 
 +element('log-entry')
   +transition(background, .4s, ease-out)
-  background: rgba(get-color('grey'), .9)
+  background: get-color('dark-grey')
 
   .wrapper
     +padding(40px 30px)
@@ -16,7 +16,7 @@
       +align(bottom left)
       +edge(null null 40px 30px)
       +font('m', 'd', 'n')
-      color: get-color('dark-grey')
+      color: get-color('grey')
 
   +state('hover')
     background: get-color('black')
