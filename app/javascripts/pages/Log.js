@@ -1,6 +1,6 @@
 // (c) Andrew Wei
 
-import { dom, enums, events, ui, utils } from 'requiem';
+import { dom, enums, ui, utils } from 'requiem';
 import 'gsap';
 
 class Log extends ui.Element() {
