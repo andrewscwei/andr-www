@@ -2,6 +2,7 @@
 
 import { dom, enums, events, ui, utils } from 'requiem';
 import Hammer from 'hammerjs';
+import pm from 'page-manager';
 import 'gsap';
 
 const INPUT_DELAY = 200;
@@ -39,13 +40,14 @@ class GlobalNav extends ui.Element() {
    */
   get hammer() {
     if (this.__private__.hammer) return this.__private__.hammer;
-    this.__private__.hammer = new Hammer(document);
+    this.__private__.hammer = new Hammer(document.body);
     return this.__private__.hammer;
   }
 
   /** @inheritdoc */
   init() {
     this.respondsTo(10.0, enums.EventType.OBJECT.SCROLL, enums.EventType.MISC.WHEEL, enums.EventType.KEYBOARD.KEY_UP);
+    this.hammer.get('swipe').set({ direction: Hammer.DIRECTION_ALL });
     this.hammer.on('swipe', event => { this.processInput(event); });
     super.init();
   }
@@ -59,7 +61,7 @@ class GlobalNav extends ui.Element() {
 
   /** @inheritdoc */
   update() {
-    if (this.isDirty(enums.DirtyType.INPUT)) this.processInput();
+    if (!this.isDirty(enums.DirtyType.ALL) && this.isDirty(enums.DirtyType.INPUT)) this.processInput();
     super.update();
   }
 
@@ -69,10 +71,7 @@ class GlobalNav extends ui.Element() {
 
     this.timeline = new TimelineLite();
     if (this.getChild('home-button')) this.timeline.add(TweenLite.to(this.getChild('home-button'), duration, { y: 0, ease: 'Expo.easeOut' }));
-    if (this.getChild('up-button')) this.timeline.add(TweenLite.to(this.getChild('up-button'), duration, { rotationX: 0, ease: 'Expo.easeOut' }));
-    if (this.getChild('right-button')) this.timeline.add(TweenLite.to(this.getChild('right-button'), duration, { x: 0, ease: 'Expo.easeOut' }));
-    if (this.getChild('down-button')) this.timeline.add(TweenLite.to(this.getChild('down-button'), duration, { rotationX: 0, ease: 'Expo.easeOut' }));
-    if (this.getChild('left-button')) this.timeline.add(TweenLite.to(this.getChild('left-button'), duration, { x: 0, ease: 'Expo.easeOut' }));
+    if (this.getChild('mouse-button')) this.timeline.add(TweenLite.to(this.getChild('mouse-button'), duration, { y: 0, ease: 'Expo.easeOut' }));
     this.timeline.add(() => { if (done) done(); });
   }
 
@@ -82,10 +81,7 @@ class GlobalNav extends ui.Element() {
 
     this.timeline = new TimelineLite();
     if (this.getChild('home-button')) this.timeline.add(TweenLite.to(this.getChild('home-button'), duration, { y: -100, ease: 'Expo.easeOut' }));
-    if (this.getChild('up-button')) this.timeline.add(TweenLite.to(this.getChild('up-button'), duration, { rotationX: 90, ease: 'Expo.easeOut' }));
-    if (this.getChild('right-button')) this.timeline.add(TweenLite.to(this.getChild('right-button'), duration, { x: 100, ease: 'Expo.easeOut' }));
-    if (this.getChild('down-button')) this.timeline.add(TweenLite.to(this.getChild('down-button'), duration, { rotationX: -90, ease: 'Expo.easeOut' }));
-    if (this.getChild('left-button')) this.timeline.add(TweenLite.to(this.getChild('left-button'), duration, { x: -100, ease: 'Expo.easeOut' }));
+    if (this.getChild('mouse-button')) this.timeline.add(TweenLite.to(this.getChild('mouse-button'), duration, { y: 100, ease: 'Expo.easeOut' }));
     this.timeline.add(() => { if (done) done(); });
   }
 
@@ -106,15 +102,14 @@ class GlobalNav extends ui.Element() {
 
     let direction = 'neutral';
 
+    console.log(this.updateDelegate.mouse.wheelY);
+
     if ((_.get(event, 'direction') === Hammer.DIRECTION_UP) || (_.get(this.updateDelegate.mouse, 'wheelY') > threshold) || (this.updateDelegate.keyCode.up && ~this.updateDelegate.keyCode.up.indexOf(enums.KeyCode.DOWN_ARROW))) direction = 'up';
     if ((_.get(event, 'direction') === Hammer.DIRECTION_DOWN) || (_.get(this.updateDelegate.mouse, 'wheelY') < threshold*-1) || (this.updateDelegate.keyCode.up && ~this.updateDelegate.keyCode.up.indexOf(enums.KeyCode.UP_ARROW))) direction = 'down';
     if ((_.get(event, 'direction') === Hammer.DIRECTION_LEFT) || (_.get(this.updateDelegate.mouse, 'wheelX') > threshold) || (this.updateDelegate.keyCode.up && ~this.updateDelegate.keyCode.up.indexOf(enums.KeyCode.RIGHT_ARROW))) direction = 'left';
     if ((_.get(event, 'direction') === Hammer.DIRECTION_RIGHT) || (_.get(this.updateDelegate.mouse, 'wheelX') < threshold*-1) || (this.updateDelegate.keyCode.up && ~this.updateDelegate.keyCode.up.indexOf(enums.KeyCode.LEFT_ARROW))) direction = 'right';
 
-    if (direction !== 'neutral') {
-      this.locked = true;
-      events.EventTimer.addEvent('unlock', () => { this.locked = false; }, INPUT_DELAY);
-    }
+    if (direction !== 'neutral') this.locked = true;
 
     switch (direction) {
       case 'up':

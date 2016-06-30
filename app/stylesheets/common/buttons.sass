@@ -12,12 +12,73 @@
         +transition(all, .3s, ease-out)
         fill: get-color('white')
 
+  &.mouse
+    +display('boxv')
+    +size(45px)
+    background: transparent
+
+    &::before
+      +align()
+      +mask()
+      +size(100%, true)
+      +transition(transform, .4s, cubic-bezier(.17,.67,.3,1.23))
+      background: get-color('white')
+      content: ''
+      transform: scale(0)
+      transform-origin: center
+      z-index: -1
+
+    +labels()
+      +font('m', 'xs', 'l')
+      +margin(null null 3px null)
+      +transition(transform opacity, .4s, cubic-bezier(.17,.67,.3,1.23))
+      color: get-color('black')
+      opacity: 0
+      text-transform: uppercase
+      transform: translate3d(0, 20px 0)
+
+    svg
+      +size(15px auto)
+
+      .body,
+      .wheel
+        +transition(fill, .3s, cubic-bezier(.17,.67,.3,1.23))
+        fill: get-color('white')
+
+    +state('hover')
+      +labels()
+        opacity: 1
+        transform: translate3d(0, 0, 0)
+
+      svg
+        .body
+          fill: get-color('black')
+        .wheel
+          fill: get-color('red')
+          +animation(mouse-wheel-pulse, 1s, ease-out, 0s, infinite)
+            @keyframes mouse-wheel-pulse
+              0%
+                transform: translate3d(0, 0, 0)
+              20%
+                transform: translate3d(0, 20px, 0)
+              30%
+                transform: translate3d(0, 0, 0)
+
+
+      &::before
+        transform: scale(1)
+
   &.cancel
     +size(20px)
     +transition(opacity, .3s, ease-out)
+    background: transparent
 
     +state('hover')
       opacity: .6
+
+  &.arrow
+    +size(15px)
+    background: transparent
 
   &.triangle
     +size(0px)
