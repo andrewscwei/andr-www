@@ -1,7 +1,6 @@
 // (c) Andrew Wei
 
-import _ from 'lodash';
-import { dom, enums, events, ui, utils } from 'requiem';
+import { dom, enums, ui } from 'requiem';
 import 'gsap';
 
 class Home extends ui.Element() {
