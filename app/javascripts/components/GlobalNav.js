@@ -96,7 +96,8 @@ class GlobalNav extends ui.Element() {
     const threshold = 2;
     const home = dom.getChild('home');
     const page = dom.getChild('page');
-    const rect = page ? utils.getRect(page) : undefined;
+    const inner = document.getElementById('inner-page');
+    const rect = (inner && utils.getRect(inner)) || (page && utils.getRect(page)) || undefined;
 
     let direction = 'neutral';
     if ((_.get(event, 'direction') === Hammer.DIRECTION_UP) || (_.get(this.updateDelegate.mouse, 'wheelY') > threshold) || (this.updateDelegate.keyCode.up && ~this.updateDelegate.keyCode.up.indexOf(enums.KeyCode.DOWN_ARROW))) direction = 'up';

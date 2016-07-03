@@ -5,11 +5,23 @@ include /includes/global-nav
 include /includes/name-card
 
 block body
-  div(is='page-home' name='home')
+  div(id='home' is='page-home' name='home')
     //- canvas(is='x-playground' name='playground')
     +name-card()(name='name-card')
 
   main(id='page')
+    if cover
+      div(id='cover' is='page-cover' name='cover')
+        figure(name='background' style=`background-image:url(${cover})`)
+
     if nav
-      +global-nav(nav)(name='global-nav')
+      +global-nav(nav)(id='global-nav' name='global-nav')
+
+    if pagination && pagination.pages && pagination.pages.length
+      div.paginator(id='paginator' name='paginator')
+        +button({ iconClass: 'prev', href: pagination.previous && pagination.previous.path })(style=!pagination.previous && 'visibility:hidden').arrow
+        each page, i in pagination.pages
+          +button({ href: page.path })(state=((i === pagination.index) || (pagination.pages.length === 1)) && 'active').dot
+        +button({ iconClass: 'next', href: pagination.next && pagination.next.path })(style=!pagination.next && 'visibility:hidden').arrow
+
     block page

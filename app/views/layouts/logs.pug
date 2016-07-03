@@ -16,19 +16,13 @@ append vars
 
 block page
   div(is='page-logs' name='page')
-    if tag
-      div.tags(name='tags')
-        +button({ label: tag, href: `/logs/${tag}/`})(disabled=true).tag
-        +button({ iconClass: 'cancel', href: `/logs/` }).cancel
+    div#inner-page
+      if tag
+        div.tags(name='tags')
+          +button({ label: tag, href: `/logs/${tag}/`})(disabled=true).tag
+          +button({ iconClass: 'cancel', href: `/logs/` }).cancel
 
-    if pagination && pagination.files && pagination.files.length
-      div.grid
-        each entry in pagination.files
-          +log-entry(entry)(name='entry')
-
-    if pagination && pagination.pages && pagination.pages.length
-      div.paginator(name='paginator')
-        +button({ iconClass: 'prev', href: pagination.previous && pagination.previous.path })(style=!pagination.previous && 'visibility:hidden').arrow
-        each page, i in pagination.pages
-          +button({ href: page.path })(state=((i === pagination.index) || (pagination.pages.length === 1)) && 'active').dot
-        +button({ iconClass: 'next', href: pagination.next && pagination.next.path })(style=!pagination.next && 'visibility:hidden').arrow
+      if pagination && pagination.files && pagination.files.length
+        div.grid
+          each entry in pagination.files
+            +log-entry(entry)(name='entry')

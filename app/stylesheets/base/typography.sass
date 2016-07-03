@@ -1,8 +1,8 @@
 // (c) Andrew Wei
 
-$font-family-sans-serif: 'proxima-nova', sans-serif
-$font-family-serif: 'roboto-slab', serif
-$font-family-monospace: 'inconsolata', monospace
+$font-family-sans-serif: 'proxima-nova', 'Proxima Nova', sans-serif
+$font-family-serif: 'roboto-slab', 'Roboto Slab', serif
+$font-family-monospace: 'inconsolata', 'Inconsolata', monospace
 
 $font-size-extra-small: 14px
 $font-size-small: 18px
@@ -42,10 +42,13 @@ ol
     opacity: .6
 
 h1
-  +font('ss', 'l', 'l')
+  +font('s', 'l', 'n')
   letter-spacing: 1px
   line-height: 1em
   text-transform: uppercase
+
+  +screen('>mobile')
+    +font('s', 'xl', 'n')
 
 h2
   +font('ss', 'm', 'n')
@@ -54,3 +57,6 @@ h2
   ol + &,
   ul + &
     margin-top: 40px
+
+h3
+  +font('ss', 'm', 'n')
