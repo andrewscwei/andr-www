@@ -1,6 +1,6 @@
 // (c) Andrew Wei
 
-import { ui } from 'requiem';
+import { dom, ui } from 'requiem';
 import 'gsap';
 
 class Logs extends ui.Element() {
@@ -39,7 +39,7 @@ class Logs extends ui.Element() {
 
   in(done) {
     let entries = this.getChild('entry');
-    let paginator = this.getChild('paginator');
+    let paginator = dom.getChild('paginator');
     let tags = this.getChild('tags');
 
     if (entries && !(entries instanceof Array)) entries = [].concat(entries);
@@ -61,14 +61,14 @@ class Logs extends ui.Element() {
 
   out(done) {
     let entries = this.getChild('entry');
-    let paginator = this.getChild('paginator')
+    let paginator = dom.getChild('paginator')
     let tags = this.getChild('tags');
 
     if (entries && !(entries instanceof Array)) entries = [].concat(entries);
 
     this.timeline = new TimelineLite();
     if (paginator)
-      this.timeline.add(TweenLite.to(paginator, .2, { y: -20, opacity: 0, ease: 'Expo.easeOut' }));
+      this.timeline.add(TweenLite.to(paginator, .2, { y: 100, opacity: 0, ease: 'Expo.easeOut' }));
     if (tags)
       this.timeline.add(TweenLite.to(tags, .2, { y: -20, opacity: 0, ease: 'Expo.easeOut' }));
     if (entries && entries.length) {

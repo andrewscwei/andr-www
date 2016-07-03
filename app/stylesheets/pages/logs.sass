@@ -2,13 +2,18 @@
 
 +element('page-logs')
   +align()
-  +display('boxv')
-  +min-size(100%)
-  +padding(50px 0)
+  // +overflow(hidden scroll)
   +size(100% auto)
+  // -webkit-overflow-scrolling: touch
+
+  #inner-page
+    +size(100% 200vh)
+    +display('boxv', top center)
+    +padding(100px 0)
 
   .tags
     +display('box>')
+    +margin(0 0 50px 0)
     opacity: 0
     transform: translate3d(0, -20px, 0)
 
@@ -16,43 +21,17 @@
       +space-between(10px)
 
   .grid
-    +display('grid>1@100%/270px|[30px]')
+    +display('grid>1@100%/270px|30px')
     +max-size(350px none)
 
     +screen('>%s', 650px)
-      +display('grid>2@100%/270px|[30px]')
+      +display('grid>2@100%/270px|30px')
       +max-size(650px none)
 
     +screen('>%s', 900px)
-      +display('grid>3@100%/270px|[30px]')
+      +display('grid>3@100%/270px|30px')
       +max-size(900px none)
 
     +element('log-entry')
       opacity: 0
       transform: translate3d(0, 100px, 0)
-
-  .paginator
-    +align(bottom center)
-    +display('box>')
-    +padding(30px)
-    +size(100% auto)
-    opacity: 0
-    transform: translate3d(0, -20px, 0)
-
-    +buttons()
-      +space-between(5px)
-      +transition(opacity transform, .4s, ease-out)
-
-      +state('none', true)
-        opacity: .6
-        transform: scale(1)
-
-      +state('hover' 'active')
-        opacity: 1
-        transform: scale(1.1)
-
-      +state('active')
-        pointer-events: none
-
-      &.arrow
-        +margin(0 10px)

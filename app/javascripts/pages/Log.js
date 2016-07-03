@@ -1,6 +1,7 @@
 // (c) Andrew Wei
 
 import { dom, enums, ui, utils } from 'requiem';
+import Prism from 'prismjs';
 import 'gsap';
 
 class Log extends ui.Element() {
@@ -23,7 +24,19 @@ class Log extends ui.Element() {
 
   /** @inheritdoc */
   init() {
-    this.respondsTo(document.getElementById('page'), 10.0, enums.EventType.OBJECT.SCROLL, enums.EventType.OBJECT.RESIZE);
+    this.respondsTo(this, 10.0, enums.EventType.OBJECT.SCROLL, enums.EventType.OBJECT.RESIZE);
+    let codeBlocks = document.querySelectorAll('pre');
+
+    let n = codeBlocks.length;
+
+    if (n) {
+      for (let i = 0; i < n; i++) {
+        const block = codeBlocks[i];
+        dom.addClass(block, 'language-objectivec');
+        Prism.highlightElement(block);
+      }
+    }
+
     super.init();
   }
 
@@ -36,13 +49,13 @@ class Log extends ui.Element() {
   /** @inheritdoc */
   update() {
     if (this.isDirty(enums.DirtyType.POSITION|enums.DirtyType.SIZE)) {
-      let rect = utils.getRect(this);
+      let rect = utils.getRect(document.getElementById('inner-page') || this);
 
       if (rect.top < -100) {
-        dom.setState(this.getChild('cover'), 'hidden');
+        dom.setState(dom.getChild('cover'), 'hidden');
       }
       else {
-        dom.setState(this.getChild('cover'), 'none');
+        dom.setState(dom.getChild('cover'), 'none');
       }
 
       let contentNodes = this.getChild('contents').querySelectorAll('[data-field="image"]');
@@ -68,7 +81,7 @@ class Log extends ui.Element() {
   }
 
   in(done) {
-    const cover = this.getChild('cover');
+    const cover = dom.getChild('cover');
     const title = this.getChild('header.info.title');
     const date = this.getChild('header.info.date');
     const tags = this.getChild('header.info.tags');
@@ -84,7 +97,7 @@ class Log extends ui.Element() {
   }
 
   out(done) {
-    const cover = this.getChild('cover');
+    const cover = dom.getChild('cover');
     const title = this.getChild('header.info.title');
     const date = this.getChild('header.info.date');
     const tags = this.getChild('header.info.tags');

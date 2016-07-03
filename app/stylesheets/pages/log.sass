@@ -1,43 +1,16 @@
 // (c) Andrew Wei
 
 +element('page-log')
-  +min-size(100%)
-  +size(100% auto)
+  +overflow(hidden scroll)
+  +size(100%)
+  -webkit-overflow-scrolling: touch
 
-  +name('cover')
-    +align(fixed)
-    +display('boxv')
-    +size(100% 100vh)
-    opacity: 0
-    perspective: 800px
-    transform: translate3d(0, 0, 300px)
-
-    +name('background')
-      +align()
-      +size(100%)
-      +transition(transform opacity, .4s, ease-out)
-      background-position: center
-      background-repeat: no-repeat
-      background-size: cover
-
-      &::before
-        +align()
-        +size(100%)
-        +transition(opacity, .3s, ease-out)
-        background: get-color('dark-grey')
-        content: ''
-        opacity: .3
-
-    +state('hidden')
-      +name('background')
-        transform: translate3d(0, 0, -300px)
-
-        &::before
-          opacity: 0
+  #inner-page
+    +size(100% calc(100% + 1px))
 
   +name('header')
     +display('boxv')
-    +size(100% 100vh)
+    +size(100%)
 
     +name('info')
       +max-size(450px none)
@@ -48,12 +21,8 @@
         +padding(0)
 
     +name('title')
-      +font('s', 'l', 'n')
       opacity: 0
       transform: translate3d(0, 40px, 0)
-
-      +screen('>mobile')
-        +font('s', 'xl', 'n')
 
     +name('date')
       +display('block')
@@ -75,14 +44,24 @@
   +name('contents')
     +padding(100px 0)
     +size(100% auto)
-    background: get-color('black')
+    background: get-color('very-dark-grey')
     opacity: 0
 
     .slice
-      +data('slicetype', 'left-aligned-text')
+      +data('slicetype', 'text')
         +padding(50px 20%)
 
+      +data('slicetype', 'quote')
+        +margin(0 25%)
+        +padding(60px 50px)
+        background: get-color('white')
+        border-radius: 4px
+
+        +labels()
+          color: get-color('black')
+
       p, li
+        +font('ss', 'd', 'n')
         line-height: 1.5em
 
         & + p
@@ -92,7 +71,16 @@
         & + p,
         & + ul,
         & + ol
+          margin-top: 30px
+
+      h3
+        & + p,
+        & + ul,
+        & + ol
           margin-top: 10px
+
+      pre
+        +overflow(scroll)
 
 
   +name('footer')
