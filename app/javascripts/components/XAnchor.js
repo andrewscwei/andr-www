@@ -19,21 +19,8 @@ class XAnchor extends ui.Element(HTMLAnchorElement) {
 
   /** @inheritdoc */
   init() {
-    this.on(enums.EventType.MOUSE.CLICK, () => {
-      this.disabled = true;
-    });
-
+    this.on(enums.EventType.MOUSE.CLICK, () => this.disabled = true);
     super.init();
-  }
-
-  /** @inheritdoc */
-  destroy() {
-    super.destroy();
-  }
-
-  /** @inheritdoc */
-  update() {
-    super.update();
   }
 }
 

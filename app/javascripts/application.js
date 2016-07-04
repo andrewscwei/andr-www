@@ -10,12 +10,13 @@ import requiem, { dom, enums } from 'requiem';
 import WebFont from 'webfontloader';
 
 // Register all components.
-const req = require.context('./', true, /^((?!PageManager)(?!application).)*.js$/);
+const req = require.context('./', true, /^((?!application).)*.js$/);
 req.keys().forEach((path) => requiem(req(path).default));
 
 pm.locales = $.locales;
 pm.autoRouting = $.autoRouting;
 
+// Put page routing/transitioning/loading logic here.
 pm.transition('in', '/', (next) => {
   dom.sightread();
   transitionIn(dom.getChild('global-nav'));
@@ -39,8 +40,7 @@ pm.transition('out', '*', (next) => {
   transitionOut(dom.getChild('page'), next);
 });
 
-// Begin routing after all requirements are defined. Comment out this line if
-// you do not want routing enabled.
+// Begin routing after all requirements are defined.
 if ($.webFont) {
   WebFont.load(_.merge($.webFont, {
     classes: false,
@@ -52,6 +52,12 @@ else {
   pm.startRouting();
 }
 
+/**
+ * Custom async transition-in behavior.
+ *
+ * @param {Element} element - Target element to transition.
+ * @param {Function} next - Callback.
+ */
 function transitionIn(element, next) {
   if (!element) { if (next) next(); return; }
 
@@ -61,6 +67,12 @@ function transitionIn(element, next) {
     element.addEventListener(enums.EventType.NODE.UPDATE, event => { if (element.in) element.in(next); else if (next) next(); });
 }
 
+/**
+ * Custom async transition-out behavior.
+ *
+ * @param {Element} element - Target element to transition.
+ * @param {Function} next - Callback.
+ */
 function transitionOut(element, next) {
   if (!element) { if (next) next(); return; }
 

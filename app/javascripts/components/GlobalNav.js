@@ -41,11 +41,21 @@ class GlobalNav extends ui.Element() {
     return this.__private__.hammer;
   }
 
+  get direction() {
+    let d = 0;
+    if (this.getChild('down-button')) d |= Hammer.DIRECTION_UP;
+    if (this.getChild('left-button')) d |= Hammer.DIRECTION_RIGHT;
+    if (this.getChild('up-button')) d |= Hammer.DIRECTION_DOWN;
+    if (this.getChild('right-button')) d |= Hammer.DIRECTION_LEFT;
+    return (d === 0) ? Hammer.DIRECTION_NONE : d;
+  }
+
   /** @inheritdoc */
   init() {
     this.respondsTo(10.0, enums.EventType.MISC.WHEEL);
     this.respondsTo(10.0, enums.EventType.KEYBOARD.KEY_UP);
-    this.hammer.get('swipe').set({ direction: Hammer.DIRECTION_ALL });
+    if (dom.getChild('page')) this.respondsTo(dom.getChild('page'), 10.0, enums.EventType.OBJECT.SCROLL, enums.EventType.OBJECT.RESIZE);
+    this.hammer.get('swipe').set({ direction: this.direction });
     this.hammer.on('swipe', event => { this.processInput(event); });
     super.init();
   }
@@ -59,7 +69,42 @@ class GlobalNav extends ui.Element() {
 
   /** @inheritdoc */
   update() {
+    if (this.isDirty(enums.DirtyType.POSITION|enums.DirtyType.SIZE)) {
+      const page = document.getElementById('inner-page') || dom.getChild('page');
+
+      if (page) {
+        const rect = utils.getRect(page);
+        const vrect = utils.getViewportRect();
+        const homeButton = this.getChild('home-button');
+        const gridButton = this.getChild('grid-button');
+        const mouseButton = this.getChild('mouse-button');
+        const duration = .2;
+
+        if (homeButton) {
+          if (rect.top < -vrect.height/2)
+            TweenLite.to(homeButton, duration, { y: -100, ease: 'Expo.easeOut' });
+          else
+            TweenLite.to(homeButton, duration, { y: 0, ease: 'Expo.easeOut' });
+        }
+
+        if (gridButton) {
+          if (rect.top < -vrect.height/2)
+            TweenLite.to(gridButton, duration, { y: -100, ease: 'Expo.easeOut' });
+          else
+            TweenLite.to(gridButton, duration, { y: 0, ease: 'Expo.easeOut' });
+        }
+
+        if (mouseButton) {
+          if ((rect.height + rect.top - vrect.height) <= vrect.height/2)
+            TweenLite.to(mouseButton, duration, { y: 0, ease: 'Expo.easeOut' });
+          else
+            TweenLite.to(mouseButton, duration, { y: 100, ease: 'Expo.easeOut' });
+        }
+      }
+    }
+
     if (!this.isDirty(enums.DirtyType.ALL) && this.isDirty(enums.DirtyType.INPUT)) this.processInput();
+
     super.update();
   }
 
@@ -69,6 +114,7 @@ class GlobalNav extends ui.Element() {
 
     this.timeline = new TimelineLite();
     if (this.getChild('home-button')) this.timeline.add(TweenLite.to(this.getChild('home-button'), duration, { y: 0, ease: 'Expo.easeOut' }));
+    if (this.getChild('grid-button')) this.timeline.add(TweenLite.to(this.getChild('grid-button'), duration, { y: 0, ease: 'Expo.easeOut' }));
     if (this.getChild('mouse-button')) this.timeline.add(TweenLite.to(this.getChild('mouse-button'), duration, { y: 0, ease: 'Expo.easeOut' }));
     this.timeline.add(() => { if (done) done(); });
   }
@@ -79,6 +125,7 @@ class GlobalNav extends ui.Element() {
 
     this.timeline = new TimelineLite();
     if (this.getChild('home-button')) this.timeline.add(TweenLite.to(this.getChild('home-button'), duration, { y: -100, ease: 'Expo.easeOut' }));
+    if (this.getChild('grid-button')) this.timeline.add(TweenLite.to(this.getChild('grid-button'), duration, { y: -100, ease: 'Expo.easeOut' }));
     if (this.getChild('mouse-button')) this.timeline.add(TweenLite.to(this.getChild('mouse-button'), duration, { y: 100, ease: 'Expo.easeOut' }));
     this.timeline.add(() => { if (done) done(); });
   }

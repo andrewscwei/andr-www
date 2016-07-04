@@ -1,36 +1,12 @@
 // (c) Andrew Wei
 
-import { dom, enums, ui } from 'requiem';
+import { dom, enums } from 'requiem';
+import Page from './Page';
 import 'gsap';
 
-class Home extends ui.Element() {
+class Home extends Page {
   /** @inheritdoc */
   static get tag() { return 'page-home'; }
-
-  /** @inheritdoc */
-  static get extends() { return 'div'; }
-
-  /**
-   * TimelineLite instance.
-   *
-   * @type {TimelineLite}
-   */
-  get timeline() { return this.__private__.timeline; }
-  set timeline(val) {
-    if (this.__private__.timeline) this.__private__.timeline.kill();
-    this.__private__.timeline = val;
-  }
-
-  /** @inheritdoc */
-  init() {
-    super.init();
-  }
-
-  /** @inheritdoc */
-  destroy() {
-    this.timeline.kill();
-    super.destroy();
-  }
 
   /** @inheritdoc */
   update() {
@@ -42,6 +18,7 @@ class Home extends ui.Element() {
     super.update();
   }
 
+  /** @inheritdoc */
   in(done) {
     let nameCard = this.getChild('name-card');
 
@@ -54,6 +31,7 @@ class Home extends ui.Element() {
     });
   }
 
+  /** @inheritdoc */
   out(done) {
     if (this.state !== 'none') {
       this.state = 'none';
