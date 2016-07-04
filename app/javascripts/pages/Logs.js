@@ -1,42 +1,14 @@
 // (c) Andrew Wei
 
 import { dom, ui } from 'requiem';
+import Page from './Page';
 import 'gsap';
 
-class Logs extends ui.Element() {
+class Logs extends Page {
   /** @inheritdoc */
   static get tag() { return 'page-logs'; }
 
   /** @inheritdoc */
-  static get extends() { return 'div'; }
-
-  /**
-   * TimelineLite instance.
-   *
-   * @type {TimelineLite}
-   */
-  get timeline() { return this.__private__.timeline; }
-  set timeline(val) {
-    if (this.__private__.timeline) this.__private__.timeline.kill();
-    this.__private__.timeline = val;
-  }
-
-  /** @inheritdoc */
-  init() {
-    super.init();
-  }
-
-  /** @inheritdoc */
-  destroy() {
-    this.timeline.kill();
-    super.destroy();
-  }
-
-  /** @inheritdoc */
-  update() {
-    super.update();
-  }
-
   in(done) {
     let entries = this.getChild('entry');
     let paginator = dom.getChild('paginator');
@@ -59,6 +31,7 @@ class Logs extends ui.Element() {
     });
   }
 
+  /** @inheritdoc */
   out(done) {
     let entries = this.getChild('entry');
     let paginator = dom.getChild('paginator')

@@ -2,14 +2,23 @@
 
 +element('page-logs')
   +align()
-  // +overflow(hidden scroll)
-  +size(100% auto)
-  // -webkit-overflow-scrolling: touch
+  +overflow(hidden scroll)
+  +size(100%)
 
   #inner-page
-    +size(100% 200vh)
+    +min-size(100%)
+    +size(100% auto)
     +display('boxv', top center)
     +padding(100px 0)
+
+    +screen('w<=%s' 'h>%s', 650px 1800)
+      +display('boxv', center)
+
+    +screen('w>%s' 'h>%s', 650px 1170px)
+      +display('boxv', center)
+
+    +screen('w>%s' 'h>%s', 900px 870px)
+      +display('boxv', center)
 
   .tags
     +display('box>')

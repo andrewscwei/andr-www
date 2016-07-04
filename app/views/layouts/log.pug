@@ -4,6 +4,22 @@ extends /layouts/page
 include /includes/button
 
 append vars
+  -
+    nav = {};
+
+    const n = _.get(collections, 'log.length');
+    const perPage = _.get($, 'documents.log.paginate.perPage');
+
+    if (n && perPage) {
+      let index = 0;
+
+      for (let i = 0; i < n; i++)
+        if (collections.log[i].uid === uid) { index = i; break; }
+
+      let page = Math.floor(index/perPage + 1);
+
+      nav.grid = `/logs/${(page > 1) ? `${page}/` : ''}`;
+    }
 
 block page
   div(is='page-log' name='page')

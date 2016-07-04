@@ -1,9 +1,6 @@
 // (c) Andrew Wei
 
 +buttons()
-  &[disabled]
-    pointer-events: none
-
   &.home
     +size(30px)
     svg
@@ -11,6 +8,13 @@
       circle
         +transition(all, .3s, ease-out)
         fill: get-color('white')
+
+  &.grid
+    +size(18px)
+    +transition(opacity, .3s, ease-out)
+
+    +state('hover')
+      opacity: .6
 
   &.mouse
     +display('boxv')

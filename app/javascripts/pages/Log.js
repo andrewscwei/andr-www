@@ -1,26 +1,13 @@
 // (c) Andrew Wei
 
-import { dom, enums, ui, utils } from 'requiem';
+import { dom, enums, utils } from 'requiem';
+import Page from './Page';
 import Prism from 'prismjs';
 import 'gsap';
 
-class Log extends ui.Element() {
+class Log extends Page {
   /** @inheritdoc */
   static get tag() { return 'page-log'; }
-
-  /** @inheritdoc */
-  static get extends() { return 'div'; }
-
-  /**
-   * TimelineLite instance.
-   *
-   * @type {TimelineLite}
-   */
-  get timeline() { return this.__private__.timeline; }
-  set timeline(val) {
-    if (this.__private__.timeline) this.__private__.timeline.kill();
-    this.__private__.timeline = val;
-  }
 
   /** @inheritdoc */
   init() {
@@ -41,21 +28,16 @@ class Log extends ui.Element() {
   }
 
   /** @inheritdoc */
-  destroy() {
-    this.timeline.kill();
-    super.destroy();
-  }
-
-  /** @inheritdoc */
   update() {
     if (this.isDirty(enums.DirtyType.POSITION|enums.DirtyType.SIZE)) {
       let rect = utils.getRect(document.getElementById('inner-page') || this);
+      let cover = dom.getChild('cover');
 
       if (rect.top < -100) {
-        dom.setState(dom.getChild('cover'), 'hidden');
+        if (cover) dom.setState(dom.getChild('cover'), 'hidden');
       }
       else {
-        dom.setState(dom.getChild('cover'), 'none');
+        if (cover) dom.setState(dom.getChild('cover'), 'none');
       }
 
       let contentNodes = this.getChild('contents').querySelectorAll('[data-field="image"]');
@@ -80,6 +62,7 @@ class Log extends ui.Element() {
     super.update();
   }
 
+  /** @inheritdoc */
   in(done) {
     const cover = dom.getChild('cover');
     const title = this.getChild('header.info.title');
@@ -88,7 +71,7 @@ class Log extends ui.Element() {
     const contents = this.getChild('contents');
 
     this.timeline = new TimelineLite();
-    if (contents) this.timeline.add(TweenLite.to(contents, 0, { opacity: 1 }));
+    if (contents) this.timeline.add(TweenLite.to(contents, 0, { y: 0, opacity: 1 }));
     if (cover) this.timeline.add(TweenLite.to(cover, 1, { z: 0, opacity: 1, ease: 'Expo.easeOut' }));
     if (title) this.timeline.add(TweenLite.to(title, .3, { y: 0, opacity: 1, ease: 'Expo.easeOut' }), `-=.2`);
     if (date) this.timeline.add(TweenLite.to(date, .3, { y: 0, opacity: 1, ease: 'Expo.easeOut' }), `-=.2`);
@@ -96,14 +79,17 @@ class Log extends ui.Element() {
     this.timeline.add(() => { if (done) done(); });
   }
 
+  /** @inheritdoc */
   out(done) {
     const cover = dom.getChild('cover');
     const title = this.getChild('header.info.title');
     const date = this.getChild('header.info.date');
     const tags = this.getChild('header.info.tags');
+    const contents = this.getChild('contents');
 
     this.timeline = new TimelineLite();
-    if (title) this.timeline.add(TweenLite.to(title, .3, { y: 40, opacity: 0, ease: 'Expo.easeIn' }));
+    if (contents) this.timeline.add(TweenLite.to(contents, .3, { y: 100, opacity: 0, ease: 'Expo.easeIn' }));
+    if (title) this.timeline.add(TweenLite.to(title, .3, { y: 40, opacity: 0, ease: 'Expo.easeIn' }), `-=.3`);
     if (date) this.timeline.add(TweenLite.to(date, .3, { y: 40, opacity: 0, ease: 'Expo.easeIn' }), `-=.2`);
     if (tags) this.timeline.add(TweenLite.to(tags, .3, { y: 40, opacity: 0, ease: 'Expo.easeIn' }), `-=.2`);
     if (cover) this.timeline.add(TweenLite.to(cover, .3, { z: 300, opacity: 0, ease: 'Expo.easeIn' }));

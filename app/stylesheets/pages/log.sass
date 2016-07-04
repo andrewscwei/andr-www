@@ -6,11 +6,12 @@
   -webkit-overflow-scrolling: touch
 
   #inner-page
-    +size(100% calc(100% + 1px))
+    +min-size(100%)
+    +size(100% auto)
 
   +name('header')
     +display('boxv')
-    +size(100%)
+    +size(100% 100vh)
 
     +name('info')
       +max-size(450px none)
@@ -46,16 +47,23 @@
     +size(100% auto)
     background: get-color('very-dark-grey')
     opacity: 0
+    transform: translate3d(0, 100px, 0)
 
     .slice
       +data('slicetype', 'text')
-        +padding(50px 20%)
+        +padding(50px 30px)
+
+        +screen('>mobile')
+          +padding(50px 20%)
 
       +data('slicetype', 'quote')
-        +margin(0 25%)
+        +margin(0 50px)
         +padding(60px 50px)
         background: get-color('white')
         border-radius: 4px
+
+        +screen('>mobile')
+          +margin(0 25%)
 
         +labels()
           color: get-color('black')
@@ -80,8 +88,9 @@
           margin-top: 10px
 
       pre
+        +size(100% auto)
         +overflow(scroll)
-
+        box-sizing: border-box
 
   +name('footer')
     +size(100% 100px)

@@ -17,6 +17,8 @@ mixin global-nav($nav)
     if $nav.home
       +button({ href: $nav.home })(name='home-button').home
         +monogram()
+    if $nav.grid
+      +button({ iconClass: 'grid', href: $nav.grid })(name='grid-button').grid
     if $nav.mouse
       +button({ label: $nav.mouse.label, href: $nav.mouse.href })(name='mouse-button').mouse
         +mouse-icon()
