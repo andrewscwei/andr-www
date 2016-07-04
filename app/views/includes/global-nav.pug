@@ -2,7 +2,7 @@
 
 include /includes/button
 include /includes/monogram
-include /includes/mouse-icon
+include /includes/grid-icon
 
 mixin global-nav($nav)
   nav(is='global-nav')&attributes(attributes)
@@ -18,7 +18,8 @@ mixin global-nav($nav)
       +button({ href: $nav.home })(name='home-button').home
         +monogram()
     if $nav.grid
-      +button({ iconClass: 'grid', href: $nav.grid })(name='grid-button').grid
-    if $nav.mouse
-      +button({ label: $nav.mouse.label, href: $nav.mouse.href })(name='mouse-button').mouse
-        +mouse-icon()
+      +button({ href: $nav.grid })(name='grid-button').logs
+        +grid-icon()
+    if $nav.logs
+      +button({ href: $nav.logs.href })(name='logs-button').logs
+        +grid-icon()
