@@ -15,8 +15,14 @@
   section.logo
     +padding(10px 0)
 
-    +icons()
+    svg
       +size(70px)
+      +overflow(visible)
+      transform: translate3d(0, 0, 0)
+
+      *
+        fill: get-color('white')
+        transform-origin: center
 
   section.name
     +labels()
@@ -32,8 +38,10 @@
 
   section.position
     +labels()
-      +font('ss', 'd', 'n')
+      +display('block')
+      +font('ss', 'xs', 'n')
       color: get-color('dark-grey')
+      line-height: 1.4em
 
   section.connect
     +padding(20px 0)
@@ -50,6 +58,25 @@
     section
       opacity: 1
       transform: translate3d(0, 0, 0)
+
+    section.logo
+      svg
+        @keyframes dot-pulse
+          0%
+            transform: scale(1)
+          50%
+            transform: scale(1.2)
+          100%
+            transform: scale(1)
+
+        .dot-1
+          +animation(dot-pulse, 1s, ease-out, 0s, infinite)
+        .dot-6
+          +animation(dot-pulse, 1.6s, ease-out, .6s, infinite)
+        .dot-8
+          +animation(dot-pulse, 3s, ease-out, .8s, infinite)
+        .dot-11
+          +animation(dot-pulse, 2s, ease-out, .2s, infinite)
 
 
 

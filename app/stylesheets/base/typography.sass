@@ -20,13 +20,24 @@ $font-weight-monospace-light: 500
 $font-weight-monospace-normal: 500
 $font-weight-monospace-bold: 500
 
-+labels()
-  +font('ss', null, 'l')
++labels('body')
+  +font('ss', null, 'n')
+  color: get-color('white')
+  line-height: 1.5em
+
+  & + p
+    margin-top: 30px
+
++labels('header')
   color: get-color('white')
 
 +list-items()
-  +font('ss', null, 'l')
+  +font('ss', null, 'n')
   color: get-color('white')
+  line-height: 1.5em
+
+  & + p
+    margin-top: 30px
 
   ol &
     list-style: decimal
@@ -53,6 +64,11 @@ h1
 h2
   +font('ss', 'm', 'n')
 
+  & + p,
+  & + ul,
+  & + ol
+    margin-top: 30px
+
   p + &,
   ol + &,
   ul + &
@@ -60,3 +76,8 @@ h2
 
 h3
   +font('ss', 'm', 'n')
+
+  & + p,
+  & + ul,
+  & + ol
+    margin-top: 10px

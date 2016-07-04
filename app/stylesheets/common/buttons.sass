@@ -5,9 +5,34 @@
     +size(30px)
     svg
       +size(100%)
+      +overflow(visible)
+
       circle
-        +transition(all, .3s, ease-out)
+        +transition(fill, .6s, ease-out)
         fill: get-color('white')
+        transform-origin: center
+
+    +state('hover')
+      svg
+        circle
+          fill: get-color('black')
+
+        @keyframes dot-pulse
+          0%
+            transform: scale(1)
+          50%
+            transform: scale(1.5)
+          100%
+            transform: scale(1)
+
+        .dot-1
+          +animation(dot-pulse, 1s, ease-out, 0s, infinite)
+        .dot-6
+          +animation(dot-pulse, 1.6s, ease-out, .6s, infinite)
+        .dot-8
+          +animation(dot-pulse, 3s, ease-out, .8s, infinite)
+        .dot-11
+          +animation(dot-pulse, 2s, ease-out, .2s, infinite)
 
   &.grid
     +size(18px)
@@ -16,25 +41,24 @@
     +state('hover')
       opacity: .6
 
-  &.mouse
-    +display('boxv')
-    +size(45px)
+  &.logs
+    +size(18px)
     background: transparent
 
-    &::before
-      +align()
-      +mask()
-      +size(100%, true)
-      +transition(transform, .4s, cubic-bezier(.17,.67,.3,1.23))
-      background: get-color('white')
-      content: ''
-      transform: scale(0)
-      transform-origin: center
-      z-index: -1
+    // &::before
+    //   +align()
+    //   +mask()
+    //   +size(100%, true)
+    //   +transition(transform, .4s, cubic-bezier(.17,.67,.3,1.23))
+    //   background: get-color('white')
+    //   content: ''
+    //   transform: scale(0)
+    //   transform-origin: center
+    //   z-index: -1
 
     +labels()
       +font('m', 'xs', 'l')
-      +margin(null null 3px null)
+      +margin(null null 0px null)
       +transition(transform opacity, .4s, cubic-bezier(.17,.67,.3,1.23))
       color: get-color('black')
       opacity: 0
@@ -42,10 +66,9 @@
       transform: translate3d(0, 20px 0)
 
     svg
-      +size(15px auto)
+      +size(100%)
 
-      .body,
-      .wheel
+      *
         +transition(fill, .3s, cubic-bezier(.17,.67,.3,1.23))
         fill: get-color('white')
 
@@ -55,19 +78,66 @@
         transform: translate3d(0, 0, 0)
 
       svg
-        .body
-          fill: get-color('black')
-        .wheel
-          fill: get-color('red')
-          +animation(mouse-wheel-pulse, 1s, ease-out, 0s, infinite)
-            @keyframes mouse-wheel-pulse
+        *
+          fill: get-color('white')
+
+        $rotate-duration: 2s
+
+        .tl
+          +animation(rotate-tl, $rotate-duration, ease-out, 0s, infinite)
+            @keyframes rotate-tl
               0%
                 transform: translate3d(0, 0, 0)
-              20%
-                transform: translate3d(0, 20px, 0)
-              30%
+              25%
+                transform: translate3d(35px, 0, 0)
+              50%
+                transform: translate3d(35px, 35px, 0)
+              75%
+                transform: translate3d(0, 35px, 0)
+              100%
                 transform: translate3d(0, 0, 0)
 
+        .tr
+          +animation(rotate-tr, $rotate-duration, ease-out, 0s, infinite)
+            @keyframes rotate-tr
+              0%
+                transform: translate3d(0, 0, 0)
+              25%
+                transform: translate3d(0, 35px, 0)
+              50%
+                transform: translate3d(-35px, 35px, 0)
+              75%
+                transform: translate3d(-35px, 0, 0)
+              100%
+                transform: translate3d(0, 0, 0)
+
+        .bl
+          +animation(rotate-bl, $rotate-duration, ease-out, 0s, infinite)
+            @keyframes rotate-bl
+              0%
+                transform: translate3d(0, 0, 0)
+              25%
+                transform: translate3d(0, -35px, 0)
+              50%
+                transform: translate3d(35px, -35px, 0)
+              75%
+                transform: translate3d(35px, 0, 0)
+              100%
+                transform: translate3d(0, 0, 0)
+
+        .br
+          +animation(rotate-br, $rotate-duration, ease-out, 0s, infinite)
+            @keyframes rotate-br
+              0%
+                transform: translate3d(0, 0, 0)
+              25%
+                transform: translate3d(-35px, 0, 0)
+              50%
+                transform: translate3d(-35px, -35px, 0)
+              75%
+                transform: translate3d(0, -35px, 0)
+              100%
+                transform: translate3d(0, 0, 0)
 
       &::before
         transform: scale(1)
@@ -156,13 +226,3 @@
     +size(5px, true)
     background: get-color('white')
     overflow: visible
-
-    // +animation(dot-pulse, 1s, ease-out, 0s, infinite)
-    //   @keyframes dot-pulse
-    //     0%
-    //       transform: scale(1)
-    //     50%
-    //       transform: scale(1.2)
-    //     100%
-    //       transform: scale(1)
-
