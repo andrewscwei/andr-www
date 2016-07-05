@@ -1,5 +1,19 @@
 // (c) Andrew Wei
 
+=log-padding-h()
+  +padding(null 30px)
+  +screen('>mobile')
+    +padding(null 20%)
+  +screen('>phablet')
+    +padding(null 25%)
+
+=log-margin-h()
+  +margin(null 50px)
+  +screen('>mobile')
+    +margin(null 25%)
+  +screen('>phablet')
+    +margin(null 30%)
+
 +element('page-log')
   +overflow(hidden scroll)
   +size(100%)
@@ -42,35 +56,36 @@
         +space-between(7px)
 
   +name('contents')
-    +padding(100px 0)
+    +padding(200px 0)
     +size(100% auto)
-    background: get-color('very-dark-grey')
+    background: get-color('black')
     opacity: 0
     transform: translate3d(0, 100px, 0)
 
     .slice
       +data('slicetype', 'text')
-        +padding(50px 30px)
-
-        +screen('>mobile')
-          +padding(50px 20%)
+        +log-padding-h()
 
       +data('slicetype', 'quote')
-        +margin(0 50px)
+        +log-margin-h()
+        +margin(70px null)
         +padding(60px 50px)
-        background: get-color('white')
-        border-radius: 4px
+        border: 1px solid get-color('white', .1)
 
-        +screen('>mobile')
-          +margin(0 25%)
+      &[data-slicetype='text'] + [data-slicetype='text'],
+      &[data-slicetype^='language-'] + [data-slicetype='text'],
+      &[data-slicetype^='language-'] + [data-slicetype^='language-']
+        +margin(70px null null null)
 
-        +labels()
-          color: get-color('black')
+      &[data-slicetype='text'] + [data-slicetype^='language-']
+        +margin(20px null null null)
+
+      &[data-slicetype^='language-']
+        +log-padding-h()
 
       pre
+        +font('m', null, 'n')
         +size(100% auto)
-        +overflow(scroll)
-        box-sizing: border-box
 
   +name('footer')
     +size(100% 100px)

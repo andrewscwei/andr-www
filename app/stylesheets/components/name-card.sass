@@ -30,11 +30,8 @@
 
       &.full-name
         +font('ss', 'l', 'l')
-
-      &.codename
-        +margin($left:5px)
-        +font('ss', 's', 'n')
-        color: get-color('dark-grey')
+        letter-spacing: 1px
+        text-transform: uppercase
 
   section.position
     +labels()
@@ -42,6 +39,7 @@
       +font('ss', 'xs', 'n')
       color: get-color('dark-grey')
       line-height: 1.4em
+      text-transform: none
 
   section.connect
     +padding(20px 0)
