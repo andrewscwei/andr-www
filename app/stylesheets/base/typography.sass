@@ -12,7 +12,7 @@ $font-size-extra-large: 60px
 
 $font-weight-sans-serif-light: 100
 $font-weight-sans-serif-normal: 300
-$font-weight-sans-serif-bold: 400
+$font-weight-sans-serif-bold: 600
 $font-weight-serif-light: 300
 $font-weight-serif-normal: 400
 $font-weight-serif-bold: 700
@@ -21,36 +21,69 @@ $font-weight-monospace-normal: 500
 $font-weight-monospace-bold: 500
 
 +labels('body')
-  +font('ss', null, 'n')
+  +font('ss', 'd', 'l')
   color: get-color('white')
-  line-height: 1.5em
+  line-height: 1.8em
+
+  a
+    +font('ss', 'd', 'n')
 
   & + p
-    margin-top: 30px
+    margin-top: 20px
+
+code,
+strong em,
+em strong
+  +padding(3px 4px)
+  +font('m', null, 'n')
+  background: get-color('very-dark-grey') !important
+  border-radius: 3px
+  color: get-color('white') !important
+  white-space: pre-line
+  font-style: normal
+
+pre
+  +overflow(scroll)
+  +padding(1em)
+  border-radius: 4px
+  box-sizing: border-box
+  background: get-color('very-dark-grey') !important
+  color: get-color('white')
+
+  & + p
+    margin-top: 40px
+
+strong
+  font-weight: get-font-weight('b', 'ss')
 
 +labels('header')
   color: get-color('white')
 
 +list-items()
-  +font('ss', null, 'n')
+  +font('ss', 'd', 'l')
   color: get-color('white')
-  line-height: 1.5em
+  line-height: 1.8em
+
+  a
+    +font('ss', 'd', 'n')
 
   & + p
-    margin-top: 30px
+    margin-top: 20px
 
   ol &
     list-style: decimal
 
-ol
-  +padding(null null null 30px)
-
 +links()
   +transition(opacity, .3s, ease-out)
-  color: get-color('blue');
+  color: get-color('white')
+  border-bottom: 1px solid get-color('white', .2)
 
   +state('hover')
     opacity: .6
+
+ol,
+ul
+  +padding(null null null 40px)
 
 h1
   +font('s', 'l', 'n')
@@ -63,21 +96,30 @@ h1
 
 h2
   +font('ss', 'm', 'n')
+  letter-spacing: 1px
+  text-transform: none
 
   & + p,
   & + ul,
   & + ol
-    margin-top: 30px
+    margin-top: 20px
 
   p + &,
   ol + &,
   ul + &
-    margin-top: 40px
+    margin-top: 70px
 
 h3
   +font('ss', 'm', 'n')
+  letter-spacing: 1px
+  text-transform: none
 
   & + p,
   & + ul,
   & + ol
     margin-top: 10px
+
+  p + &,
+  ol + &,
+  ul + &
+    margin-top: 50px

@@ -4,7 +4,7 @@
   "keywords": "",
   "url": "https://www.andr.mu",
   "locales": ["en"],
-  "autoRouting": true,
+  "autoRouting": false,
   "sourceDir": "app",
   "buildDir": "public",
   "configDir": "config",

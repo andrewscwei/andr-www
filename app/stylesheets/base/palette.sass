@@ -4,9 +4,11 @@
   @if $color == null
     @return transparent
   @if $color == 'black'
-    @return rgba(#111, $alpha)
+    @return rgba(26, 26, 26, $alpha)
   @if $color == 'white'
     @return rgba(255, 255, 255, $alpha)
+  @if $color == 'light-grey'
+    @return rgba(200, 200, 200, $alpha)
   @if $color == 'grey'
     @return rgba(#999, $alpha)
   @if $color == 'dark-grey'
@@ -14,5 +16,5 @@
   @if $color == 'very-dark-grey'
     @return rgba(#333, $alpha)
   @if $color == 'blue'
-    @return rgba(#5de9ff, $alpha)
+    @return rgba(#bae1fb, $alpha)
   @return rgba(#ff0, 1)
