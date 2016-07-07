@@ -7,7 +7,7 @@ $font-family-monospace: 'inconsolata', 'Inconsolata', monospace
 $font-size-extra-small: 14px
 $font-size-small: 18px
 $font-size-medium: 24px
-$font-size-large: 42px
+$font-size-large: 36px
 $font-size-extra-large: 60px
 
 $font-weight-sans-serif-light: 100
@@ -28,12 +28,7 @@ $font-weight-monospace-bold: 500
   a
     +font('ss', 'd', 'n')
 
-  & + p
-    margin-top: 20px
-
 code,
-strong em,
-em strong
   +padding(3px 4px)
   +font('m', null, 'n')
   background: get-color('very-dark-grey') !important
@@ -50,8 +45,12 @@ pre
   background: get-color('very-dark-grey') !important
   color: get-color('white')
 
-  & + p
-    margin-top: 40px
+  code
+    +padding(0)
+
+blockquote
+  +padding(60px 50px)
+  border: 1px solid get-color('white', .1)
 
 strong
   font-weight: get-font-weight('b', 'ss')
@@ -66,9 +65,6 @@ strong
 
   a
     +font('ss', 'd', 'n')
-
-  & + p
-    margin-top: 20px
 
   ol &
     list-style: decimal
@@ -85,8 +81,17 @@ ol,
 ul
   +padding(null null null 40px)
 
+  ol
+    & li
+      list-style: lower-alpha
+
+    ol
+      & li
+        list-style: lower-roman
+
 h1
-  +font('s', 'l', 'n')
+  +font('s', 'xl', 'n')
+  font-size: get-font-size('xl', .7)
   letter-spacing: 1px
   line-height: 1em
   text-transform: uppercase
@@ -95,31 +100,16 @@ h1
     +font('s', 'xl', 'n')
 
 h2
-  +font('ss', 'm', 'n')
+  +font('ss', 'l', 'n')
   letter-spacing: 1px
-  text-transform: none
-
-  & + p,
-  & + ul,
-  & + ol
-    margin-top: 20px
-
-  p + &,
-  ol + &,
-  ul + &
-    margin-top: 70px
+  text-transform: uppercase
 
 h3
   +font('ss', 'm', 'n')
   letter-spacing: 1px
   text-transform: none
 
-  & + p,
-  & + ul,
-  & + ol
-    margin-top: 10px
-
-  p + &,
-  ol + &,
-  ul + &
-    margin-top: 50px
+h4
+  +font('ss', 's', 'n')
+  letter-spacing: 1px
+  text-transform: none

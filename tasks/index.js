@@ -19,6 +19,7 @@ gulp.init({
     i18n: view.i18n(),
     metadata: view.metadata(),
     collections: view.documents(),
+    mathjax: true,
     tags: view.tags(),
     watch: { files: [task.config('**/*')] }
   }
