@@ -37,9 +37,10 @@ describe('app', function() {
       .walk(task.dest())
       .on('data', function(item) {
         if (item.stats.isDirectory() || !_.endsWith(item.path, '.html')) return;
-        let res = fs.readFileSync(item.path, 'utf-8').match(/["|']((\/)([a-zA-Z0-9\-\_\/\.]+))["|']/g);
+        let res = fs.readFileSync(item.path, 'utf-8').match(/=["|']((\/)([a-zA-Z0-9\-\_\/\.]+))["|']/g);
         res.forEach((v, i) => {
           let p = v.replace(/("|')/g, '');
+          if (_.startsWith(p, '=')) p = p.substr(1);
           if (!_.startsWith(p, '//') && !_.startsWith(p, 'http')) paths.push(p);
         });
       })
