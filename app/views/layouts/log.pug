@@ -33,5 +33,5 @@ block page
               each tag in tags
                 +button({ label: tag, href: `/logs/${tag}/` }).tag
       div(name='contents')
-        != body
+        != markdown || body
         div(name='footer')

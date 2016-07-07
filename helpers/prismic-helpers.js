@@ -1,8 +1,16 @@
 // (c) Andrew Wei
 
+const $ = require('../config');
 const _ = require('lodash');
+const marked = require('./marked-helpers');
 const moment = require('moment');
+const Marked = require('marked');
 const Prismic = require('prismic.io').Prismic;
+
+Marked.setOptions({
+  renderer: marked.renderer,
+  highlight: marked.highlight
+});
 
 /**
  * Gets the Prismic API.
@@ -73,13 +81,41 @@ exports.reduce = function(docs, relative) {
     let r = _.mapKeys(_.mapValues(docs.data, (v, k) => {
       switch (v.type) {
         case 'StructuredText':
-          return docs.getStructuredText(k).asText();
+          let ret = docs.getStructuredText(k).asText();
+          if ((k === 'markdown') || (k === `${docs.type}.markdown`)) ret = Marked(ret);
+          return ret;
         case 'Image':
           return docs.getImage(k).url;
         case 'Number':
           return docs.getNumber(k);
         case 'SliceZone':
-          return docs.getSliceZone(k).asHtml();
+          return docs.getSliceZone(k).asHtml((doc) => {
+            let pattern = _.get($, `documents.${doc.type}.permalink`);
+            let ret = pattern;
+
+            if (pattern) {
+              const regex = /:(\w+)/g;
+              let params = [];
+              let m;
+              while (m = regex.exec(pattern)) params.push(m[1]);
+
+              for (let i = 0, key; key = params[i++];) {
+                let val = doc[key];
+                if (!val) return null;
+
+                ret = ret.replace(`:${key}`, val);
+              }
+
+              if (/((\/)?([a-zA-Z0-9\-\_\/\.]+))/g.test(ret)) {
+                if (!_.startsWith(ret, '/')) ret = `/${ret}`;
+                if (!_.endsWith(ret, '.html') && !_.endsWith(ret, '/')) ret = `${ret}/`;
+              }
+
+              return ret;
+            }
+
+            return null;
+          });
         case 'Date':
           return moment(docs.getDate(k)).format('YYYY-MM-DD');
         case 'Link.web':

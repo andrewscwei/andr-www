@@ -14,6 +14,17 @@
   +screen('>phablet')
     +margin(null 30%)
 
+=log-paragraph-space($spacing:1.5em)
+  & + p
+    +margin($spacing null null null)
+
+=log-leading-space($spacing:1.5em)
+  * + &
+    +margin($spacing null null null)
+
+=log-trailing-space($spacing:1.5em)
+  +margin(null null $spacing null)
+
 +element('page-log')
   +overflow(hidden scroll)
   +size(100%)
@@ -57,35 +68,78 @@
 
   +name('contents')
     +padding(200px 0)
+    +log-padding-h()
     +size(100% auto)
     background: get-color('black')
     opacity: 0
     transform: translate3d(0, 100px, 0)
 
     .slice
-      +data('slicetype', 'text')
+      &[data-slicetype='text']
         +log-padding-h()
 
-      +data('slicetype', 'quote')
+      &[data-slicetype='quote']
         +log-margin-h()
-        +margin(70px null)
+        +log-leading-space(4em)
+        +log-trailing-space(4em)
         +padding(60px 50px)
         border: 1px solid get-color('white', .1)
-
-      &[data-slicetype='text'] + [data-slicetype='text'],
-      &[data-slicetype^='language-'] + [data-slicetype='text'],
-      &[data-slicetype^='language-'] + [data-slicetype^='language-']
-        +margin(70px null null null)
-
-      &[data-slicetype='text'] + [data-slicetype^='language-']
-        +margin(20px null null null)
 
       &[data-slicetype^='language-']
         +log-padding-h()
 
-      pre
+    p
+      +log-paragraph-space()
+
+    h2
+      +log-leading-space(3em)
+      +log-trailing-space()
+
+    h3
+      +log-leading-space(2em)
+      +log-trailing-space(1em)
+
+    h4
+      +log-leading-space(2em)
+      +log-trailing-space(1em)
+
+    pre
+      +log-trailing-space()
+      +font('m', null, 'n')
+      +size(100% auto)
+
+      code
         +font('m', null, 'n')
-        +size(100% auto)
+
+    blockquote
+      +margin(null 40px)
+      +log-leading-space(4em)
+      +log-trailing-space(4em)
+
+    .MathJax
+      +padding(4px)
+      +display('(block)')
+      background: get-color('very-dark-grey')
+      border-radius: 4px
+
+      span
+        color: get-color('white')
+
+    .MathJax_SVG svg *,
+    .MathJax_SVG_Display svg *
+      fill: get-color('white')
+
+    .MathJax_Display
+      +margin(20px 0)
+
+      .MathJax
+        +padding(20px)
+        +size(100% null)
+        +overflow(scroll)
+        text-align: center
+        word-wrap: normal
+        box-sizing: border-box
+        display: block
 
   +name('footer')
     +size(100% 100px)

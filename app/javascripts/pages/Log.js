@@ -3,7 +3,6 @@
 import _ from 'lodash';
 import { dom, enums, utils } from 'requiem';
 import Page from './Page';
-import Prism from 'prismjs';
 import 'gsap';
 
 class Log extends Page {
@@ -13,10 +12,6 @@ class Log extends Page {
   /** @inheritdoc */
   init() {
     this.respondsTo(this, 10.0, enums.EventType.OBJECT.SCROLL, enums.EventType.OBJECT.RESIZE);
-
-    // Process code blocks.
-    this.syntaxHighlight(document.querySelectorAll('[data-slicetype="language-bash"] pre'), 'bash');
-
     super.init();
   }
 
@@ -87,18 +82,6 @@ class Log extends Page {
     if (tags) this.timeline.add(TweenLite.to(tags, .3, { y: 40, opacity: 0, ease: 'Expo.easeIn' }), `-=.2`);
     if (cover) this.timeline.add(TweenLite.to(cover, .3, { z: 300, opacity: 0, ease: 'Expo.easeIn' }));
     this.timeline.add(() => { if (done) done(); });
-  }
-
-  syntaxHighlight(elements, language) {
-    if (!elements || !elements.length || !language) return;
-
-    let n = elements.length;
-
-    for (let i = 0; i < n; i++) {
-      const element = elements[i];
-      dom.addClass(element, _.startsWith(language, 'language-') ? language : `language-${language}`);
-      Prism.highlightElement(element);
-    }
   }
 }
 

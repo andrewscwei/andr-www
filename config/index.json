@@ -4,7 +4,7 @@
   "keywords": "",
   "url": "https://www.andr.mu",
   "locales": ["en"],
-  "autoRouting": false,
+  "autoRouting": true,
   "sourceDir": "app",
   "buildDir": "public",
   "configDir": "config",
@@ -26,6 +26,10 @@
       "sortBy": "date",
       "reverse": true,
       "permalink": "logs/:uid/",
+      "metadata": {
+        "mathjax": true,
+        "prism": true
+      },
       "paginate": {
         "perPage": 6,
         "first": "logs/",
