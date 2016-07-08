@@ -21,17 +21,20 @@ body
 #cover
   +align(fixed)
   +size(100vw 100vh)
+  backface-visibility: hidden
   opacity: 0
   perspective: 800px
-  transform: translate3d(0, 0, 300px)
+  transform: translate3d(0, 0, -300px)
 
   +name('background')
     +align()
     +size(100%)
     +transition(transform opacity, .4s, ease-out)
+    backface-visibility: hidden
     background-position: center
     background-repeat: no-repeat
     background-size: cover
+    transform: translate3d(0, 0, 0)
     &::before
       +align()
       +size(100%)

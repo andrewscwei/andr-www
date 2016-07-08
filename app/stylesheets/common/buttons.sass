@@ -19,42 +19,24 @@
 
         @keyframes dot-pulse
           0%
-            transform: scale(1)
+            opacity: 1
           50%
-            transform: scale(1.5)
+            opacity: 0
           100%
-            transform: scale(1)
+            opacity: 1
 
         .dot-1
-          +animation(dot-pulse, 1s, ease-out, 0s, infinite)
+          +animation(dot-pulse, 7s, ease-out, 0s, infinite)
         .dot-6
-          +animation(dot-pulse, 1.6s, ease-out, .6s, infinite)
+          +animation(dot-pulse, 5s, ease-out, .6s, infinite)
         .dot-8
           +animation(dot-pulse, 3s, ease-out, .8s, infinite)
         .dot-11
           +animation(dot-pulse, 2s, ease-out, .2s, infinite)
 
-  &.grid
-    +size(18px)
-    +transition(opacity, .3s, ease-out)
-
-    +state('hover')
-      opacity: .6
-
   &.logs
     +size(18px)
     background: transparent
-
-    // &::before
-    //   +align()
-    //   +mask()
-    //   +size(100%, true)
-    //   +transition(transform, .4s, cubic-bezier(.17,.67,.3,1.23))
-    //   background: get-color('white')
-    //   content: ''
-    //   transform: scale(0)
-    //   transform-origin: center
-    //   z-index: -1
 
     +labels()
       +font('m', 'xs', 'l')
@@ -152,7 +134,11 @@
 
   &.arrow
     +size(15px)
+    +transition(opacity, .3s, ease-out)
     background: transparent
+
+    +state('hover')
+      opacity: .6 !important
 
   &.triangle
     +size(0px)
@@ -226,3 +212,33 @@
     +size(5px, true)
     background: get-color('white')
     overflow: visible
+
+  &.post
+    +padding(15px 20px)
+    +size(100px auto)
+    +transition(border, .3s, ease-out)
+    background: transparent
+    border: 1px solid get-color('white', .1)
+
+    +icons()
+      +size(15px)
+
+    +labels()
+      color: get-color('white')
+      text-transform: capitalize
+
+    +state('hover')
+      border: 1px solid get-color('white')
+
+    &.prev
+      +display('box<', right center)
+
+      +icons()
+        +margin(null null null 10px)
+
+    &.next
+      +display('box>', left center)
+
+      +icons()
+        +margin(null 10px null null)
+

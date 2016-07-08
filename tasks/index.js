@@ -20,6 +20,14 @@ gulp.init({
     metadata: view.metadata(),
     collections: view.documents(),
     mathjax: true,
+    prism: {
+      lineNumbers: true
+    },
+    related: {
+      terms: 3,
+      max: 3,
+      text: (doc) => (doc.markdown)
+    },
     tags: view.tags(),
     watch: { files: [task.config('**/*')] }
   }

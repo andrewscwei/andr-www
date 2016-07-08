@@ -1,6 +1,6 @@
 {
   "name": "andr.mu",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "license": "MIT",
   "engines": {
@@ -49,7 +49,7 @@
     "async": "^2.0.0-rc.6",
     "chalk": "^1.1.3",
     "gsap": "^1.18.5",
-    "gulp-sys-metalprismic": "^2.2.1",
+    "gulp-sys-metalprismic": "^3.0.1",
     "hammerjs": "^2.0.8",
     "minuet": "^0.12.1",
     "mocha": "^2.5.3",
