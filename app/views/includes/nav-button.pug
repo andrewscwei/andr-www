@@ -1,0 +1,7 @@
+//- (c) Andrew Wei
+
+include /includes/button
+
+mixin nav-button($direction, $path)
+  if $path && $direction
+    +button({ href: $path })(name=`${$direction}-button` class=$direction style='display:none').triangle
