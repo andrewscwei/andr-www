@@ -17,6 +17,21 @@ pm.locales = $.locales;
 pm.autoRouting = $.autoRouting;
 
 // Put page routing/transitioning/loading logic here.
+pm.request((newDocument, oldDocument, next) => {
+  let oldMJStyles = oldDocument.getElementById('MathJax_SVG_styles');
+  let oldMJDefs = oldDocument.getElementById('MathJax_SVG_glyphs');
+  let newMJStyles = newDocument.getElementById('MathJax_SVG_styles');
+  let newMJDefs = newDocument.getElementById('MathJax_SVG_glyphs');
+
+  if (oldMJStyles) oldMJStyles.parentNode.removeChild(oldMJStyles);
+  if (oldMJDefs) oldMJDefs.parentNode.parentNode.removeChild(oldMJDefs.parentNode);
+
+  if (newMJDefs) oldDocument.body.insertBefore(newMJDefs.parentNode, oldDocument.body.firstChild);
+  if (newMJStyles) oldDocument.body.insertBefore(newMJStyles, oldDocument.body.firstChild);
+
+  next();
+});
+
 pm.transition('in', '/', (next) => {
   dom.sightread();
   transitionIn(dom.getChild('global-nav'));

@@ -21,7 +21,7 @@ class Log extends Page {
     const nodes = this.querySelectorAll(FADE_IN_ELEMENT_SELECTOR);
 
     for (let i=0, node; node = nodes[i++];) {
-      TweenLite.to(node, 0, { opacity: 0, x: 0, y: 100, z: 0 });
+      TweenLite.to(node, 0, { opacity: 0, x: 0, y: 60, z: 0 });
     }
 
     super.init();
