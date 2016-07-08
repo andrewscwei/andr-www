@@ -39,7 +39,7 @@
     }
   },
   "tags": {
-    "path": "logs/:tag",
+    "path": "logs/tag/:tag",
     "layout": "logs",
     "sortBy": "date",
     "reverse": true,
