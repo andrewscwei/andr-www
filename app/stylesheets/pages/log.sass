@@ -19,7 +19,7 @@
     +margin($spacing null null null)
 
 =log-leading-space($spacing:1.5em)
-  * + &
+  * + &:not(:first-child)
     +margin($spacing null null null)
 
 =log-trailing-space($spacing:1.5em)
@@ -36,7 +36,6 @@
   +name('header')
     +display('boxv')
     +size(100% 100vh)
-
     +name('info')
       +max-size(450px none)
       +padding(10%)
@@ -74,19 +73,7 @@
     opacity: 0
     transform: translate3d(0, 100px, 0)
 
-    .slice
-      &[data-slicetype='text']
-        +log-padding-h()
 
-      &[data-slicetype='quote']
-        +log-margin-h()
-        +log-leading-space(4em)
-        +log-trailing-space(4em)
-        +padding(60px 50px)
-        border: 1px solid get-color('white', .1)
-
-      &[data-slicetype^='language-']
-        +log-padding-h()
 
     p
       +log-paragraph-space()
@@ -108,6 +95,10 @@
       +font('m', null, 'n')
       +size(100% auto)
 
+      span.line-numbers-rows
+        margin-top: -3px
+        opacity: .3
+
       code
         +font('m', null, 'n')
 
@@ -116,31 +107,45 @@
       +log-leading-space(4em)
       +log-trailing-space(4em)
 
-    .MathJax
-      +padding(4px)
-      +display('(block)')
-      background: get-color('very-dark-grey')
-      border-radius: 4px
-
-      span
-        color: get-color('white')
-
     .MathJax_SVG svg *,
     .MathJax_SVG_Display svg *
       fill: get-color('white')
 
-    .MathJax_Display
-      +margin(20px 0)
-
-      .MathJax
-        +padding(20px)
-        +size(100% null)
-        +overflow(scroll)
-        text-align: center
-        word-wrap: normal
-        box-sizing: border-box
-        display: block
-
   +name('footer')
-    +size(100% 100px)
+    +display('box>')
+    +margin(-1px null null null)
+    +padding(50px 0)
+    +size(100% auto)
+    background: get-color('black')
+
+    +buttons()
+      +space-between(30px, '>')
+
+  +name('related')
+    +display('boxv', top center)
+    +padding(100px 0)
+    +size(100% auto)
+    background: get-color('black', .95)
+
+  .tags
+    +display('box>')
+    +margin(0 0 50px 0)
+
+  .grid
+    +display('grid>1@85%/270px|30px')
+    +max-size(350px none)
+
+    +screen('>%s', 650px)
+      +display('grid>2@100%/270px|30px')
+      +max-size(650px none)
+
+    +screen('>%s', 900px)
+      +display('grid>3@100%/270px|30px')
+      +max-size(900px none)
+
+    +element('log-entry')
+      background: get-color('very-dark-grey')
+
+      +state('hover')
+        background: get-color('black')
 

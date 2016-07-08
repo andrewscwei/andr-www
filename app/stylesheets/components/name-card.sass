@@ -61,16 +61,16 @@
       svg
         @keyframes dot-pulse
           0%
-            transform: scale(1)
+            opacity: 1
           50%
-            transform: scale(1.2)
+            opacity: 0
           100%
-            transform: scale(1)
+            opacity: 1
 
         .dot-1
-          +animation(dot-pulse, 1s, ease-out, 0s, infinite)
+          +animation(dot-pulse, 7s, ease-out, 0s, infinite)
         .dot-6
-          +animation(dot-pulse, 1.6s, ease-out, .6s, infinite)
+          +animation(dot-pulse, 5s, ease-out, .6s, infinite)
         .dot-8
           +animation(dot-pulse, 3s, ease-out, .8s, infinite)
         .dot-11

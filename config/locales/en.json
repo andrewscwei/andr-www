@@ -10,5 +10,7 @@
 	"first-name": "Andrew",
 	"log": "log",
 	"next": "next",
-	"prev": "prev"
+	"prev": "prev",
+	"related": "related",
+	"logs": "logs"
 }

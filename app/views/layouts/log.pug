@@ -2,6 +2,7 @@
 
 extends /layouts/page
 include /includes/button
+include /includes/log-entry
 
 append vars
   -
@@ -34,4 +35,16 @@ block page
                 +button({ label: tag, href: `/logs/${tag}/` }).tag
       div(name='contents')
         != markdown || body
-        div(name='footer')
+      div(name='footer')
+        if previous
+        +button({ iconClass: 'prev', label: __('prev'), href: previous && previous.path })(style=!previous && 'visibility:hidden').prev.post
+        +button({ iconClass: 'up' })(name='top-button').arrow
+        +button({ iconClass: 'next', label: __('next'), href: next && next.path })(style=!next && 'visibility:hidden').next.post
+      if related
+        div(name='related')
+          div.tags(name='tags')
+            +button({ label: __('related') })(disabled=true).tag
+          div.grid
+            each entry in related
+              +log-entry(entry)(name='entry')
+
