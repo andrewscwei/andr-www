@@ -2,15 +2,11 @@
 
 const $ = require('../config');
 const _ = require('lodash');
-const marked = require('./marked-helpers');
+const marked = require('marked');
 const moment = require('moment');
-const Marked = require('marked');
 const Prismic = require('prismic.io').Prismic;
 
-Marked.setOptions({
-  renderer: marked.renderer,
-  highlight: marked.highlight
-});
+marked.setOptions({ langPrefix: 'language-' });
 
 /**
  * Gets the Prismic API.
@@ -82,7 +78,7 @@ exports.reduce = function(docs, relative) {
       switch (v.type) {
         case 'StructuredText':
           let ret = docs.getStructuredText(k).asText();
-          if ((k === 'markdown') || (k === `${docs.type}.markdown`)) ret = Marked(ret);
+          if ((k === 'markdown') || (k === `${docs.type}.markdown`)) ret = marked(ret);
           return ret;
         case 'Image':
           return docs.getImage(k).url;

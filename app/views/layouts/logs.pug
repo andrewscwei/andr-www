@@ -18,7 +18,7 @@ block page
     div#inner-page
       if tag
         div.tags(name='tags')
-          +button({ label: tag, href: `/logs/${tag}/`})(disabled=true).tag
+          +button({ label: tag, href: `/logs/tag/${tag}/`})(disabled=true).tag
           +button({ iconClass: 'cancel', href: `/logs/` }).cancel
 
       if pagination && pagination.files && pagination.files.length

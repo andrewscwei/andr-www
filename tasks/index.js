@@ -4,6 +4,7 @@
  *       changes and serve the app in the dev server.
  */
 
+const $ = require('../config');
 const gulp = require('gulp-sys-metalprismic');
 const task = require('../helpers/task-helpers');
 const view = require('../helpers/view-helpers');
@@ -18,7 +19,7 @@ gulp.init({
   views: {
     i18n: view.i18n(),
     metadata: view.metadata(),
-    collections: view.documents(),
+    collections: $.documents,
     mathjax: true,
     prism: {
       lineNumbers: true
@@ -28,7 +29,8 @@ gulp.init({
       max: 3,
       text: (doc) => (doc.markdown)
     },
-    tags: view.tags(),
+    tags: $.tags,
+    sitemap: { hostname: $.url },
     watch: { files: [task.config('**/*')] }
   }
 });

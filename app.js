@@ -57,7 +57,7 @@ app.use(cookieParser());
 app.use(methodOverride());
 
 // Set up Prismic previews if enabled.
-if (process.env.PRISMIC_PREVIEWS_ENABLED) app.use('/', require(task.config('routes/prismic')));
+if (process.env.PRISMIC_PREVIEWS_ENABLED) app.use('/', require(task.config('routes')));
 
 // Serve static files and add expire headers.
 app.use(express.static(task.dest(), {
