@@ -13,6 +13,7 @@ class Home extends Page {
     if (this.isDirty(enums.DirtyType.STATE)) {
       const playground = this.getChild('playground');
       if (playground) playground.paused = (this.state !== 'active');
+      this.locked = this.state !== 'active';
     }
 
     super.update();
@@ -40,9 +41,7 @@ class Home extends Page {
 
       this.timeline = new TimelineLite();
       this.timeline.add(TweenLite.to(this, .8, { z: -600, opacity: .1, ease: 'Expo.easeOut' }));
-      this.timeline.add(() => {
-        if (done) done();
-      });
+      this.timeline.add(() => { if (done) done(); });
     }
     else {
       if (done) done();

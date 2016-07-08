@@ -1,20 +1,20 @@
 //- (c) Andrew Wei
 
 extends /layouts/page
-include /includes/button
 include /includes/log-entry
+include /includes/nav-button
 
 append vars
   - title = 'Logs'
   -
     nav = {
-      home: '/',
-      left: pagination.previous && pagination.previous.path,
-      right: pagination.next && pagination.next.path
+      home: '/'
     }
 
 block page
   div(is='page-logs' name='page')
+    +nav-button('right', pagination.next && pagination.next.path)
+    +nav-button('left', pagination.previous && pagination.previous.path)
     div#inner-page
       if tag
         div.tags(name='tags')
