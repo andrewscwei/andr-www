@@ -183,17 +183,13 @@ class Playground extends ui.Element(HTMLCanvasElement) {
     this.destroyWall();
 
     const rect = utils.getViewportRect();
-    const map = { x: Math.ceil(rect.width/CUBE_SIZE), y: Math.ceil(rect.height/CUBE_SIZE) };
 
-    for (let x = 0; x < map.x; x++) {
-      for (let y = 0; y < map.y; y++) {
-        let cube = this.generateCylinder();
-        cube.position.x = (CUBE_SIZE * 2 * x) + (CUBE_GAP * x) - rect.width/2;
-        cube.position.y = (CUBE_SIZE * 2* y) + (CUBE_GAP * y) - rect.height/2;
-        cube.position.z = 0;
-        this.grid.add(cube);
-      }
-    }
+    let cube = this.generateCylinder();
+    cube.position.x = (CUBE_SIZE * 2 * 0) + (CUBE_GAP * 0);
+    cube.position.y = (CUBE_SIZE * 2* 0) + (CUBE_GAP * 0);
+    cube.position.z = 0;
+    cube.rotation.x = Math.PI/2;
+    this.grid.add(cube);
   }
 
   destroyWall() {
