@@ -21,7 +21,7 @@ deployment:
       - git add -fA
       - git commit -m "CircleCI build"
       - "[[ ! -s \"$(git rev-parse --git-dir)/shallow\" ]] || git fetch --unshallow"
-      - git push -f git@heroku.com:verb-studio-stage.git ${CIRCLE_BRANCH}:master
+      - git push -f git@heroku.com:andr-mu.git ${CIRCLE_BRANCH}:master
   release:
     tag: /^v(\d+\.)?(\d+\.)?(\*|\d+)$/
     commands:
