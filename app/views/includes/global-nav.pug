@@ -13,5 +13,5 @@ mixin global-nav($nav)
       +button({ href: $nav.grid })(name='grid-button').logs
         +grid-icon()
     if $nav.logs
-      +button({ href: $nav.logs.href })(name='logs-button').logs
+      +button({ href: $nav.logs })(name='logs-button').logs
         +grid-icon()

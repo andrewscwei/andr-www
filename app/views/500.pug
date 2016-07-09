@@ -3,7 +3,16 @@
 extends /layouts/page
 
 append vars
-  - title = `500 Internal Error`
+  -
+    title = `500`;
+    nav = {
+      home: '/',
+      logs: '/logs/'
+    }
 
 block page
-  h1= __('500')
+  div(is='page-base' name='page')
+    +nav-button('down', '/logs/')
+    +nav-button('up', '/')
+    h1= __('500')
+    p= __('500-message')
