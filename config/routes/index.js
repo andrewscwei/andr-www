@@ -74,6 +74,10 @@ router.get('/preview', (req, res, next) => {
   }
 });
 
+router.get('/logs', (req, res, next) => {
+  next();
+});
+
 router.get('/', (req, res, next) => {
   res.render('index');
 });
