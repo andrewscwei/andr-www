@@ -10,7 +10,7 @@ class Home extends Page {
 
   /** @inheritdoc */
   update() {
-    if (this.isDirty(enums.DirtyType.STATE)) {
+    if (this.isDirty(enums.DirtyType.STATE|enums.DirtyType.INPUT)) {
       const playground = this.getChild('playground');
       if (playground) playground.paused = (this.state !== 'active');
       this.locked = this.state !== 'active';
