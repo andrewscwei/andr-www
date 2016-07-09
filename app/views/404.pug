@@ -1,9 +1,19 @@
 //- (c) Andrew Wei
 
 extends /layouts/page
+include /includes/nav-button
 
 append vars
-  - title = `404 Not Found`
+  -
+    title = `404`;
+    nav = {
+      home: '/',
+      logs: '/logs/'
+    }
 
 block page
-  h1= __('404')
+  div(is='page-base' name='page')
+    +nav-button('down', '/logs/')
+    +nav-button('up', '/')
+    h1= __('404')
+    p= __('404-message')

@@ -5,7 +5,7 @@ import Hammer from 'hammerjs';
 
 class Page extends ui.Element() {
   /** @inheritdoc */
-  static get tag() { return 'page'; }
+  static get tag() { return 'page-base'; }
 
   /** @inheritdoc */
   static get extends() { return 'div'; }
@@ -75,7 +75,7 @@ class Page extends ui.Element() {
   /** @inheritdoc */
   destroy() {
     this.hammer.off('swipe');
-    this.timeline.kill();
+    if (this.timeline) this.timeline.kill();
     super.destroy();
   }
 
