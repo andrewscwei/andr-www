@@ -57,7 +57,7 @@ router.get('/preview', (req, res, next) => {
 
 router.get('/:collection', (req, res, next) => {
   const collection = req.params['collection'];
-  const docType = _.endsWith(collection, 's') && collection.substr(0, collection.length-1) || collection;
+  const docType = pluralize(collection, 1);
   const config = $.documents[docType];
 
   if (config) {
@@ -77,7 +77,7 @@ router.get('/:collection/:page', (req, res, next) => {
   }
   else {
     const collection = req.params['collection'];
-    const docType = _.endsWith(collection, 's') && collection.substr(0, collection.length-1) || collection;
+    const docType = pluralize(collection, 1);
     const pagination = view.pagination(collection, res.locals.data[docType], page);
 
     if (!pagination) {
@@ -112,8 +112,10 @@ router.get('/:collection/:uid', (req, res, next) => {
 });
 
 router.get('*', (req, res, next) => {
-  let path = `${req.path.split('/').join('/')}/index`;
+  let path = `${req.path.split('/').join('/')}`;
   while (_.startsWith(path, '/')) path = path.substr(1);
+  if (_.endsWith(path, '/')) path = path.substr(0, path.length-1);
+  if (path === '') path = 'index';
 
   res.render(path, {}, (err, html) => {
     if (err) {
