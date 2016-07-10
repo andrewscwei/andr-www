@@ -1,6 +1,6 @@
 {
   "name": "andr.mu",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "private": true,
   "license": "MIT",
   "engines": {
@@ -22,9 +22,9 @@
     "dev": "NODE_ENV=development npm run build -- --watch --serve",
     "stage": "NODE_ENV=staging npm run build -- --serve",
     "prod": "NODE_ENV=production npm run build -- --serve",
-    "dev:server": "PRISMIC_PREVIEWS_ENABLED=true NODE_ENV=development npm run build && nodemon --ext js,json,pug app",
-    "stage:server": "PRISMIC_PREVIEWS_ENABLED=true NODE_ENV=staging npm run build && node app",
-    "prod:server": "PRISMIC_PREVIEWS_ENABLED=true NODE_ENV=production npm run build && node app"
+    "dev:server": "export PRISMIC_PREVIEWS_ENABLED=true && NODE_ENV=development npm run build && nodemon --ext js,json,pug app",
+    "stage:server": "export PRISMIC_PREVIEWS_ENABLED=true && NODE_ENV=staging npm run build && node app",
+    "prod:server": "export PRISMIC_PREVIEWS_ENABLED=true && NODE_ENV=production npm run build && node app"
   },
   "dependencies": {
     "body-parser": "^1.15.2",
