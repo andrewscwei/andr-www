@@ -65,7 +65,7 @@ exports.reduce = function(docs, relative) {
         let n = collection.length;
 
         collection.forEach((doc, i) => {
-          doc.prev = (i > 0) ? collection[i-1] : undefined;
+          doc.previous = (i > 0) ? collection[i-1] : undefined;
           doc.next = (i < (n - 1)) ? collection[i+1] : undefined;
         });
       }

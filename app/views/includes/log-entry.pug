@@ -1,7 +1,7 @@
 //- (c) Andrew Wei
 
 mixin log-entry($entry)
-  a(type='button' is='log-entry' href=$entry.path)&attributes(attributes)
+  a(type='button' is='log-entry' href=p($entry.path))&attributes(attributes)
     div.wrapper
       h2.title= $entry.title
       span.date(type='label')= m($entry.date).format('MMM DD YY')

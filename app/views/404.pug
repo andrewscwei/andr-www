@@ -16,4 +16,4 @@ block page
     +nav-button('down', '/logs/')
     +nav-button('up', '/')
     h1= __('404')
-    p= __('404-message')
+    p= message || __('404-message')

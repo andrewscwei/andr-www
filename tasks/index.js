@@ -16,7 +16,7 @@ gulp.init({
     entry: { application: 'application.js' },
     resolve: { root: [task.config('data')] }
   },
-  views: {
+  views: process.env.PRISMIC_PREVIEWS_ENABLED ? false : {
     i18n: view.i18n(),
     metadata: view.metadata(),
     collections: $.documents,
