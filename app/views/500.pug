@@ -15,4 +15,4 @@ block page
     +nav-button('down', '/logs/')
     +nav-button('up', '/')
     h1= __('500')
-    p= __('500-message')
+    p= message || __('500-message')

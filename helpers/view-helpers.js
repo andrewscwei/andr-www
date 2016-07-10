@@ -58,11 +58,55 @@ exports.documentPath = function(doc, options) {
       ret = ret.replace(`:${key}`, val);
     }
 
-    return ret;
+    return exports.path(ret);
   }
 
   return null;
-}
+};
+
+/**
+ * Gets the pagination metadata arguments provided.
+ *
+ * @param {string} collectionName
+ * @param {Object} collection
+ * @param {number} currentPage
+ *
+ * @return {Object}
+ */
+exports.pagination = function(collectionName, collection, currentPage) {
+  if (!collection.length) return undefined;
+
+  const config = $.documents[collection[0].type];
+  const perPage = _.get(config, 'paginate.perPage');
+
+  if (!config || isNaN(perPage)) return undefined;
+
+  const chunks = _.chunk(collection, perPage);
+  const pages = [];
+
+  for (let i = 0; i < chunks.length; i++) {
+    pages.push({
+      path: (i === 0) ? `/${collectionName}/` : `/${collectionName}/${i+1}/`
+    });
+  }
+
+  if (chunks.length >= currentPage) {
+    return {
+      files: chunks[currentPage-1],
+      index: currentPage - 1,
+      num: currentPage,
+      pages: pages,
+      next: (chunks.length > currentPage) && {
+        path: `/${collectionName}/${currentPage+1}/`
+      },
+      previous: (currentPage > 1) && {
+        path: ((currentPage - 1) === 1) ? `/${collectionName}/` : `/${collectionName}/${currentPage-1}/`
+      }
+    };
+  }
+
+  return undefined;
+};
 
 /**
  * Gets the metadata (local variables) for views.
@@ -79,7 +123,7 @@ exports.metadata = function() {
     m: moment,
     p: exports.path
   };
-}
+};
 
 /**
  * Gets the i18n configuration settings.
@@ -93,4 +137,4 @@ exports.i18n = function() {
     directory: task.config('locales'),
     objectNotation: true
   };
-}
+};

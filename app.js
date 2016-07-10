@@ -24,7 +24,6 @@ const app = express();
 app.set('port', process.env.PORT || 3000);
 app.set('views', task.views());
 app.set('view engine', 'pug');
-app.locals.basedir = task.views();
 
 // Localization setup.
 // @see {@link https://www.npmjs.com/package/i18n}
@@ -56,9 +55,6 @@ app.use(cookieParser());
 // @see {@link https://www.npmjs.com/package/method-override}
 app.use(methodOverride());
 
-// Set up Prismic previews if enabled.
-if (process.env.PRISMIC_PREVIEWS_ENABLED) app.use('/', require(task.config('routes')));
-
 // Serve static files and add expire headers.
 app.use(express.static(task.dest(), {
   setHeaders: function(res, path) {
@@ -69,6 +65,9 @@ app.use(express.static(task.dest(), {
     res.setHeader('Cache-Control', `max-age=${duration / 1000}`);
   }
 }));
+
+// Set up Prismic previews if enabled.
+if (process.env.PRISMIC_PREVIEWS_ENABLED) app.use('/', require(task.config('routes')));
 
 // Handle 404 error.
 app.use(function(req, res, next) {

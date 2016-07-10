@@ -25,3 +25,7 @@ block page
         div.grid
           each entry in pagination.files
             +log-entry(entry)(name='entry')
+      else if data.log
+        div.grid
+          each entry in data.log
+            +log-entry(entry)(name='entry')
