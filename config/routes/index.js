@@ -31,7 +31,7 @@ router.use('/', (req, res, next) => {
       _.merge(res.locals.data, docs);
       next();
     })
-    .catch(err => res.status(500).render('500', { message: err.message }));
+    .catch(err => next());
 });
 
 router.get('/preview', (req, res, next) => {
