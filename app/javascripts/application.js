@@ -10,7 +10,7 @@ import requiem, { dom, enums } from 'requiem';
 import WebFont from 'webfontloader';
 
 // Register all components.
-const req = require.context('./', true, /^((?!application).)*.js$/);
+const req = require.context('./', true, /^((?!Playground)(?!application).)*.js$/);
 req.keys().forEach((path) => requiem(req(path).default));
 
 pm.locales = $.locales;
