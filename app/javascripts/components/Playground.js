@@ -6,8 +6,8 @@ import THREE from 'three';
 import { enums, ui, utils } from 'requiem';
 import TCC from 'three-camera-controller';
 
-const CUBE_SIZE = 100;
-const CUBE_GAP = 0;
+const MESH_RADIUS = 100;
+const MESH_GAP = MESH_RADIUS * ((35 - 20.2) / 5.3);
 
 class Playground extends ui.Element(HTMLCanvasElement) {
   /** @inheritdoc */
@@ -41,7 +41,7 @@ class Playground extends ui.Element(HTMLCanvasElement) {
   get renderer() {
     if (this.__private__.renderer) return this.__private__.renderer;
     this.__private__.renderer = new THREE.WebGLRenderer({ canvas: this, antialias: true });
-    this.__private__.renderer.setClearColor(0x000000, 1);
+    this.__private__.renderer.setClearColor(0x1a1a1a, 1);
     this.__private__.renderer.setPixelRatio(window.devicePixelRatio);
     this.__private__.renderer.sortObjects = false;
     return this.__private__.renderer;
@@ -56,7 +56,7 @@ class Playground extends ui.Element(HTMLCanvasElement) {
 
   get hemisphereLight() {
     if (this.__private__.hemisphereLight) return this.__private__.hemisphereLight;
-    const color = _.random(0, 0x111111);
+    const color = _.random(0, 0xff0);
     this.__private__.hemisphereLight = new THREE.HemisphereLight(color, color, 1);
     this.__private__.hemisphereLight.castShadow = false;
     return this.__private__.hemisphereLight;
@@ -64,7 +64,7 @@ class Playground extends ui.Element(HTMLCanvasElement) {
 
   get cubeGeometry() {
     if (this.__private__.cubeGeometry) return this.__private__.cubeGeometry;
-    this.__private__.cubeGeometry = new THREE.CylinderGeometry(CUBE_SIZE, CUBE_SIZE, CUBE_SIZE, 32);
+    this.__private__.cubeGeometry = new THREE.CylinderGeometry(MESH_RADIUS, MESH_RADIUS, MESH_RADIUS, 32);
     return this.__private__.cubeGeometry;
   }
 
@@ -121,6 +121,13 @@ class Playground extends ui.Element(HTMLCanvasElement) {
     this.scene.add(this.hemisphereLight);
 
     this.controls = new TCC(this.camera);
+    this.camera.position.x = -123.244;
+    this.camera.position.y = -622.637;
+    this.camera.position.z = 290.245;
+    this.camera.rotation.x = 1.117;
+    this.camera.rotation.y = 0.244;
+    this.camera.rotation.z = 0.076;
+
 
     super.init();
   }
@@ -153,43 +160,35 @@ class Playground extends ui.Element(HTMLCanvasElement) {
       }
     }
 
-    if (this.isDirty(enums.DirtyType.DATA))
-      if (this.activeCube) this.pulse(this.activeCube);
-
     super.update();
-  }
-
-  pulse(indexOrCube) {
-    if (indexOrCube === undefined) {
-      const color = _.random(0, 0x111111);
-      this.hemisphereLight.color.setHex(color);
-      this.hemisphereLight.groundColor.setHex(color);
-      this.grid.children.forEach(cube => this.pulse(cube));
-    }
-    else if (!isNaN(indexOrCube)) {
-      this.pulse(this.grid.children[indexOrCube]);
-    }
-    else {
-      let cube = indexOrCube;
-      cube.tl.kill();
-      cube.tl.clear();
-      cube.tl.add(TweenLite.to(cube.position, _.random(0, .5, true), { z: _.random(0, 100), ease: 'Expo.easeOut', delay: _.random(0, .5, true) }));
-      cube.tl.add(TweenLite.to(cube.position, _.random(0, .5, true), { z: 0, ease: 'Expo.easeOut' }));
-      cube.tl.play();
-    }
   }
 
   createWall() {
     this.destroyWall();
 
     const rect = utils.getViewportRect();
+    const positions = [
+      new THREE.Vector2(-2, 1),
+      new THREE.Vector2(-2, 0),
+      new THREE.Vector2(-2, -1),
+      new THREE.Vector2(-1, -1),
+      new THREE.Vector2(0, -1),
+      new THREE.Vector2(0, 0),
+      new THREE.Vector2(0, 1),
+      new THREE.Vector2(1, 1),
+      new THREE.Vector2(2, 1),
+      new THREE.Vector2(2, 0),
+      new THREE.Vector2(2, -1)
+    ];
 
-    let cube = this.generateCylinder();
-    cube.position.x = (CUBE_SIZE * 2 * 0) + (CUBE_GAP * 0);
-    cube.position.y = (CUBE_SIZE * 2* 0) + (CUBE_GAP * 0);
-    cube.position.z = 0;
-    cube.rotation.x = Math.PI/2;
-    this.grid.add(cube);
+    for (let i = 0, pos; pos=positions[i++];) {
+      let cube = this.generateCylinder();
+      cube.position.x = pos.x * MESH_GAP;
+      cube.position.y = pos.y * MESH_GAP;
+      cube.position.z = 0;
+      cube.rotation.x = Math.PI/2;
+      this.grid.add(cube);
+    }
   }
 
   destroyWall() {

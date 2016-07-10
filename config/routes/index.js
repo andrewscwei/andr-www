@@ -119,7 +119,6 @@ router.get('*', (req, res, next) => {
       res.render('404', { message: err });
     }
     else {
-      console.log(typeof html);
       res.send(html);
     }
   });
