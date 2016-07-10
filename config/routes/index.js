@@ -7,6 +7,7 @@ const _ = require('lodash');
 const log = require('debug')('app');
 const moment = require('moment');
 const path = require('path');
+const pluralize = require('pluralize');
 const prismic = require('../../helpers/prismic-helpers');
 const router = require('express').Router();
 const view = require('../../helpers/view-helpers');
@@ -91,7 +92,7 @@ router.get('/:collection/:page', (req, res, next) => {
 
 router.get('/:collection/:uid', (req, res, next) => {
   const collection = req.params['collection'];
-  const docType = _.endsWith(collection, 's') && collection.substr(0, collection.length-1) || collection;
+  const docType = pluralize(collection, 1);
   const uid = req.params['uid'];
   const data = _.find(_.get(res.locals.data, `${docType}`), o => (o.uid === uid));
 
