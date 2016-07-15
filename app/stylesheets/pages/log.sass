@@ -32,10 +32,13 @@
   #inner-page
     +min-size(100%)
     +size(100% auto)
+    transform: translate3d(0, 0, 0)
 
   +name('header')
     +display('boxv')
     +size(100% 100vh)
+    transform: translate3d(0, 0, 0)
+
     +name('info')
       +max-size(450px none)
       +padding(10%)
@@ -72,8 +75,6 @@
     background: get-color('black')
     opacity: 0
     transform: translate3d(0, 100px, 0)
-
-
 
     p
       +log-paragraph-space()
@@ -118,6 +119,7 @@
     +padding(60px 0)
     +size(100% auto)
     background: get-color('black')
+    transform: translate3d(0, 0, 0)
 
     +buttons()
       +space-between(30px, '>')
@@ -127,6 +129,7 @@
     +padding(100px 0)
     +size(100% auto)
     background: get-color('black', .95)
+    transform: translate3d(0, 0, 0)
 
   .tags
     +display('box>')
