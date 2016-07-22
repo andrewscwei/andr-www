@@ -1,6 +1,6 @@
 {
   "name": "andr.mu",
-  "version": "0.6.1",
+  "version": "0.7.0",
   "private": true,
   "license": "MIT",
   "engines": {
@@ -46,10 +46,10 @@
     "serve-favicon": "^2.3.0"
   },
   "devDependencies": {
-    "async": "^2.0.0",
+    "async": "^2.0.1",
     "chalk": "^1.1.3",
     "gsap": "^1.18.5",
-    "gulp-sys-metalprismic": "^3.0.4",
+    "gulp-sys-metalprismic": "^4.0.0",
     "hammerjs": "^2.0.8",
     "mathjax-node": "^0.5.1",
     "minuet": "^0.12.1",
