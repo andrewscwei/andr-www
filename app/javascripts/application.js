@@ -7,7 +7,6 @@ import $ from '../../config';
 import _ from 'lodash';
 import pm from 'page-manager';
 import requiem, { dom, enums } from 'requiem';
-import WebFont from 'webfontloader';
 
 // Register all components.
 const req = require.context('./', true, /^((?!Playground)(?!application).)*.js$/);
@@ -57,11 +56,19 @@ pm.transition('out', '*', (next) => {
 
 // Begin routing after all requirements are defined.
 if ($.webFont) {
-  WebFont.load(_.merge($.webFont, {
-    classes: false,
-    active: pm.startRouting,
-    inactive: pm.startRouting
-  }));
+  if ($.webFont.typekit) {
+    try {
+      Typekit.load({
+        async: true,
+        classes: false,
+        active: pm.startRouting,
+        inactive: pm.startRouting
+      });
+    }
+    catch (err) {
+      pm.startRouting();
+    }
+  }
 }
 else {
   pm.startRouting();

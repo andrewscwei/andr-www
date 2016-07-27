@@ -52,6 +52,9 @@ html
       script.
         window.prismic = { endpoint: '#{env.PRISMIC_API_ENDPOINT}' };
       script(type='text/javascript' src='//static.cdn.prismic.io/prismic.min.js')
+    if (_.get($, 'webFont'))
+      if ($.webFont.typekit)
+        script(src=`https://use.typekit.net/${$.webFont.typekit.id}.js`)
     script(src=p('/assets/javascripts/common.js'))
 
   body
