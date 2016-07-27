@@ -1,6 +1,6 @@
 {
   "name": "andr.mu",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "private": true,
   "license": "MIT",
   "engines": {
@@ -34,7 +34,7 @@
     "express": "^4.14.0",
     "fs-extra": "^0.30.0",
     "i18n": "^0.8.3",
-    "lodash": "^4.13.1",
+    "lodash": "^4.14.0",
     "marked": "^0.3.5",
     "method-override": "^2.3.6",
     "moment": "^2.14.1",
@@ -48,13 +48,13 @@
   "devDependencies": {
     "async": "^2.0.1",
     "chalk": "^1.1.3",
-    "gsap": "^1.18.5",
+    "gsap": "1.18.5",
     "gulp-sys-metalprismic": "^4.0.0",
     "hammerjs": "^2.0.8",
     "mathjax-node": "^0.5.1",
-    "minuet": "^0.12.1",
+    "minuet": "^0.13.0",
     "mocha": "^2.5.3",
-    "nodemon": "^1.9.2",
+    "nodemon": "^1.10.0",
     "page-manager": "^1.2.0",
     "prismjs": "^1.5.1",
     "requiem": "^0.53.3",
@@ -62,7 +62,6 @@
     "supertest": "^1.2.0",
     "three": "^0.79.0",
     "three-camera-controller": "^0.2.1",
-    "webcomponents.js": "^0.7.22",
-    "webfontloader": "^1.6.26"
+    "webcomponents.js": "^0.7.22"
   }
 }
