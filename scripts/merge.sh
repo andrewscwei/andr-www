@@ -23,4 +23,6 @@ else
     git merge $1
     git push
   fi
+
+  git checkout $1
 fi
