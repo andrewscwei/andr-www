@@ -2,9 +2,10 @@
 
 set -e
 
-if [ "$1" != "development" && "$1" != "staging" && "$1" != "master"]; then
-  echo -e "Unknown branch to merge: $1"
+if [ "$1" != "development" ] && [ "$1" != "staging" ] && [ "$1" != "master" ]; then
+  echo "\x1b[0;31mERROR: \x1b[0mUnknown branch to merge: \x1b[0;36m$1\x1b[0m"
 else
+  echo "Merging changes from \x1b[0;36m$1\x1b[0m to all branches..."
   if [ "$1" != "development" ]; then
     git checkout development
     git merge $1
