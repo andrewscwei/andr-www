@@ -1,0 +1,16 @@
+node_modules
+bower_components
+include
+lib
+logs/*
+vendor
+public
+!.keep
+package
+*.tgz
+npm-debug.log
+dump.rdb
+.DS_STORE
+.tmp
+.prismic
+.ruby-version
