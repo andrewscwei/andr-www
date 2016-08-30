@@ -30,7 +30,9 @@ gulp.init({
       text: (doc) => (doc.markdown)
     },
     tags: $.tags,
-    sitemap: { hostname: $.url },
     watch: { files: [task.config('**/*')] }
+  },
+  sitemap: {
+    siteUrl: $.url
   }
 });

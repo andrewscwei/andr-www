@@ -2,9 +2,10 @@
 
 import 'gsap';
 import _ from 'lodash';
-import THREE from 'three';
 import { enums, ui, utils } from 'requiem';
 import TCC from 'three-camera-controller';
+
+window.THREE = require('three');
 
 const MESH_RADIUS = 100;
 const MESH_GAP = MESH_RADIUS * ((35 - 20.2) / 5.3);
