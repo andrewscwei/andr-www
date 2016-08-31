@@ -41,6 +41,7 @@ describe('app', function() {
         res.forEach((v, i) => {
           let p = v.replace(/("|')/g, '');
           if (_.startsWith(p, '=')) p = p.substr(1);
+          if (_.isEmpty(path.extname(p)) && !_.endsWith(p, '/')) p = `${p}/`;
           if (!_.startsWith(p, '//') && !_.startsWith(p, 'http')) paths.push(p);
         });
       })
