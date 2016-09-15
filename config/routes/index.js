@@ -5,31 +5,28 @@
 const $ = require('../../config');
 const _ = require('lodash');
 const log = require('debug')('app');
-const moment = require('moment');
 const path = require('path');
 const pluralize = require('pluralize');
-const prismic = require('../../helpers/prismic-helpers');
+const prismic = require('gulp-sys-metalprismic/helpers/prismic-helpers');
 const router = require('express').Router();
-const view = require('../../helpers/view-helpers');
+const view = require('gulp-sys-metalprismic/helpers/view-helpers');
 
 router.use('/', (req, res, next) => {
-  _.merge(res.locals, view.metadata());
-
   prismic
     .getAPI(process.env.PRISMIC_API_ENDPOINT, { accessToken: process.env.PRISMIC_ACCESS_TOKEN })
     .then(api => {
       const ref = req.cookies[prismic.previewCookie] || api.master();
-      const orderings = _.flatMap($.documents, (val, key) => (`my.${key}.${val.sortBy}${val.reverse ? ' desc' : ''}`));
+      const orderings = _.flatMap($.collections, (val, key) => (`my.${key}.${val.sortBy}${val.reverse ? ' desc' : ''}`));
       res.locals.ctx = { api: api, ref: ref };
       return prismic.getEverything(api, ref, '', orderings);
     })
     .then(response => {
-      const docs = prismic.reduce(response.results, true);
+      const docs = prismic.reduce(response.results, true, $);
       for (let docType in docs) {
-        const c = _.get($, `documents.${docType}`);
-        if (c && c.collection) docs[docType].forEach(doc => doc.path = view.documentPath(doc, $.documents));
+        const c = _.get($, `collections.${docType}`);
+        if (c && c.permalink) docs[docType].forEach(doc => doc.path = view.getDocumentPath(doc, $.collections));
       }
-      _.merge(res.locals.data, docs);
+      _.merge(req.app.locals.data, docs);
       next();
     })
     .catch(err => next());
@@ -44,7 +41,7 @@ router.get('/preview', (req, res, next) => {
   }
   else {
     ctx.api
-      .previewSession(previewToken, (doc) => (view.documentPath(doc, $.documents) || '/'), '/')
+      .previewSession(previewToken, (doc) => (view.getDocumentPath(doc, $.collections) || '/'), '/')
       .then(url => {
         res.cookie(prismic.previewCookie, previewToken, { maxAge: 60 * 30, path: '/', httpOnly: false });
         res.redirect(url);
@@ -58,10 +55,10 @@ router.get('/preview', (req, res, next) => {
 router.get('/:collection', (req, res, next) => {
   const collection = req.params['collection'];
   const docType = pluralize(collection, 1);
-  const config = $.documents[docType];
+  const config = $.collections[docType];
 
   if (config) {
-    res.locals.pagination = view.pagination(collection, res.locals.data[docType], 1);
+    res.locals.pagination = view.getPaginationData(collection, req.app.locals.data[docType], 1, $.collections);
     res.render(`layouts/${collection}`);
   }
   else {
@@ -78,7 +75,7 @@ router.get('/:collection/:page', (req, res, next) => {
   else {
     const collection = req.params['collection'];
     const docType = pluralize(collection, 1);
-    const pagination = view.pagination(collection, res.locals.data[docType], page);
+    const pagination = view.getPaginationData(collection, req.app.locals.data[docType], page, $.collections);
 
     if (!pagination) {
       next();
@@ -94,7 +91,7 @@ router.get('/:collection/:uid', (req, res, next) => {
   const collection = req.params['collection'];
   const docType = pluralize(collection, 1);
   const uid = req.params['uid'];
-  const data = _.find(_.get(res.locals.data, `${docType}`), o => (o.uid === uid));
+  const data = _.find(_.get(req.app.locals.data, `${docType}`), o => (o.uid === uid));
 
   if (data) {
     res.render(`layouts/${docType}`, data, (err, html) => {
@@ -125,6 +122,10 @@ router.get('*', (req, res, next) => {
       res.send(html);
     }
   });
+});
+
+router.use((req, res, next) => {
+  res.status(404).render('404');
 });
 
 module.exports = router;
