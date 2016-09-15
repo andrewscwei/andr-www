@@ -1,6 +1,6 @@
 {
   "name": "andr.mu",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "private": true,
   "license": "MIT",
   "engines": {
@@ -16,8 +16,8 @@
   "scripts": {
     "start": "node app",
     "test": "mocha tests --recursive --reporter spec",
-    "clean": "gulp clean --gulpfile tasks/index.js",
-    "build": "gulp --gulpfile tasks/index.js",
+    "clean": "gulp clean --gulpfile config/tasks/index.js",
+    "build": "gulp --gulpfile config/tasks/index.js",
     "dev": "NODE_ENV=development npm run build -- --watch --serve",
     "prod": "NODE_ENV=production npm run build -- --serve",
     "dev:server": "export PRISMIC_PREVIEWS_ENABLED=true && NODE_ENV=development npm run build && nodemon --ext js,json,pug app"
