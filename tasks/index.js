@@ -6,20 +6,30 @@
 
 const $ = require('../config');
 const gulp = require('gulp-sys-metalprismic');
-const task = require('../helpers/task-helpers');
-const view = require('../helpers/view-helpers');
+const path = require('path');
+
+const baseDir = path.join(__dirname, '../');
 
 gulp.init({
-  base: task.src(),
-  dest: task.dest(),
+  base: path.join(baseDir, $.sourceDir),
+  dest: path.join(baseDir, $.buildDir),
   scripts: {
     entry: { application: 'application.js' },
-    resolve: { root: [task.config('data')] }
+    resolve: { root: [path.join(baseDir, $.configDir, 'data')] }
   },
   views: process.env.PRISMIC_PREVIEWS_ENABLED ? false : {
-    i18n: view.i18n(),
-    metadata: view.metadata(),
-    collections: $.documents,
+    i18n: {
+      locales: $.locales || ['en'],
+      directory: path.join(baseDir, $.configDir, 'locales')
+    },
+    metadata: {
+      _: require('lodash'),
+      $: $,
+      data: require('require-dir')(path.join(baseDir, $.configDir, 'data'), { recurse: true }),
+      env: process.env,
+      m: require('moment')
+    },
+    collections: $.collections,
     mathjax: true,
     prism: {
       lineNumbers: true
@@ -30,7 +40,7 @@ gulp.init({
       text: (doc) => (doc.markdown)
     },
     tags: $.tags,
-    watch: { files: [task.config('**/*')] }
+    watch: { files: [path.join(baseDir, $.configDir, '**/*')] }
   },
   sitemap: {
     siteUrl: $.url

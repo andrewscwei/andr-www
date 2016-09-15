@@ -1,6 +1,6 @@
 {
   "name": "andr.mu",
-  "version": "1.1.1",
+  "version": "2.0.0",
   "private": true,
   "license": "MIT",
   "engines": {
@@ -9,22 +9,18 @@
   "files": [
     "app/views",
     "config",
-    "helpers",
     "logs",
     "public",
     "app.js"
-  ],
+],
   "scripts": {
     "start": "node app",
     "test": "mocha tests --recursive --reporter spec",
     "clean": "gulp clean --gulpfile tasks/index.js",
     "build": "gulp --gulpfile tasks/index.js",
     "dev": "NODE_ENV=development npm run build -- --watch --serve",
-    "stage": "NODE_ENV=staging npm run build -- --serve",
     "prod": "NODE_ENV=production npm run build -- --serve",
-    "dev:server": "export PRISMIC_PREVIEWS_ENABLED=true && NODE_ENV=development npm run build && nodemon --ext js,json,pug app",
-    "stage:server": "export PRISMIC_PREVIEWS_ENABLED=true && NODE_ENV=staging npm run build && node app",
-    "prod:server": "export PRISMIC_PREVIEWS_ENABLED=true && NODE_ENV=production npm run build && node app"
+    "dev:server": "export PRISMIC_PREVIEWS_ENABLED=true && NODE_ENV=development npm run build && nodemon --ext js,json,pug app"
   },
   "dependencies": {
     "body-parser": "^1.15.2",
@@ -35,12 +31,10 @@
     "fs-extra": "^0.30.0",
     "i18n": "^0.8.3",
     "lodash": "^4.15.0",
-    "marked": "^0.3.6",
     "method-override": "^2.3.6",
-    "moment": "^2.14.1",
+    "moment": "^2.15.0",
     "morgan": "^1.7.0",
     "pluralize": "^3.0.0",
-    "prismic.io": "^3.1.3",
     "pug": "^2.0.0-beta6",
     "require-dir": "^0.3.0",
     "serve-favicon": "^2.3.0"
@@ -49,7 +43,7 @@
     "async": "^2.0.1",
     "chalk": "^1.1.3",
     "gsap": "1.18.5",
-    "gulp-sys-metalprismic": "^4.1.2",
+    "gulp-sys-metalprismic": "^5.0.3",
     "hammerjs": "^2.0.8",
     "mathjax-node": "^0.5.1",
     "minuet": "^0.13.0",

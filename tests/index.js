@@ -2,6 +2,7 @@
 
 'use strict';
 
+const $ = require('../config');
 const _ = require('lodash');
 const async = require('async');
 const browserSync = require('browser-sync');
@@ -9,7 +10,8 @@ const chalk = require('chalk');
 const fs = require('fs-extra');
 const path = require('path');
 const request = require('supertest');
-const task = require('../helpers/task-helpers');
+
+const baseDir = path.join(__dirname, '../');
 
 describe('app', function() {
   let app;
@@ -19,7 +21,7 @@ describe('app', function() {
     browserSync.reset();
 
     app = browserSync.init({
-      server: { baseDir: task.dest() },
+      server: { baseDir: path.join(baseDir, $.buildDir) },
       open: false,
       logLevel: 'silent'
     }, done).instance;
@@ -34,7 +36,7 @@ describe('app', function() {
     let error;
 
     fs
-      .walk(task.dest())
+      .walk(path.join(baseDir, $.buildDir))
       .on('data', function(item) {
         if (item.stats.isDirectory() || !_.endsWith(item.path, '.html')) return;
         let res = fs.readFileSync(item.path, 'utf-8').match(/=["|']((\/)([a-zA-Z0-9\-\_\/\.]+))["|']/g);

@@ -15,14 +15,12 @@
       "id": "tof7bnk"
     }
   },
-  "documents": {
+  "collections": {
     "identity": {
       "sortBy": "title",
-      "reverse": false,
-      "permalink": "/"
+      "reverse": false
     },
     "log": {
-      "collection": true,
       "sortBy": "date",
       "reverse": true,
       "permalink": "logs/:uid/",
