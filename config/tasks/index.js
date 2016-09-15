@@ -4,11 +4,11 @@
  *       changes and serve the app in the dev server.
  */
 
-const $ = require('../config');
+const $ = require('../');
 const gulp = require('gulp-sys-metalprismic');
 const path = require('path');
 
-const baseDir = path.join(__dirname, '../');
+const baseDir = path.join(__dirname, '../../');
 
 gulp.init({
   base: path.join(baseDir, $.sourceDir),
