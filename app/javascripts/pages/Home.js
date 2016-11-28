@@ -40,7 +40,7 @@ class Home extends Page {
       dom.setState(nameCard, 'active');
 
       this.timeline = new TimelineLite();
-      this.timeline.add(TweenLite.to(this, .8, { z: -600, opacity: .1, ease: 'Expo.easeOut' }));
+      this.timeline.add(TweenLite.to(this, .8, { z: -600, opacity: .3, ease: 'Expo.easeOut' }));
       this.timeline.add(() => { if (done) done(); });
     }
     else {
