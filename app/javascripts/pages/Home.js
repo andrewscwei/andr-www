@@ -1,4 +1,4 @@
-// (c) Andrew Wei
+// © Andrew Wei
 
 import { dom, enums } from 'requiem';
 import Page from './Page';

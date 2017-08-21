@@ -1,4 +1,4 @@
-// (c) Andrew Wei
+// © Andrew Wei
 
 import 'gsap';
 import _ from 'lodash';

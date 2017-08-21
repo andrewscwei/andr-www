@@ -1,4 +1,4 @@
-// (c) Andrew Wei
+// © Andrew Wei
 /**
  * @file Default task - builds the entire app with the option to watch for
  *       changes and serve the app in the dev server.
@@ -14,8 +14,23 @@ gulp.init({
   base: path.join(baseDir, $.sourceDir),
   dest: path.join(baseDir, $.buildDir),
   scripts: {
-    entry: { application: 'application.js' },
-    resolve: { root: [path.join(baseDir, $.configDir, 'data')] }
+    entry: { 
+      application: 'application.js' 
+    },
+    module: {
+      rules: [{
+        test: /\.pug/,
+        loader: `pug-loader?root=${path.join(baseDir, $.viewsDir)}`
+      }]
+    },
+    resolve: {
+      extensions: ['.pug'],
+      modules: [
+        path.join(baseDir, $.configDir, 'data'),
+        path.join(baseDir, $.viewsDir, 'includes'),
+        path.join(baseDir, 'node_modules')
+      ] 
+    }
   },
   views: process.env.PRISMIC_PREVIEWS_ENABLED ? false : {
     i18n: {

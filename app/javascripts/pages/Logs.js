@@ -1,4 +1,4 @@
-// (c) Andrew Wei
+// © Andrew Wei
 
 import { dom, ui } from 'requiem';
 import Page from './Page';

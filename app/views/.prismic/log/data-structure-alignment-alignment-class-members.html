@@ -1,0 +1,12 @@
+---
+title: 'Data Structure Alignment: Alignment Class Members'
+cover: 'https://andr-mu.cdn.prismic.io/andr-mu/3e41668398da27f76f40d3494bb35944bb1c3546_data-structure-alignment-cover.jpg'
+markdown: "<p>Suppose there are two C++ classes, A and B, with the following structures in a 64-bit system:</p>\n<pre><code class=\"language-cpp\">class A\n{\npublic:\n    bool b1;\n    double x1;\n    bool b2;\n    double x2;\n};\n\nclass B\n{\npublic:\n    double x1;\n    double x2;\n    bool b1;\n    bool b2;\n};\n</code></pre>\n<p>Their members are identical, except their order of declaration is different. So what’s the deal here? If you do a <code>sizeof()</code> for both classes, class <code>A</code> will have a size of 32 (bytes) and class <code>B</code> will have a size of 24 (bytes). This is due to the compiler performing type/class alignment as it reads/writes these members to computer memory. The compiler will attempt to do this in chunks of the computer’s word size, i.e. in a 64-bit system that would be 8 bytes, whereas in a 32-bit system that would be 4 bytes. During this process the compiler will insert byte paddings in between members so they can fit in word chunks. This is what the classes look like after the compiler is done (again, this example refers to a 64-bit system where the word size is 8 bytes):</p>\n<pre><code class=\"language-cpp\">class A\n{\npublic:\n    bool b1;            // this is 1 byte\n    char padding1[7];   // since the next member is a double (8 bytes), compiler will add 7 bytes to fill the gap and fit the previous bool in a word chunk\n    double x1;\n    bool b2;\n    char padding2[7];   // same as above\n    double x2;\n};\n\nclass B\n{\npublic:\n    double x1;\n    double x2;\n    bool b1;\n    bool b2;\n    char padding2[6];   // adding 6 bytes to fill the gap\n};\n</code></pre>\n<p>In conclusion, the rule of thumb is to always order members from largest to smallest and group same types together. For more info about data structure alignment, visit this Wikipedia article: <a href=\"http://en.wikipedia.org/wiki/Data_structure_alignment\">Data Structure Alignment</a>.</p>\n"
+date: '2014-03-23'
+id: V22qsCUAAGMSR9BR
+uid: data-structure-alignment-alignment-class-members
+type: log
+tags:
+    - coding
+    - c++
+---
