@@ -1,4 +1,4 @@
-// (c) Andrew Wei
+// © Andrew Wei
 
 import { dom, enums, ui } from 'requiem';
 import Hammer from 'hammerjs';

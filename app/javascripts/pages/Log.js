@@ -1,4 +1,4 @@
-// (c) Andrew Wei
+// © Andrew Wei
 
 import _ from 'lodash';
 import { dom, enums, utils } from 'requiem';

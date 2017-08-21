@@ -1,4 +1,4 @@
-//- (c) Andrew Wei
+//- © Andrew Wei
 
 extends /layouts/page
 include /includes/button
@@ -32,7 +32,7 @@ block page
           if tags && tags.length
             div(name='tags')
               each tag in tags
-                +button({ label: tag, href: `/logs/tag/${tag}/` }).tag
+                +button({ label: tag.name, href: `/logs/tag/${tag.slug}/` }).tag.slug
       div(name='contents')
         != markdown || body
       div(name='footer')

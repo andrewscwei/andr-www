@@ -1,4 +1,4 @@
-// (c) Andrew Wei
+// © Andrew Wei
 
 'use strict';
 
@@ -8,6 +8,7 @@ const async = require('async');
 const browserSync = require('browser-sync');
 const chalk = require('chalk');
 const fs = require('fs-extra');
+const klaw = require('klaw');
 const path = require('path');
 const request = require('supertest');
 
@@ -35,8 +36,7 @@ describe('app', function() {
     let paths = [];
     let error;
 
-    fs
-      .walk(path.join(baseDir, $.buildDir))
+    klaw(path.join(baseDir, $.buildDir))
       .on('data', function(item) {
         if (item.stats.isDirectory() || !_.endsWith(item.path, '.html')) return;
         let res = fs.readFileSync(item.path, 'utf-8').match(/=["|']((\/)([a-zA-Z0-9\-\_\/\.]+))["|']/g);
