@@ -1,6 +1,6 @@
 {
   "name": "andr-www",
-  "version": "2.0.1",
+  "version": "2.1.0",
   "private": true,
   "license": "MIT",
   "files": [
@@ -11,13 +11,12 @@
     "app.js"
   ],
   "scripts": {
-    "start": "node app",
+    "start": "[ \"$NODE_ENV\" = \"development\" ] && nodemon --verbose --watch app.js --watch config --ext js,json,pug --debug app || node app",
     "test": "mocha tests --recursive --reporter spec",
     "clean": "gulp clean --gulpfile config/tasks/index.js",
     "build": "gulp --gulpfile config/tasks/index.js",
     "dev": "NODE_ENV=development npm run build -- --watch --serve",
-    "prod": "NODE_ENV=production npm run build -- --serve",
-    "dev:server": "export PRISMIC_PREVIEWS_ENABLED=true && NODE_ENV=development npm run build && nodemon --ext js,json,pug app"
+    "prod": "NODE_ENV=production npm run build -- --serve"
   },
   "dependencies": {
     "body-parser": "^1.15.2",
@@ -40,11 +39,10 @@
     "async": "^2.0.1",
     "chalk": "^1.1.3",
     "gsap": "1.18.5",
-    "gulp-sys-metalprismic": "^5.0.3",
+    "gulp-sys-metalprismic": "^5.6.0",
     "hammerjs": "^2.0.8",
     "jstransformer-pug": "^0.2.3",
     "klaw": "^2.1.0",
-    "mathjax-node": "^0.5.1",
     "minuet": "^0.13.0",
     "mocha": "^3.0.2",
     "nodemon": "^1.10.2",

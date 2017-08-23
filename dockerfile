@@ -1,14 +1,32 @@
-FROM node:6.1.0
+FROM node:8.4.0
 
 # Install NPM dependencies
-COPY package.json /src/package.json
-WORKDIR /src
-RUN npm install
+COPY package.json /var/andr-www/
+COPY yarn.lock /var/andr-www/
+WORKDIR /var/andr-www
+RUN yarn global add node-gyp
+RUN yarn
 
 # Clone source files
-COPY . /src
+ADD app.js /var/andr-www/
+ADD app /var/andr-www/app
+ADD config /var/andr-www/config
+ADD tests /var/andr-www/tests
+
+# Set environment
+ARG NODE_ENV=production
+ARG GOOGLE_ANALYTICS_ID
+ARG PRISMIC_PREVIEWS_ENABLED
+ARG PRISMIC_API_ENDPOINT
+ARG PRISMIC_ACCESS_TOKEN
+ENV NODE_ENV=$NODE_ENV
+ENV GOOGLE_ANALYTICS_ID=$GOOGLE_ANALYTICS_ID
+ENV PRISMIC_PREVIEWS_ENABLED=$PRISMIC_PREVIEWS_ENABLED
+ENV PRISMIC_API_ENDPOINT=$PRISMIC_API_ENDPOINT
+ENV PRISMIC_ACCESS_TOKEN=$PRISMIC_ACCESS_TOKEN
+
+# Build static files
+RUN yarn run build
 
 # Run
-CMD ["npm", "run", "dev"]
-
-EXPOSE 3000
+CMD yarn start

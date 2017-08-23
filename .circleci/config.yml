@@ -1,0 +1,50 @@
+version: 2
+jobs:
+  build:
+    working_directory: ~/repo
+    docker:
+      - image: node:8.4.0
+    steps:
+      - checkout
+      - restore_cache:
+          keys: 
+            - dependency-cache-{{ checksum "package.json" }}
+            - dependency-cache-
+      - run:
+          name: Install NPM dependencies
+          command: yarn
+      - save_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+          paths:
+            - "node_modules"
+      - run: 
+          name: Build
+          command: npm run build
+      - deploy:
+          name: Deploy to Heroku
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "development" ]; then
+              npm pack
+              tar -xzf *.tgz
+              find . -maxdepth 1 ! -name '.' ! -name '..' ! -name 'package' ! -name '.git' ! -name '.gitignore' -exec rm -rf {} \;
+              mv package/* .
+              rm -R package/
+              sed -i -e '/public/d' .gitignore
+              git config user.name "circleci"
+              git config user.email "circleci@circleci.com"
+              git add -fA
+              git commit -m "CircleCI build"
+              "[[ ! -s \"$(git rev-parse --git-dir)/shallow\" ]] || git fetch --unshallow"
+              git push -f git@heroku.com:andr-www.git ${CIRCLE_BRANCH}:master
+            else
+              echo "Skipping because this is not the development branch"
+            fi
+      - deploy:
+          name: Deploy to GitHub pages
+          command: |
+            if [[ $(git describe --tags) =~ ^v[0-9]+(\.[0-9]+)+(-rc[0-9]+)?(-alpha[0-9]+)?$ ]]; then
+              chmod +x ./scripts/release.sh
+              ./scripts/release.sh
+            else
+              echo "Skipping because this is not a release"
+            fi
