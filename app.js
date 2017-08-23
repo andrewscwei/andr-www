@@ -13,8 +13,8 @@ const fs = require('fs-extra');
 const http = require('http');
 const i18n = require('i18n');
 const log = require('debug')('app');
-const logger = require('morgan');
 const methodOverride = require('method-override');
+const morgan = require('morgan');
 const path = require('path');
 const view = require('gulp-sys-metalprismic/helpers/view-helpers');
 
@@ -54,7 +54,8 @@ app.use(compress());
 
 // HTTP request logger setup.
 // @see {@link https://www.npmjs.com/package/morgan}
-app.use(logger('combined', { stream: fs.createWriteStream(__dirname + '/logs/access.log', { flags: 'a' }) }));
+try { fs.mkdirSync(__dirname + '/logs'); } catch (err) {}
+app.use(morgan('combined', { stream: fs.createWriteStream(__dirname + '/logs/access.log', { flags: 'a' }) }));
 
 // Form body parsing setup.
 // @see {@link https://www.npmjs.com/package/body-parser}
