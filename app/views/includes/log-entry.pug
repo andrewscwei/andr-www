@@ -1,8 +1,16 @@
 //- © Andrew Wei
 
 mixin log-entry($entry)
+  -
+    function getIdx(log) {
+      const l = collections.log.length;
+      for (let i = 0; i < l; i++) {
+        if (collections.log[i].id === log.id) return l-i-1;
+      }
+      return -1;
+    }
   a(type='button' is='log-entry' href=p($entry.path))&attributes(attributes)
     div.wrapper
       h2.title= $entry.title
       span.date(type='label')= m($entry.date).format('MMM DD YY')
-
+      span.number(type='label')= getIdx($entry)
