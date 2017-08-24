@@ -5,11 +5,11 @@ include /includes/log-entry
 include /includes/nav-button
 
 append vars
-  - title = 'Logs'
+  - title = 'Logs';
   -
     nav = {
       home: '/'
-    }
+    };
 
 block page
   div(is='page-logs' name='page')
@@ -20,12 +20,11 @@ block page
         div.tags(name='tags')
           +button({ label: tag, href: `/logs/tag/${tag}/`})(disabled=true).tag
           +button({ iconClass: 'cancel', href: `/logs/` }).cancel
-
       if pagination && pagination.files && pagination.files.length
         div.grid
-          each entry in pagination.files
+          each entry, index in pagination.files
             +log-entry(entry)(name='entry')
       else if data.log
         div.grid
-          each entry in data.log
+          each entry, index in data.log
             +log-entry(entry)(name='entry')
