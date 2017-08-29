@@ -19,6 +19,7 @@ jobs:
             echo "export PACKAGE_FILE=$PACKAGE_NAME-$PACKAGE_VERSION.zip" >> .env
             echo "export PUBLIC_DIR=${PUBLIC_DIR:-public}" >> .env
             echo "export GIT_ORIGIN_URL=`git config --get remote.origin.url`" >> .env
+            echo "export IS_RELEASE=`[[ $(git describe --tags) =~ ^v[0-9]+(\.[0-9]+)+(-rc[0-9]+)?(-alpha[0-9]+)?$ ]] && echo true || echo false" >> .env
       - restore_cache:
           keys: 
             - dependency-cache-{{ checksum "package.json" }}
@@ -48,7 +49,7 @@ jobs:
           command: |
             source .env
 
-            if [ "${CIRCLE_BRANCH}" == "development" ] && [ "${AUTO_DEPLOY_DEV}" == "true" ]; then
+            if [ "${CIRCLE_BRANCH}" == "development" ]; then
               npm pack
               tar -xzf *.tgz
               find . -maxdepth 1 ! -name '.' ! -name '..' ! -name 'package' ! -name '.git' ! -name '.gitignore' -exec rm -rf {} \;
@@ -69,7 +70,7 @@ jobs:
           command: |
             source .env
 
-            if [[ $(git describe --tags) =~ ^v[0-9]+(\.[0-9]+)+(-rc[0-9]+)?(-alpha[0-9]+)?$ ]]; then
+            if [ "${IS_RELEASE}" == "false" ]; then
               # Publish docs to gh-pages branch.
               echo "Publishing to gh-pages branch..."
 
@@ -102,7 +103,7 @@ jobs:
           command: |
             source .env
 
-            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+            if [ "${CIRCLE_BRANCH}" == "master" ] && [ "${IS_RELEASE}" == "true" ]; then
               NETLIFY_API=https://api.netlify.com/api/v1
               SITE_ID=""
 
@@ -148,5 +149,5 @@ jobs:
                 echo $SITE_URL
               fi
             else
-              echo "Skipping deploy — set AUTO_DEPLOY to \"true\" to enable this feature"
+              echo "Skipping deploy — publish a release with tag format \"v1.0.0\" to enable this feature"
             fi
