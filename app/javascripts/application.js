@@ -8,7 +8,6 @@ import _ from 'lodash';
 import pm from 'page-manager';
 import requiem, { dom, enums } from 'requiem';
 
-console.log('Hello, world!');
 // Register all components.
 const req = require.context('./', true, /^((?!Playground)(?!application).)*.js$/);
 req.keys().forEach((path) => requiem(req(path).default));

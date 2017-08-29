@@ -135,7 +135,7 @@ jobs:
                 git commit -m "[Skip CI] Adding generated .netlify file"
                 git push -f $GIT_ORIGIN_URL
 
-                echo "\nDone! Your site URL is:"
+                echo -e "\nDone! Your site URL is:"
                 echo $SITE_URL
               else
                 echo "Deploying to site ${SITE_ID}..."
@@ -144,7 +144,7 @@ jobs:
                 SITE_URL=$(echo $RESULT | jq -r ".url")
 
                 echo $RESULT
-                echo "\nDone! Your site URL is:"
+                echo -e "\nDone! Your site URL is:"
                 echo $SITE_URL
               fi
             else
