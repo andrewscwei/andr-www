@@ -6,13 +6,26 @@ jobs:
       - image: node:8.4.0
     steps:
       - checkout
+      - run:
+          name: Install APT packages
+          command: |
+            apt-get update -y
+            apt-get install jq zip -y
+      - run:
+          name: Export global environment variables
+          command: |
+            echo "export PACKAGE_NAME=$(cat package.json | jq -r ".name")" >> .env
+            echo "export PACKAGE_VERSION=$(cat package.json | jq -r ".version")" >> .env
+            echo "export PACKAGE_FILE=$PACKAGE_NAME-$PACKAGE_VERSION.zip" >> .env
+            echo "export PUBLIC_DIR=${PUBLIC_DIR:-public}" >> .env
+            echo "export GIT_ORIGIN_URL=`git config --get remote.origin.url`" >> .env
       - restore_cache:
           keys: 
             - dependency-cache-{{ checksum "package.json" }}
             - dependency-cache-
       - run:
           name: Install NPM dependencies
-          command: yarn
+          command: yarn --pure-lockfile
       - save_cache:
           key: dependency-cache-{{ checksum "package.json" }}
           paths:
@@ -20,10 +33,18 @@ jobs:
       - run: 
           name: Build
           command: npm run build
+      - run:
+          name: Pack
+          command: |
+            source .env
+            mkdir -p build
+            zip -r build/$PACKAGE_FILE $PUBLIC_DIR
       - deploy:
           name: Deploy to Heroku
           command: |
-            if [ "${CIRCLE_BRANCH}" == "development" ]; then
+            source .env
+
+            if [ "${CIRCLE_BRANCH}" == "development" ] && [ "${AUTO_DEPLOY_DEV}" == "true" ]; then
               npm pack
               tar -xzf *.tgz
               find . -maxdepth 1 ! -name '.' ! -name '..' ! -name 'package' ! -name '.git' ! -name '.gitignore' -exec rm -rf {} \;
@@ -37,14 +58,86 @@ jobs:
               "[[ ! -s \"$(git rev-parse --git-dir)/shallow\" ]] || git fetch --unshallow"
               git push -f git@heroku.com:andr-www.git ${CIRCLE_BRANCH}:master
             else
-              echo "Skipping because this is not the development branch"
+              echo "Skipping because this is not the development branch or AUTO_DEPLOY_DEV is not set to \"true\""
             fi
       - deploy:
           name: Deploy to GitHub pages
           command: |
             if [[ $(git describe --tags) =~ ^v[0-9]+(\.[0-9]+)+(-rc[0-9]+)?(-alpha[0-9]+)?$ ]]; then
-              chmod +x ./scripts/release.sh
-              ./scripts/release.sh
+              # Publish docs to gh-pages branch.
+              echo "Publishing to gh-pages branch..."
+
+              if [ `git branch | grep gh-pages` ]
+              then
+                git branch -D gh-pages
+              fi
+              git checkout -b gh-pages
+
+              # Move public to root and delete everything else.
+              find . -maxdepth 1 ! -name '.' ! -name '..' ! -name 'public' ! -name '.git' ! -name '.gitignore' -exec rm -rf {} \;
+              mv public/* .
+              rm -R public/
+
+              # Push to gh-pages.
+              git config user.name "$CIRCLE_PROJECT_USERNAME"
+              git config user.email "$GITHUB_EMAIL"
+              git add -fA
+              git commit --allow-empty -m "$(git log -1 --pretty=%B) [ci skip]"
+              git push -f $GIT_ORIGIN_URL gh-pages
+
+              echo "Done"
+
+              exit 0
             else
               echo "Skipping because this is not a release"
+            fi
+      - deploy:
+          name: Deploy to Netlify
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+              NETLIFY_API=https://api.netlify.com/api/v1
+              NETLIFY_KEY=cf0c12eb0726b8ce44159b1947bde2363c915427a85594fd264abd10f5561e08
+
+              SITE_ID=""
+
+              if [ -f ./.netlify ]; then
+                SITE_ID=$(cat .netlify)
+                echo "Site ID is $SITE_ID"
+                RESULT=$(curl -H "User-Agent: $CIRCLE_PROJECT_USERNAME ($GITHUB_EMAIL)" $NETLIFY_API/sites/$SITE_ID?access_token=$NETLIFY_KEY)
+                echo $RESULT
+                RESPONSE_CODE=$(echo $RESULT | jq -r ".code")
+
+                # Site not found.
+                if [[ $RESPONSE_CODE == "404" ]]; then
+                  SITE_ID=""
+                fi
+              fi
+
+              if [[ $SITE_ID == "" ]]; then
+                echo "No .netlify file detected or site is not found, creating a new site on Netlify..."
+
+                RESULT=$(curl -H "Content-Type: application/zip" -H "Authorization: Bearer $NETLIFY_KEY" --data-binary "@build/$PACKAGE_FILE" $NETLIFY_API/sites)
+                SITE_ID=$(echo $RESULT | jq -r ".id")
+                SITE_NAME=$(echo $RESULT | jq -r ".subdomain")
+                SITE_URL=https://$SITE_NAME.netlify.com
+
+                echo "$SITE_ID" > .netlify
+
+                git config user.name "$CIRCLE_PROJECT_USERNAME"
+                git config user.email "$GITHUB_EMAIL"
+                git add ./.netlify
+                git commit -m "[skip ci] Adding generated .netlify file"
+                git push -f $GIT_ORIGIN_URL
+
+                echo "Done! Your site URL is $SITE_URL"
+              else
+                echo "Deploying to site ${SITE_ID}..."
+
+                RESULT=$(curl -H "Content-Type: application/zip" -H "Authorization: Bearer $NETLIFY_KEY" --data-binary "@build/$PACKAGE_FILE" $NETLIFY_API/sites/$SITE_ID/deploys)
+
+                SITE_URL=$(echo $RESULT | jq -r ".url")
+                echo "Done! Your site URL is $SITE_URL"
+              fi
+            else
+              echo "Skipping deploy — set AUTO_DEPLOY to \"true\" to enable this feature"
             fi
