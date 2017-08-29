@@ -67,6 +67,8 @@ jobs:
       - deploy:
           name: Deploy to GitHub pages
           command: |
+            source .env
+            
             if [[ $(git describe --tags) =~ ^v[0-9]+(\.[0-9]+)+(-rc[0-9]+)?(-alpha[0-9]+)?$ ]]; then
               # Publish docs to gh-pages branch.
               echo "Publishing to gh-pages branch..."
@@ -86,7 +88,7 @@ jobs:
               git config user.name "$CIRCLE_PROJECT_USERNAME"
               git config user.email "$GITHUB_EMAIL"
               git add -fA
-              git commit --allow-empty -m "$(git log -1 --pretty=%B) [ci skip]"
+              git commit --allow-empty -m "[Skip CI] $(git log -1 --pretty=%B)"
               git push -f $GIT_ORIGIN_URL gh-pages
 
               echo "Done"
@@ -98,13 +100,15 @@ jobs:
       - deploy:
           name: Deploy to Netlify
           command: |
+            source .env
+
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
               NETLIFY_API=https://api.netlify.com/api/v1
               SITE_ID=""
 
               if [ -f ./.netlify ]; then
                 SITE_ID=$(cat .netlify)
-                echo "Site ID is $SITE_ID"
+                echo "Existing site ID ($SITE_ID) found in repo, verifying that site exists..."
                 RESULT=$(curl -H "User-Agent: $CIRCLE_PROJECT_USERNAME ($GITHUB_EMAIL)" $NETLIFY_API/sites/$SITE_ID?access_token=$NETLIFY_KEY)
                 echo $RESULT
                 RESPONSE_CODE=$(echo $RESULT | jq -r ".code")
@@ -128,17 +132,20 @@ jobs:
                 git config user.name "$CIRCLE_PROJECT_USERNAME"
                 git config user.email "$GITHUB_EMAIL"
                 git add ./.netlify
-                git commit -m "[skip ci] Adding generated .netlify file"
+                git commit -m "[Skip CI] Adding generated .netlify file"
                 git push -f $GIT_ORIGIN_URL
 
-                echo "Done! Your site URL is $SITE_URL"
+                echo "Done! Your site URL is:"
+                echo $SITE_URL
               else
                 echo "Deploying to site ${SITE_ID}..."
 
                 RESULT=$(curl -H "Content-Type: application/zip" -H "Authorization: Bearer $NETLIFY_KEY" --data-binary "@build/$PACKAGE_FILE" $NETLIFY_API/sites/$SITE_ID/deploys)
-
                 SITE_URL=$(echo $RESULT | jq -r ".url")
-                echo "Done! Your site URL is $SITE_URL"
+
+                echo $RESULT
+                echo "Done! Your site URL is:"
+                echo $SITE_URL
               fi
             else
               echo "Skipping deploy — set AUTO_DEPLOY to \"true\" to enable this feature"
