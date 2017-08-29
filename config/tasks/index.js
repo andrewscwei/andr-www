@@ -13,6 +13,9 @@ const baseDir = path.join(__dirname, '../../');
 gulp.init({
   base: path.join(baseDir, $.sourceDir),
   dest: path.join(baseDir, $.buildDir),
+  rev: {
+    prefix: 'foo'
+  },
   scripts: {
     entry: { 
       application: 'application.js' 
