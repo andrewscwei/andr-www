@@ -45,61 +45,7 @@ jobs:
       - store_artifacts:
           path: ~/repo/build
       - deploy:
-          name: Deploy to Heroku
-          command: |
-            source .env
-
-            if [ "${CIRCLE_BRANCH}" == "development" ]; then
-              npm pack
-              tar -xzf *.tgz
-              find . -maxdepth 1 ! -name '.' ! -name '..' ! -name 'package' ! -name '.git' ! -name '.gitignore' -exec rm -rf {} \;
-              mv package/* .
-              rm -R package/
-              sed -i -e '/public/d' .gitignore
-              git config user.name "circleci"
-              git config user.email "circleci@circleci.com"
-              git add -fA
-              git commit -m "CircleCI build"
-              "[[ ! -s \"$(git rev-parse --git-dir)/shallow\" ]] || git fetch --unshallow"
-              git push -f git@heroku.com:andr-www.git ${CIRCLE_BRANCH}:master
-            else
-              echo "Skipping because this is not the development branch or AUTO_DEPLOY_DEV is not set to \"true\""
-            fi
-      - deploy:
-          name: Deploy to GitHub pages
-          command: |
-            source .env
-
-            if [ "${IS_RELEASE}" == "false" ]; then
-              # Publish docs to gh-pages branch.
-              echo "Publishing to gh-pages branch..."
-
-              if [ `git branch | grep gh-pages` ]
-              then
-                git branch -D gh-pages
-              fi
-              git checkout -b gh-pages
-
-              # Move public to root and delete everything else.
-              find . -maxdepth 1 ! -name '.' ! -name '..' ! -name 'public' ! -name '.git' ! -name '.gitignore' -exec rm -rf {} \;
-              mv public/* .
-              rm -R public/
-
-              # Push to gh-pages.
-              git config user.name "$CIRCLE_PROJECT_USERNAME"
-              git config user.email "$GITHUB_EMAIL"
-              git add -fA
-              git commit --allow-empty -m "[Skip CI] $(git log -1 --pretty=%B)"
-              git push -f $GIT_ORIGIN_URL gh-pages
-
-              echo "Done"
-
-              exit 0
-            else
-              echo "Skipping because this is not a release"
-            fi
-      - deploy:
-          name: Deploy to Netlify
+          name: Deploy to production environment
           command: |
             source .env
 
@@ -150,4 +96,52 @@ jobs:
               fi
             else
               echo "Skipping deploy — publish a release with tag format \"v1.0.0\" to enable this feature"
+            fi
+      - deploy:
+          name: Deploy to staging environment
+          command: |
+            source .env
+
+            if [ "${CIRCLE_BRANCH}" == "development" ]; then
+              if [ "${STAGING_TARGET}" == "heroku" ]; then
+                npm pack
+                tar -xzf *.tgz
+                find . -maxdepth 1 ! -name '.' ! -name '..' ! -name 'package' ! -name '.git' ! -name '.gitignore' -exec rm -rf {} \;
+                mv package/* .
+                rm -R package/
+                sed -i -e '/public/d' .gitignore
+                git config user.name "circleci"
+                git config user.email "circleci@circleci.com"
+                git add -fA
+                git commit -m "CircleCI build"
+                "[[ ! -s \"$(git rev-parse --git-dir)/shallow\" ]] || git fetch --unshallow"
+                git push -f git@heroku.com:andr-www.git ${CIRCLE_BRANCH}:master
+
+                echo -e "\nSuccessfuly deployed to Heroku"
+              else
+                # Publish docs to gh-pages branch.
+                echo "Publishing to gh-pages branch..."
+
+                if [ `git branch | grep gh-pages` ]
+                then
+                  git branch -D gh-pages
+                fi
+                git checkout -b gh-pages
+
+                # Move public to root and delete everything else.
+                find . -maxdepth 1 ! -name '.' ! -name '..' ! -name 'public' ! -name '.git' ! -name '.gitignore' -exec rm -rf {} \;
+                mv public/* .
+                rm -R public/
+
+                # Push to gh-pages.
+                git config user.name "$CIRCLE_PROJECT_USERNAME"
+                git config user.email "$GITHUB_EMAIL"
+                git add -fA
+                git commit --allow-empty -m "[Skip CI] $(git log -1 --pretty=%B)"
+                git push -f $GIT_ORIGIN_URL gh-pages
+
+                echo -e "\nSuccessfuly deployed to GitHub pages"
+              fi 
+            else
+              echo "Skipping because this is not the staging branch"
             fi
