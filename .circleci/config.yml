@@ -68,7 +68,7 @@ jobs:
           name: Deploy to GitHub pages
           command: |
             source .env
-            
+
             if [[ $(git describe --tags) =~ ^v[0-9]+(\.[0-9]+)+(-rc[0-9]+)?(-alpha[0-9]+)?$ ]]; then
               # Publish docs to gh-pages branch.
               echo "Publishing to gh-pages branch..."
@@ -135,7 +135,7 @@ jobs:
                 git commit -m "[Skip CI] Adding generated .netlify file"
                 git push -f $GIT_ORIGIN_URL
 
-                echo "Done! Your site URL is:"
+                echo "\nDone! Your site URL is:"
                 echo $SITE_URL
               else
                 echo "Deploying to site ${SITE_ID}..."
@@ -144,7 +144,7 @@ jobs:
                 SITE_URL=$(echo $RESULT | jq -r ".url")
 
                 echo $RESULT
-                echo "Done! Your site URL is:"
+                echo "\nDone! Your site URL is:"
                 echo $SITE_URL
               fi
             else
