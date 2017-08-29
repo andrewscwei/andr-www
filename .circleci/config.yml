@@ -39,6 +39,10 @@ jobs:
             source .env
             mkdir -p build
             zip -r build/$PACKAGE_FILE $PUBLIC_DIR
+      - store_artifacts:
+          path: ~/repo/public
+      - store_artifacts:
+          path: ~/repo/build
       - deploy:
           name: Deploy to Heroku
           command: |
@@ -96,8 +100,6 @@ jobs:
           command: |
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
               NETLIFY_API=https://api.netlify.com/api/v1
-              NETLIFY_KEY=cf0c12eb0726b8ce44159b1947bde2363c915427a85594fd264abd10f5561e08
-
               SITE_ID=""
 
               if [ -f ./.netlify ]; then
