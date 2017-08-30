@@ -38,6 +38,7 @@ jobs:
           command: |
             source .env
             if [ "${CIRCLE_BRANCH}" == "development" ] && [ "${STAGE_TARGET}" == "" ]; then
+              echo "FOOOOOOOO"
               PUBLIC_PATH=/$PACKAGE_NAME/ npm run build
             else
               npm run build
