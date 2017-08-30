@@ -127,6 +127,8 @@ jobs:
                 sed -i -e '/public/d' .gitignore
 
                 # Commit and push to Heroku master.
+                git config user.name "$CIRCLE_PROJECT_USERNAME"
+                git config user.email "$CIRCLE_PROJECT_USERNAME@users.noreply.github.com"
                 git add -fA
                 git commit --allow-empty -m "[Skip CI] $(git log -1 --pretty=%B)"
                 git push -f heroku master
