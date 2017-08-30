@@ -64,7 +64,7 @@ jobs:
               if [ -f ./.netlify ]; then
                 SITE_ID=$(cat .netlify)
                 echo "Existing site ID ($SITE_ID) found in repo, verifying that site exists..."
-                RESULT=$(curl -H "User-Agent: $CIRCLE_PROJECT_USERNAME ($GITHUB_EMAIL)" $NETLIFY_API/sites/$SITE_ID?access_token=$NETLIFY_KEY)
+                RESULT=$(curl -H "User-Agent: $CIRCLE_PROJECT_USERNAME ($CIRCLE_PROJECT_USERNAME@users.noreply.github.com)" $NETLIFY_API/sites/$SITE_ID?access_token=$NETLIFY_KEY)
                 echo $RESULT
                 RESPONSE_CODE=$(echo $RESULT | jq -r ".code")
 
@@ -85,7 +85,7 @@ jobs:
                 echo "$SITE_ID" > .netlify
 
                 git config user.name "$CIRCLE_PROJECT_USERNAME"
-                git config user.email "$GITHUB_EMAIL"
+                git config user.email "$CIRCLE_PROJECT_USERNAME@users.noreply.github.com"
                 git add ./.netlify
                 git commit -m "[Skip CI] Adding generated .netlify file"
                 git push -f $GIT_ORIGIN_URL
@@ -143,7 +143,7 @@ jobs:
 
                 # Push to gh-pages.
                 git config user.name "$CIRCLE_PROJECT_USERNAME"
-                # git config user.email "$GITHUB_EMAIL"
+                git config user.email "$CIRCLE_PROJECT_USERNAME@users.noreply.github.com"
                 git add -fA
                 git commit --allow-empty -m "[Skip CI] $(git log -1 --pretty=%B)"
                 git push -f $GIT_ORIGIN_URL gh-pages
