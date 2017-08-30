@@ -1,6 +1,6 @@
 {
   "name": "andr-www",
-  "version": "2.3.0",
+  "version": "2.4.0",
   "private": true,
   "license": "MIT",
   "files": [
@@ -47,7 +47,7 @@
     "minuet": "^0.18.1",
     "mocha": "^3.5.0",
     "nodemon": "^1.11.0",
-    "page-manager": "^1.5.0",
+    "page-manager": "^1.6.0",
     "prismjs": "^1.6.0",
     "pug-loader": "^2.3.0",
     "requiem": "^0.58.1",

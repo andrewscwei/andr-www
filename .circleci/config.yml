@@ -118,12 +118,12 @@ jobs:
                 mv package/* .
                 rm -R package/
                 sed -i -e '/public/d' .gitignore
-                git config user.name "circleci"
-                git config user.email "circleci@circleci.com"
+                git config user.name "$CIRCLE_PROJECT_USERNAME"
+                git config user.email "$CIRCLE_PROJECT_USERNAME@users.noreply.github.com"
                 git add -fA
-                git commit -m "CircleCI build"
+                git commit --allow-empty -m "[Skip CI] $(git log -1 --pretty=%B)"
                 "[[ ! -s \"$(git rev-parse --git-dir)/shallow\" ]] || git fetch --unshallow"
-                git push -f git@heroku.com:andr-www.git ${CIRCLE_BRANCH}:master
+                git push -f git@heroku.com:$PACKAGE_NAME.git ${CIRCLE_BRANCH}:master
 
                 echo -e "\nSuccessfuly deployed to Heroku"
               else
