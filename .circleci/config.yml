@@ -27,14 +27,18 @@ jobs:
             - dependency-cache-
       - run:
           name: Install NPM dependencies
-          command: yarn --pure-lockfile
+          command: |
+            source .env
+            yarn --pure-lockfile
       - save_cache:
           key: dependency-cache-{{ checksum "package.json" }}
           paths:
             - "node_modules"
       - run: 
           name: Build
-          command: npm run build
+          command: |
+            source .env
+            npm run build
       - run:
           name: Pack
           command: |
