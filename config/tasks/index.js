@@ -14,7 +14,7 @@ gulp.init({
   base: path.join(baseDir, $.sourceDir),
   dest: path.join(baseDir, $.buildDir),
   rev: {
-    prefix: './'
+    publicPath: process.env.PUBLIC_PATH || '/'
   },
   scripts: {
     entry: { 
