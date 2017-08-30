@@ -20,7 +20,6 @@ jobs:
             echo "export PUBLIC_DIR=${PUBLIC_DIR:-public}" >> .env
             echo "export GIT_ORIGIN_URL=`git config --get remote.origin.url`" >> .env
             echo "export IS_RELEASE=`[[ $(git describe --tags) =~ ^v[0-9]+(\.[0-9]+)+(-rc[0-9]+)?(-alpha[0-9]+)?$ ]] && echo true || echo false`" >> .env
-            echo "export PUBLIC_PATH=`[ "${CIRCLE_BRANCH}" == "development" ] && echo \"/$PACKAGE_NAME/\" || echo \"/\"`" >> .env
       - restore_cache:
           keys: 
             - dependency-cache-{{ checksum "package.json" }}
@@ -38,7 +37,11 @@ jobs:
           name: Build
           command: |
             source .env
-            npm run build
+            if [ "${CIRCLE_BRANCH}" == "development" ] && [ "${STAGE_TARGET}" == "" ]; then
+              PUBLIC_PATH=/$PACKAGE_NAME/ npm run build
+            else
+              npm run build
+            fi
       - run:
           name: Pack
           command: |
@@ -108,7 +111,7 @@ jobs:
             source .env
 
             if [ "${CIRCLE_BRANCH}" == "development" ]; then
-              if [ "${STAGING_TARGET}" == "heroku" ]; then
+              if [ "${STAGE_TARGET}" == "heroku" ]; then
                 npm pack
                 tar -xzf *.tgz
                 find . -maxdepth 1 ! -name '.' ! -name '..' ! -name 'package' ! -name '.git' ! -name '.gitignore' -exec rm -rf {} \;
@@ -140,7 +143,7 @@ jobs:
 
                 # Push to gh-pages.
                 git config user.name "$CIRCLE_PROJECT_USERNAME"
-                git config user.email "$GITHUB_EMAIL"
+                # git config user.email "$GITHUB_EMAIL"
                 git add -fA
                 git commit --allow-empty -m "[Skip CI] $(git log -1 --pretty=%B)"
                 git push -f $GIT_ORIGIN_URL gh-pages
