@@ -5537,9 +5537,9 @@ package-json@^1.0.0:
     got "^3.2.0"
     registry-url "^3.0.0"
 
-page-manager@^1.5.0:
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/page-manager/-/page-manager-1.5.0.tgz#e3353d4c2424305b92ed452c201c8dc4e6246cb0"
+page-manager@^1.6.0:
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/page-manager/-/page-manager-1.6.0.tgz#5410b45b7ce9442ce593bba0b199f76cf627aaa1"
   dependencies:
     lodash "^4.17.4"
     page "^1.7.1"
