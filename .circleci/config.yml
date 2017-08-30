@@ -5,6 +5,9 @@ jobs:
     docker:
       - image: node:8.4.0
     steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "06:b0:72:25:39:b6:2a:ee:c1:fd:37:bc:a8:dc:f4:0a"
       - checkout
       - run:
           name: Install APT packages
@@ -112,18 +115,38 @@ jobs:
 
             if [ "${CIRCLE_BRANCH}" == "development" ]; then
               if [ "${STAGE_TARGET}" == "heroku" ]; then
+                # Isolate built files.
                 npm pack
                 tar -xzf *.tgz
                 find . -maxdepth 1 ! -name '.' ! -name '..' ! -name 'package' ! -name '.git' ! -name '.gitignore' -exec rm -rf {} \;
                 mv package/* .
                 rm -R package/
                 sed -i -e '/public/d' .gitignore
+
+                # Setup Heroku.
+                git remote add heroku https://git.heroku.com/$PACKAGE_NAME.git
+                wget https://cli-assets.heroku.com/branches/stable/heroku-linux-amd64.tar.gz
+                mkdir -p /usr/local/lib /usr/local/bin
+                tar -xvzf heroku-linux-amd64.tar.gz -C /usr/local/lib
+                ln -s /usr/local/lib/heroku/bin/heroku /usr/local/bin/heroku
+                
+                cat > ~/.netrc << EOF
+                machine api.heroku.com
+                  login $HEROKU_LOGIN
+                  password $HEROKU_API_KEY
+                machine git.heroku.com
+                  login $HEROKU_LOGIN
+                  password $HEROKU_API_KEY
+                EOF
+
+                # Add heroku.com to the list of known hosts
+                ssh-keyscan -H heroku.com >> ~/.ssh/known_hosts
+
                 git config user.name "$CIRCLE_PROJECT_USERNAME"
                 git config user.email "$CIRCLE_PROJECT_USERNAME@users.noreply.github.com"
                 git add -fA
                 git commit --allow-empty -m "[Skip CI] $(git log -1 --pretty=%B)"
-                "[[ ! -s \"$(git rev-parse --git-dir)/shallow\" ]] || git fetch --unshallow"
-                git push -f git@heroku.com:$PACKAGE_NAME.git ${CIRCLE_BRANCH}:master
+                git push heroku master
 
                 echo -e "\nSuccessfuly deployed to Heroku"
               else
