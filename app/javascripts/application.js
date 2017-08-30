@@ -14,6 +14,7 @@ req.keys().forEach((path) => requiem(req(path).default));
 
 pm.locales = $.locales;
 pm.autoRouting = $.autoRouting;
+pm.rootPath = '/andr-www/';
 
 // Put page routing/transitioning/loading logic here.
 pm.request((newDocument, oldDocument, next) => {
