@@ -20,7 +20,7 @@ jobs:
             echo "export PUBLIC_DIR=${PUBLIC_DIR:-public}" >> .env
             echo "export GIT_ORIGIN_URL=`git config --get remote.origin.url`" >> .env
             echo "export IS_RELEASE=`[[ $(git describe --tags) =~ ^v[0-9]+(\.[0-9]+)+(-rc[0-9]+)?(-alpha[0-9]+)?$ ]] && echo true || echo false`" >> .env
-            echo "export PUBLIC_PATH=`[ "${CIRCLE_BRANCH}" == "development" ] && echo \"/$PACKAGE_NAME/\" || echo \"/\"" >> .env
+            echo "export PUBLIC_PATH=`[ "${CIRCLE_BRANCH}" == "development" ] && echo \"/$PACKAGE_NAME/\" || echo \"/\"`" >> .env
       - restore_cache:
           keys: 
             - dependency-cache-{{ checksum "package.json" }}
