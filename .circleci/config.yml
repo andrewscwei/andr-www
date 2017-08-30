@@ -115,18 +115,18 @@ jobs:
 
             if [ "${CIRCLE_BRANCH}" == "development" ]; then
               if [ "${STAGE_TARGET}" == "heroku" ]; then
+                # Set up Heroku.
                 bash .circleci/setup-heroku.sh
 
                 # Isolate built files.
                 npm pack
                 tar -xzf *.tgz
-                find . -maxdepth 1 ! -name '.' ! -name '..' ! -name '.netrc' ! -name 'package' ! -name '.git' ! -name '.gitignore' -exec rm -rf {} \;
+                find . -maxdepth 1 ! -name '.' ! -name '..' ! -name 'package' ! -name '.git' ! -name '.gitignore' -exec rm -rf {} \;
                 mv package/* .
                 rm -R package/
                 sed -i -e '/public/d' .gitignore
 
-                git config user.name "$CIRCLE_PROJECT_USERNAME"
-                git config user.email "$CIRCLE_PROJECT_USERNAME@users.noreply.github.com"
+                # Commit and push to Heroku master.
                 git add -fA
                 git commit --allow-empty -m "[Skip CI] $(git log -1 --pretty=%B)"
                 git push -f heroku master
