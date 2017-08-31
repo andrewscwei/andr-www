@@ -1,166 +1,171 @@
-version: 2
+version: 2.0
 jobs:
-  build:
-    working_directory: ~/repo
-    filters:
-      tags:
-        only: /^v(\d+\.)?(\d+\.)?(\*|\d+)$/
-    docker:
-      - image: node:8.4.0
-    steps:
-      - add_ssh_keys:
-          fingerprints:
-            - "06:b0:72:25:39:b6:2a:ee:c1:fd:37:bc:a8:dc:f4:0a"
-      - checkout
-      - run:
-          name: Install APT packages
-          command: |
-            apt-get update -y
-            apt-get install jq zip -y
-      - run:
-          name: Export global environment variables
-          command: |
-            echo "export PACKAGE_NAME=$(cat package.json | jq -r ".name")" >> .env
-            echo "export PACKAGE_VERSION=$(cat package.json | jq -r ".version")" >> .env
-            echo "export PACKAGE_FILE=$PACKAGE_NAME-$PACKAGE_VERSION.zip" >> .env
-            echo "export PUBLIC_DIR=${PUBLIC_DIR:-public}" >> .env
-            echo "export GIT_ORIGIN_URL=`git config --get remote.origin.url`" >> .env
-            echo "export IS_RELEASE=`[[ $(git describe --tags) =~ ^v[0-9]+(\.[0-9]+)+(-rc[0-9]+)?(-alpha[0-9]+)?$ ]] && echo true || echo false`" >> .env
-      - restore_cache:
-          keys: 
-            - dependency-cache-{{ checksum "package.json" }}
-            - dependency-cache-
-      - run:
-          name: Install NPM dependencies
-          command: |
-            source .env
-            yarn --pure-lockfile
-      - save_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
-          paths:
-            - "node_modules"
-      - run: 
-          name: Build
-          command: |
-            source .env
-            if [ "${CIRCLE_BRANCH}" == "development" ] && [ "${STAGE_TARGET}" == "heroku" ]; then
-              NODE_ENV=development SSR_ENABLED=true npm run build 
-            else
-              npm run build
-            fi
-      - run:
-          name: Pack
-          command: |
-            source .env
-            mkdir -p build
-            zip -r build/$PACKAGE_FILE $PUBLIC_DIR
-      - store_artifacts:
-          path: ~/repo/public
-      - store_artifacts:
-          path: ~/repo/build
-      - deploy:
-          name: Deploy to production environment
-          command: |
-            source .env
+  - build:
+      working_directory: ~/repo
+      filters:
+        tags:
+          only: /^v(\d+\.)?(\d+\.)?(\*|\d+)$/
+      docker:
+        - image: node:8.4.0
+      steps:
+        - add_ssh_keys:
+            fingerprints:
+              - "06:b0:72:25:39:b6:2a:ee:c1:fd:37:bc:a8:dc:f4:0a"
+        - checkout
+        - run:
+            name: Install APT packages
+            command: |
+              apt-get update -y
+              apt-get install jq zip -y
+        - run:
+            name: Export global environment variables
+            command: |
+              echo "export PACKAGE_NAME=$(cat package.json | jq -r ".name")" >> .env
+              echo "export PACKAGE_VERSION=$(cat package.json | jq -r ".version")" >> .env
+              echo "export PACKAGE_FILE=$PACKAGE_NAME-$PACKAGE_VERSION.zip" >> .env
+              echo "export PUBLIC_DIR=${PUBLIC_DIR:-public}" >> .env
+              echo "export GIT_ORIGIN_URL=`git config --get remote.origin.url`" >> .env
+              echo "export IS_RELEASE=`[[ $(git describe --tags) =~ ^v[0-9]+(\.[0-9]+)+(-rc[0-9]+)?(-alpha[0-9]+)?$ ]] && echo true || echo false`" >> .env
+        - restore_cache:
+            keys: 
+              - dependency-cache-{{ checksum "package.json" }}
+              - dependency-cache-
+        - run:
+            name: Install NPM dependencies
+            command: |
+              source .env
+              yarn --pure-lockfile
+        - save_cache:
+            key: dependency-cache-{{ checksum "package.json" }}
+            paths:
+              - "node_modules"
+        - run: 
+            name: Build
+            command: |
+              source .env
+              if [ "${CIRCLE_BRANCH}" == "development" ] && [ "${STAGE_TARGET}" == "heroku" ]; then
+                NODE_ENV=development SSR_ENABLED=true npm run build 
+              else
+                npm run build
+              fi
+        - run:
+            name: Pack
+            command: |
+              source .env
+              mkdir -p build
+              zip -r build/$PACKAGE_FILE $PUBLIC_DIR
+        - store_artifacts:
+            path: ~/repo/public
+        - store_artifacts:
+            path: ~/repo/build
+        - deploy:
+            name: Deploy to production environment
+            command: |
+              source .env
 
-            if [ "${CIRCLE_BRANCH}" == "master" ] && [ "${IS_RELEASE}" == "true" ]; then
-              NETLIFY_API=https://api.netlify.com/api/v1
-              SITE_ID=""
+              if [ "${CIRCLE_BRANCH}" == "master" ] && [ "${IS_RELEASE}" == "true" ]; then
+                NETLIFY_API=https://api.netlify.com/api/v1
+                SITE_ID=""
 
-              if [ -f ./.netlify ]; then
-                SITE_ID=$(cat .netlify)
-                echo "Existing site ID ($SITE_ID) found in repo, verifying that site exists..."
-                RESULT=$(curl -H "User-Agent: $CIRCLE_PROJECT_USERNAME ($CIRCLE_PROJECT_USERNAME@users.noreply.github.com)" $NETLIFY_API/sites/$SITE_ID?access_token=$NETLIFY_KEY)
-                echo $RESULT
-                RESPONSE_CODE=$(echo $RESULT | jq -r ".code")
+                if [ -f ./.netlify ]; then
+                  SITE_ID=$(cat .netlify)
+                  echo "Existing site ID ($SITE_ID) found in repo, verifying that site exists..."
+                  RESULT=$(curl -H "User-Agent: $CIRCLE_PROJECT_USERNAME ($CIRCLE_PROJECT_USERNAME@users.noreply.github.com)" $NETLIFY_API/sites/$SITE_ID?access_token=$NETLIFY_KEY)
+                  echo $RESULT
+                  RESPONSE_CODE=$(echo $RESULT | jq -r ".code")
 
-                # Site not found.
-                if [[ $RESPONSE_CODE == "404" ]]; then
-                  SITE_ID=""
+                  # Site not found.
+                  if [[ $RESPONSE_CODE == "404" ]]; then
+                    SITE_ID=""
+                  fi
                 fi
+
+                if [[ $SITE_ID == "" ]]; then
+                  echo "No .netlify file detected or site is not found, creating a new site on Netlify..."
+
+                  RESULT=$(curl -H "Content-Type: application/zip" -H "Authorization: Bearer $NETLIFY_KEY" --data-binary "@build/$PACKAGE_FILE" $NETLIFY_API/sites)
+                  SITE_ID=$(echo $RESULT | jq -r ".id")
+                  SITE_NAME=$(echo $RESULT | jq -r ".subdomain")
+                  SITE_URL=https://$SITE_NAME.netlify.com
+
+                  echo "$SITE_ID" > .netlify
+
+                  git config user.name "$CIRCLE_PROJECT_USERNAME"
+                  git config user.email "$CIRCLE_PROJECT_USERNAME@users.noreply.github.com"
+                  git add ./.netlify
+                  git commit -m "[Skip CI] Adding generated .netlify file"
+                  git push -f $GIT_ORIGIN_URL
+
+                  echo -e "\nDone! Your site URL is:"
+                  echo $SITE_URL
+                else
+                  echo "Deploying to site ${SITE_ID}..."
+
+                  RESULT=$(curl -H "Content-Type: application/zip" -H "Authorization: Bearer $NETLIFY_KEY" --data-binary "@build/$PACKAGE_FILE" $NETLIFY_API/sites/$SITE_ID/deploys)
+                  SITE_URL=$(echo $RESULT | jq -r ".url")
+
+                  echo $RESULT
+                  echo -e "\nDone! Your site URL is:"
+                  echo $SITE_URL
+                fi
+              else
+                echo "Skipping deploy — publish a release with tag format \"v1.0.0\" to enable this feature"
+              fi
+        - deploy:
+            name: Deploy to staging environment
+            command: |
+              source .env
+
+              if [ "${CIRCLE_BRANCH}" == "development" ]; then
+                if [ "${STAGE_TARGET}" == "heroku" ]; then
+                  # Set up Heroku.
+                  bash .circleci/setup-heroku.sh
+
+                  # Isolate built files.
+                  npm pack
+                  tar -xzf *.tgz
+                  find . -maxdepth 1 ! -name '.' ! -name '..' ! -name 'package' ! -name '.git' ! -name '.gitignore' -exec rm -rf {} \;
+                  mv package/* .
+                  rm -R package/
+                  sed -i -e '/public/d' .gitignore
+
+                  # Commit and push to Heroku master.
+                  git config user.name "$CIRCLE_PROJECT_USERNAME"
+                  git config user.email "$CIRCLE_PROJECT_USERNAME@users.noreply.github.com"
+                  git add -fA
+                  git commit --allow-empty -m "[Skip CI] $(git log -1 --pretty=%B)"
+                  git push -f git@heroku.com:$PACKAGE_NAME.git ${CIRCLE_BRANCH}:master
+
+                  echo -e "\nSuccessfuly deployed to Heroku"
+                else
+                  # Publish docs to gh-pages branch.
+                  echo "Publishing to gh-pages branch..."
+
+                  if [ `git branch | grep gh-pages` ]
+                  then
+                    git branch -D gh-pages
+                  fi
+                  git checkout -b gh-pages
+
+                  # Move public to root and delete everything else.
+                  find . -maxdepth 1 ! -name '.' ! -name '..' ! -name 'public' ! -name '.git' ! -name '.gitignore' -exec rm -rf {} \;
+                  mv public/* .
+                  rm -R public/
+
+                  # Push to gh-pages.
+                  git config user.name "$CIRCLE_PROJECT_USERNAME"
+                  git config user.email "$CIRCLE_PROJECT_USERNAME@users.noreply.github.com"
+                  git add -fA
+                  git commit --allow-empty -m "[Skip CI] $(git log -1 --pretty=%B)"
+                  git push -f $GIT_ORIGIN_URL gh-pages
+
+                  echo -e "\nSuccessfuly deployed to GitHub pages"
+                fi 
+              else
+                echo "Skipping because this is not the staging branch"
               fi
 
-              if [[ $SITE_ID == "" ]]; then
-                echo "No .netlify file detected or site is not found, creating a new site on Netlify..."
-
-                RESULT=$(curl -H "Content-Type: application/zip" -H "Authorization: Bearer $NETLIFY_KEY" --data-binary "@build/$PACKAGE_FILE" $NETLIFY_API/sites)
-                SITE_ID=$(echo $RESULT | jq -r ".id")
-                SITE_NAME=$(echo $RESULT | jq -r ".subdomain")
-                SITE_URL=https://$SITE_NAME.netlify.com
-
-                echo "$SITE_ID" > .netlify
-
-                git config user.name "$CIRCLE_PROJECT_USERNAME"
-                git config user.email "$CIRCLE_PROJECT_USERNAME@users.noreply.github.com"
-                git add ./.netlify
-                git commit -m "[Skip CI] Adding generated .netlify file"
-                git push -f $GIT_ORIGIN_URL
-
-                echo -e "\nDone! Your site URL is:"
-                echo $SITE_URL
-              else
-                echo "Deploying to site ${SITE_ID}..."
-
-                RESULT=$(curl -H "Content-Type: application/zip" -H "Authorization: Bearer $NETLIFY_KEY" --data-binary "@build/$PACKAGE_FILE" $NETLIFY_API/sites/$SITE_ID/deploys)
-                SITE_URL=$(echo $RESULT | jq -r ".url")
-
-                echo $RESULT
-                echo -e "\nDone! Your site URL is:"
-                echo $SITE_URL
-              fi
-            else
-              echo "Skipping deploy — publish a release with tag format \"v1.0.0\" to enable this feature"
-            fi
-      - deploy:
-          name: Deploy to staging environment
-          command: |
-            source .env
-
-            if [ "${CIRCLE_BRANCH}" == "development" ]; then
-              if [ "${STAGE_TARGET}" == "heroku" ]; then
-                # Set up Heroku.
-                bash .circleci/setup-heroku.sh
-
-                # Isolate built files.
-                npm pack
-                tar -xzf *.tgz
-                find . -maxdepth 1 ! -name '.' ! -name '..' ! -name 'package' ! -name '.git' ! -name '.gitignore' -exec rm -rf {} \;
-                mv package/* .
-                rm -R package/
-                sed -i -e '/public/d' .gitignore
-
-                # Commit and push to Heroku master.
-                git config user.name "$CIRCLE_PROJECT_USERNAME"
-                git config user.email "$CIRCLE_PROJECT_USERNAME@users.noreply.github.com"
-                git add -fA
-                git commit --allow-empty -m "[Skip CI] $(git log -1 --pretty=%B)"
-                git push -f git@heroku.com:$PACKAGE_NAME.git ${CIRCLE_BRANCH}:master
-
-                echo -e "\nSuccessfuly deployed to Heroku"
-              else
-                # Publish docs to gh-pages branch.
-                echo "Publishing to gh-pages branch..."
-
-                if [ `git branch | grep gh-pages` ]
-                then
-                  git branch -D gh-pages
-                fi
-                git checkout -b gh-pages
-
-                # Move public to root and delete everything else.
-                find . -maxdepth 1 ! -name '.' ! -name '..' ! -name 'public' ! -name '.git' ! -name '.gitignore' -exec rm -rf {} \;
-                mv public/* .
-                rm -R public/
-
-                # Push to gh-pages.
-                git config user.name "$CIRCLE_PROJECT_USERNAME"
-                git config user.email "$CIRCLE_PROJECT_USERNAME@users.noreply.github.com"
-                git add -fA
-                git commit --allow-empty -m "[Skip CI] $(git log -1 --pretty=%B)"
-                git push -f $GIT_ORIGIN_URL gh-pages
-
-                echo -e "\nSuccessfuly deployed to GitHub pages"
-              fi 
-            else
-              echo "Skipping because this is not the staging branch"
-            fi
+workflows:
+  version: 2.0
+  build-n-deploy:
+    - build
