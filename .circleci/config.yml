@@ -2,9 +2,6 @@ version: 2
 jobs:
   build:
     working_directory: ~/repo
-    filters:
-      tags:
-        only: /^v(\d+\.)?(\d+\.)?(\*|\d+)$/
     docker:
       - image: node:8.4.0
     steps:
@@ -164,3 +161,11 @@ jobs:
             else
               echo "Skipping because this is not the staging branch"
             fi
+
+workflows:
+  build-n-deploy:
+    jobs:
+      - build:
+          filters:
+            tags:
+              only: /^v(\d+\.)?(\d+\.)?(\*|\d+)$/
