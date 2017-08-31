@@ -15,9 +15,7 @@ jobs:
             - dependency-cache-
       - run:
           name: Install NPM dependencies
-          command: |
-            source .env
-            yarn --pure-lockfile
+          command: yarn --pure-lockfile
       - save_cache:
           key: dependency-cache-{{ checksum "package.json" }}
           paths:
@@ -25,7 +23,6 @@ jobs:
       - run: 
           name: Build
           command: |
-            source .env
             if [ "${CIRCLE_BRANCH}" == "development" ] && [ "${STAGE_TARGET}" == "heroku" ]; then
               NODE_ENV=development SSR_ENABLED=true npm run build 
             else
@@ -185,4 +182,10 @@ jobs:
 workflows:
   version: 2.0
   build-n-deploy:
+    - filters:
+        branches:
+          only: master
     - build
+    - pack:
+        requires:
+          - build
