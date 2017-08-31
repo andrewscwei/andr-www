@@ -49,8 +49,11 @@ pre
     +padding(0)
 
 blockquote
-  +padding(60px 50px)
+  +padding(40px 30px)
   border: 1px solid get-color('white', .1)
+
+  +screen('>phablet')
+    +padding(60px 50px)
 
 strong
   font-weight: get-font-weight('b', 'ss')
