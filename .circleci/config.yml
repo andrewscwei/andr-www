@@ -1,28 +1,14 @@
+defaults: &defaults
+  working_directory: ~/repo
+  docker:
+    - image: node:8.4.0
+
 version: 2.0
 jobs:
   build:
-    working_directory: ~/repo
-    docker:
-      - image: node:8.4.0
+    <<: *defaults
     steps:
-      - add_ssh_keys:
-          fingerprints:
-            - "06:b0:72:25:39:b6:2a:ee:c1:fd:37:bc:a8:dc:f4:0a"
       - checkout
-      - run:
-          name: Install APT packages
-          command: |
-            apt-get update -y
-            apt-get install jq zip -y
-      - run:
-          name: Export global environment variables
-          command: |
-            echo "export PACKAGE_NAME=$(cat package.json | jq -r ".name")" >> .env
-            echo "export PACKAGE_VERSION=$(cat package.json | jq -r ".version")" >> .env
-            echo "export PACKAGE_FILE=$PACKAGE_NAME-$PACKAGE_VERSION.zip" >> .env
-            echo "export PUBLIC_DIR=${PUBLIC_DIR:-public}" >> .env
-            echo "export GIT_ORIGIN_URL=`git config --get remote.origin.url`" >> .env
-            echo "export IS_RELEASE=`[[ $(git describe --tags) =~ ^v[0-9]+(\.[0-9]+)+(-rc[0-9]+)?(-alpha[0-9]+)?$ ]] && echo true || echo false`" >> .env
       - restore_cache:
           keys: 
             - dependency-cache-{{ checksum "package.json" }}
@@ -45,6 +31,30 @@ jobs:
             else
               npm run build
             fi
+      - persist_to_workspace:
+          root: ~/repo
+          paths:
+            - public
+  
+  package:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: ~/repo
+      - run:
+          name: Install APT packages
+          command: |
+            apt-get update -y
+            apt-get install jq zip -y
+      - run:
+          name: Export global environment variables
+          command: |
+            echo "export PACKAGE_NAME=$(cat package.json | jq -r ".name")" >> .env
+            echo "export PACKAGE_VERSION=$(cat package.json | jq -r ".version")" >> .env
+            echo "export PACKAGE_FILE=$PACKAGE_NAME-$PACKAGE_VERSION.zip" >> .env
+            echo "export PUBLIC_DIR=${PUBLIC_DIR:-public}" >> .env
+            echo "export GIT_ORIGIN_URL=`git config --get remote.origin.url`" >> .env
+            echo "export IS_RELEASE=`[[ $(git describe --tags) =~ ^v[0-9]+(\.[0-9]+)+(-rc[0-9]+)?(-alpha[0-9]+)?$ ]] && echo true || echo false`" >> .env
       - run:
           name: Pack
           command: |
@@ -55,6 +65,10 @@ jobs:
           path: ~/repo/public
       - store_artifacts:
           path: ~/repo/build
+
+  deploy_production:
+    <<: *defaults
+    steps:
       - deploy:
           name: Deploy to production environment
           command: |
@@ -108,6 +122,12 @@ jobs:
             else
               echo "Skipping deploy — publish a release with tag format \"v1.0.0\" to enable this feature"
             fi
+  deploy_stage:
+    <<: *defaults
+    steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "06:b0:72:25:39:b6:2a:ee:c1:fd:37:bc:a8:dc:f4:0a"
       - deploy:
           name: Deploy to staging environment
           command: |
