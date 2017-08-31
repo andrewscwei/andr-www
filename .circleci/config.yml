@@ -29,15 +29,15 @@ jobs:
               npm run build
             fi
       - persist_to_workspace:
-          root: ~/repo
+          root: ~/
           paths:
-            - public
+            - repo
   
   package:
     <<: *defaults
     steps:
       - attach_workspace:
-          at: ~/repo
+          at: ~/
       - run:
           name: Install APT packages
           command: |
@@ -182,9 +182,6 @@ jobs:
 workflows:
   version: 2.0
   build-n-deploy:
-    - filters:
-        branches:
-          only: master
     - build
     - pack:
         requires:
