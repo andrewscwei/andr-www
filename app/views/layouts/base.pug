@@ -48,7 +48,7 @@ html(lang=locale)
     block styles
       link(rel='stylesheet' href=p('/assets/stylesheets/application.css'))
 
-    if (_.get($, 'cms') === 'prismic') && _.get(env, 'PRISMIC_API_ENDPOINT') && _.get(env, 'PRISMIC_PREVIEWS_ENABLED')
+    if (_.get($, 'cms') === 'prismic') && _.get(env, 'PRISMIC_API_ENDPOINT') && _.get(env, 'SSR_ENABLED')
       script.
         window.prismic = { endpoint: '#{env.PRISMIC_API_ENDPOINT}' };
       script(type='text/javascript' src='//static.cdn.prismic.io/prismic.min.js')

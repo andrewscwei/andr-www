@@ -13,9 +13,6 @@ const baseDir = path.join(__dirname, '../../');
 gulp.init({
   base: path.join(baseDir, $.sourceDir),
   dest: path.join(baseDir, $.buildDir),
-  rev: {
-    publicPath: process.env.PUBLIC_PATH || '/'
-  },
   scripts: {
     entry: { 
       application: 'application.js' 
@@ -35,7 +32,7 @@ gulp.init({
       ] 
     }
   },
-  views: process.env.PRISMIC_PREVIEWS_ENABLED ? false : {
+  views: process.env.SSR_ENABLED ? false : {
     i18n: {
       locales: $.locales || ['en'],
       directory: path.join(baseDir, $.configDir, 'locales')
@@ -49,9 +46,7 @@ gulp.init({
     },
     collections: $.collections,
     mathjax: true,
-    prism: {
-      lineNumbers: true
-    },
+    prism: true,
     related: {
       terms: 3,
       max: 3,

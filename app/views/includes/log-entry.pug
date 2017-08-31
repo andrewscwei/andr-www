@@ -3,10 +3,15 @@
 mixin log-entry($entry)
   -
     function getIdx(log) {
-      const l = collections.log.length;
+      const entries = (collections && collections.log) || (data && data.log);
+      if (!entries) return -1;
+
+      const l = entries.length;
+
       for (let i = 0; i < l; i++) {
-        if (collections.log[i].id === log.id) return l-i-1;
+        if (entries[i].id === log.id) return l-i-1;
       }
+
       return -1;
     }
   a(type='button' is='log-entry' href=p($entry.path))&attributes(attributes)

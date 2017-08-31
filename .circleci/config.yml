@@ -40,8 +40,8 @@ jobs:
           name: Build
           command: |
             source .env
-            if [ "${CIRCLE_BRANCH}" == "development" ] && [ "${STAGE_TARGET}" == "" ]; then
-              PUBLIC_PATH=/$PACKAGE_NAME/ npm run build
+            if [ "${CIRCLE_BRANCH}" == "development" ] && [ "${STAGE_TARGET}" == "heroku" ]; then
+              NODE_ENV=development SSR_ENABLED=true npm run build 
             else
               npm run build
             fi
