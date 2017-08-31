@@ -24,7 +24,7 @@ jobs:
           name: Build
           command: npm run build
       - persist_to_workspace:
-          root: ""
+          root: /tmp
           paths:
             - public
   
