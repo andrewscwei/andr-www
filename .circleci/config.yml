@@ -1,7 +1,7 @@
 version: 2
 jobs:
   build:
-    working_directory: /tmp
+    working_directory: ~/repo
     filters:
       tags:
         only: /^v(\d+\.)?(\d+\.)?(\*|\d+)$/
@@ -55,9 +55,9 @@ jobs:
             mkdir -p build
             zip -r build/$PACKAGE_FILE $PUBLIC_DIR
       - store_artifacts:
-          path: /tmp/public
+          path: ~/repo/public
       - store_artifacts:
-          path: /tmp/build
+          path: ~/repo/build
       - deploy:
           name: Deploy to production environment
           command: |
