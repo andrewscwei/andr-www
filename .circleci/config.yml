@@ -165,7 +165,4 @@ jobs:
 workflows:
   build-n-deploy:
     jobs:
-      - build:
-          filters:
-            tags:
-              only: /^v(\d+\.)?(\d+\.)?(\*|\d+)$/
+      - build
