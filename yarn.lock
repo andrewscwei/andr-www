@@ -3155,13 +3155,13 @@ gulp-pipe-media@^2.2.0:
     lodash "^4.17.4"
     run-sequence "^1.2.2"
 
-gulp-pipe-metalprismic@^4.5.0:
-  version "4.5.0"
-  resolved "https://registry.yarnpkg.com/gulp-pipe-metalprismic/-/gulp-pipe-metalprismic-4.5.0.tgz#a33a0c3602cd55bdf810359c1dbaf7be6daac6f1"
+gulp-pipe-metalprismic@^5.0.1:
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/gulp-pipe-metalprismic/-/gulp-pipe-metalprismic-5.0.1.tgz#372a94ad1277ea3912124aef8fbbe40144fc26a9"
   dependencies:
     fs-extra "^4.0.1"
     gulp-task-helpers "^1.4.0"
-    gulp-task-metalsmith "^5.6.0"
+    gulp-task-metalsmith "^6.0.0"
     gulp-util "^3.0.8"
     lodash "^4.17.4"
     marked "^0.3.6"
@@ -3271,15 +3271,15 @@ gulp-sourcemaps@^2.6.0:
     through2 "2.X"
     vinyl "1.X"
 
-gulp-sys-metalprismic@^5.7.0:
-  version "5.7.0"
-  resolved "https://registry.yarnpkg.com/gulp-sys-metalprismic/-/gulp-sys-metalprismic-5.7.0.tgz#9b5ab9ec578e62e03a4fc9be6d0fbda40c06d64a"
+gulp-sys-metalprismic@^6.0.1:
+  version "6.0.1"
+  resolved "https://registry.yarnpkg.com/gulp-sys-metalprismic/-/gulp-sys-metalprismic-6.0.1.tgz#afe122d0771f2237c906c29ad5312b3b49ee91bd"
   dependencies:
     browser-sync "^2.18.13"
     del "^3.0.0"
     gulp "^3.9.1"
     gulp-pipe-assets "^3.7.0"
-    gulp-pipe-metalprismic "^4.5.0"
+    gulp-pipe-metalprismic "^5.0.1"
     gulp-sitemap "^4.2.0"
     gulp-task-helpers "^1.4.0"
     gulp-util "^3.0.8"
@@ -3292,18 +3292,17 @@ gulp-task-helpers@^1.4.0:
   dependencies:
     lodash "^4.17.4"
 
-gulp-task-metalsmith@^5.6.0:
-  version "5.6.0"
-  resolved "https://registry.yarnpkg.com/gulp-task-metalsmith/-/gulp-task-metalsmith-5.6.0.tgz#a833007abcb9b6ef0ef5ce67624a77814fbc6e0f"
+gulp-task-metalsmith@^6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/gulp-task-metalsmith/-/gulp-task-metalsmith-6.0.0.tgz#2d7b7bc536d3fa77ab89bfaec79949da0ab4c6ef"
   dependencies:
     async "^2.4.0"
     browser-sync "^2.18.8"
     gulp-task-helpers "^1.4.0"
     gulp-util "^3.0.8"
     i18n "^0.8.3"
-    jsdom "^11.2.0"
     lodash "^4.17.4"
-    mathjax-node "^0.5.1"
+    mathjax-dom "^0.3.0"
     metalsmith "^2.3.0"
     metalsmith-collections "^0.9.0"
     metalsmith-in-place "^3.0.1"
@@ -3314,7 +3313,7 @@ gulp-task-metalsmith@^5.6.0:
     metalsmith-related "0.1.0"
     metalsmith-tags "^2.0.0"
     minimatch "^3.0.3"
-    prismjs "^1.6.0"
+    prism-dom "^0.2.0"
     run-sequence "^2.1.0"
 
 gulp-task-rev@^1.5.0:
@@ -4732,6 +4731,14 @@ math-interval-parser@^1.1.0:
   dependencies:
     xregexp "^2.0.0"
 
+mathjax-dom@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/mathjax-dom/-/mathjax-dom-0.3.0.tgz#5cbb773f7f5604025798bf9a6cc64b2bb3e168a7"
+  dependencies:
+    chalk "^2.1.0"
+    jsdom "^11.2.0"
+    mathjax-node "^0.5.1"
+
 mathjax-node@^0.5.1:
   version "0.5.2"
   resolved "https://registry.yarnpkg.com/mathjax-node/-/mathjax-node-0.5.2.tgz#24ce7a9e1abf695e7c17cb73ee72fc2754a49f8f"
@@ -6028,6 +6035,15 @@ pretty-bytes@^4.0.2:
 pretty-hrtime@^1.0.0:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/pretty-hrtime/-/pretty-hrtime-1.0.3.tgz#b7e3ea42435a4c9b2759d99e0f201eb195802ee1"
+
+prism-dom@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/prism-dom/-/prism-dom-0.2.0.tgz#31df894b18d271e62f2e36cb5e3a8b92a24840b2"
+  dependencies:
+    async "^2.5.0"
+    chalk "^2.1.0"
+    jsdom "^11.2.0"
+    prismjs "^1.6.0"
 
 prismic.io@^3.5.6:
   version "3.5.7"

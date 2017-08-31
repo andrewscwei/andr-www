@@ -24,10 +24,6 @@
       "sortBy": "date",
       "reverse": true,
       "permalink": "logs/:uid/",
-      "metadata": {
-        "mathjax": true,
-        "prism": true
-      },
       "paginate": {
         "perPage": 6,
         "first": "logs/",
