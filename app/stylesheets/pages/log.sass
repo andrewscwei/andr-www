@@ -3,9 +3,9 @@
 =log-padding-h()
   +padding(null 30px)
   +screen('>mobile')
-    +padding(null 20%)
+    +padding(null 50px)
   +screen('>phablet')
-    +padding(null 25%)
+    +padding(null 80px)
 
 =log-margin-h()
   +margin(null 50px)
@@ -104,9 +104,12 @@
         +font('m', null, 'n')
 
     blockquote
-      +margin(null 40px)
+      +margin(null 10px)
       +log-leading-space(4em)
       +log-trailing-space(4em)
+
+      +screen('>phablet')
+        +margin(null 30px)
 
     .MathJax_SVG svg *,
     .MathJax_SVG_Display svg *
