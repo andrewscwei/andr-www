@@ -8,7 +8,7 @@
     "config",
     "logs",
     "public",
-    "app.js"
+    "previewer"
   ],
   "scripts": {
     "start": "node previewer",
