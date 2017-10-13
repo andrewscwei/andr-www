@@ -2,15 +2,21 @@
 
 'use strict';
 
-import 'webcomponents.js/webcomponents-lite';
+import 'document-register-element';
 import $ from '../../config';
 import _ from 'lodash';
 import pm from 'page-manager';
-import requiem, { dom, enums } from 'requiem';
+import m, { dom, NodeState } from 'meno';
 
-// Register all components.
-const req = require.context('./', true, /^((?!Playground)(?!application).)*.js$/);
-req.keys().forEach((path) => requiem(req(path).default));
+import './components/XAnchor';
+import './components/GlobalNav';
+import './pages/Home';
+import './pages/Logs';
+import './pages/Log';
+
+if (process.env.NODE_ENV === 'development') {
+  localStorage.debug = `app*,meno*`;
+}
 
 pm.locales = $.locales;
 pm.autoRouting = $.autoRouting;
@@ -32,7 +38,6 @@ pm.request((newDocument, oldDocument, next) => {
 });
 
 pm.transition('in', '/', (next) => {
-  dom.sightread();
   transitionIn(dom.getChild('global-nav'));
   transitionIn(dom.getChild('home'), next);
 });
@@ -43,7 +48,6 @@ pm.transition('out', '/', (next) => {
 });
 
 pm.transition('in', '*', (next) => {
-  dom.sightread();
   transitionOut(dom.getChild('home'));
   transitionIn(dom.getChild('global-nav'));
   transitionIn(dom.getChild('page'), next);
@@ -83,10 +87,10 @@ else {
 function transitionIn(element, next) {
   if (!element) { if (next) next(); return; }
 
-  if (element.in && (element.nodeState === enums.NodeState.UPDATED))
+  if (element.in && (element.nodeState === NodeState.INITIALIZED))
     element.in(next);
   else
-    element.addEventListener(enums.EventType.NODE.UPDATE, event => { if (element.in) element.in(next); else if (next) next(); });
+    element.addEventListener('nodeinitialize', event => { if (element.in) element.in(next); else if (next) next(); });
 }
 
 /**
@@ -98,8 +102,8 @@ function transitionIn(element, next) {
 function transitionOut(element, next) {
   if (!element) { if (next) next(); return; }
 
-  if (element.out && (element.nodeState === enums.NodeState.UPDATED))
+  if (element.out && (element.nodeState === NodeState.INITIALIZED))
     element.out(next);
   else
-    element.addEventListener(enums.EventType.NODE.UPDATE, event => { if (element.out) element.out(next); else if (next) next(); });
+    element.addEventListener('nodeinitialize', event => { if (element.out) element.out(next); else if (next) next(); });
 }

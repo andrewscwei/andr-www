@@ -67,7 +67,7 @@
       opacity: 0
       transform: translate3d(0, 40px, 0)
 
-      +buttons()
+      #{select-buttons()}
         +space-between(7px)
 
   +name('contents')
@@ -126,7 +126,7 @@
     background: get-color('black')
     transform: translate3d(0, 0, 0)
 
-    +buttons()
+    #{select-buttons()}
       +space-between(30px, '>')
 
   +name('related')
@@ -155,6 +155,5 @@
     +element('log-entry')
       background: get-color('very-dark-grey')
 
-      +state('hover')
+      &:hover
         background: get-color('black')
-

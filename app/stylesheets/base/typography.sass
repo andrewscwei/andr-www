@@ -20,7 +20,7 @@ $font-weight-monospace-light: 500
 $font-weight-monospace-normal: 500
 $font-weight-monospace-bold: 500
 
-+labels('body')
+#{select-texts()}
   +font('ss', 'd', 'l')
   color: get-color('white')
   line-height: 1.8em
@@ -58,10 +58,10 @@ blockquote
 strong
   font-weight: get-font-weight('b', 'ss')
 
-+labels('header')
+#{select-headings()}
   color: get-color('white')
 
-+list-items()
+#{select-list-items()}
   +font('ss', 'd', 'l')
   color: get-color('white')
   line-height: 1.8em
@@ -72,12 +72,12 @@ strong
   ol &
     list-style: decimal
 
-+links()
+#{select-links()}
   +transition(opacity, .3s, ease-out)
   color: get-color('white')
   border-bottom: 1px solid get-color('white', .2)
 
-  +state('hover')
+  &:hover
     opacity: .6
 
 ol,

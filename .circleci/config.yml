@@ -24,7 +24,7 @@ jobs:
             echo "export GIT_ORIGIN_URL=`git config --get remote.origin.url`" >> .env
             echo "export IS_RELEASE=`[[ $(git describe --tags) =~ ^v[0-9]+(\.[0-9]+)+(-rc[0-9]+)?(-alpha[0-9]+)?$ ]] && echo true || echo false`" >> .env
       - restore_cache:
-          keys: 
+          keys:
             - dependency-cache-{{ checksum "package.json" }}
             - dependency-cache-
       - run:
@@ -36,12 +36,12 @@ jobs:
           key: dependency-cache-{{ checksum "package.json" }}
           paths:
             - "node_modules"
-      - run: 
+      - run:
           name: Build
           command: |
             source .env
             if [ "${CIRCLE_BRANCH}" == "development" ] && [ "${STAGE_TARGET}" == "heroku" ]; then
-              NODE_ENV=development SSR_ENABLED=true npm run build 
+              NODE_ENV=development SSR_ENABLED=true npm run build
             else
               npm run build
             fi
@@ -64,8 +64,8 @@ jobs:
               NETLIFY_API=https://api.netlify.com/api/v1
               SITE_ID=""
 
-              if [ -f ./.netlify ]; then
-                SITE_ID=$(cat .netlify)
+              if [ -f ./.circleci/netlify ]; then
+                SITE_ID=$(cat .circleci/netlify)
                 echo "Existing site ID ($SITE_ID) found in repo, verifying that site exists..."
                 RESULT=$(curl -H "User-Agent: $CIRCLE_PROJECT_USERNAME ($CIRCLE_PROJECT_USERNAME@users.noreply.github.com)" $NETLIFY_API/sites/$SITE_ID?access_token=$NETLIFY_KEY)
                 echo $RESULT
@@ -78,19 +78,19 @@ jobs:
               fi
 
               if [[ $SITE_ID == "" ]]; then
-                echo "No .netlify file detected or site is not found, creating a new site on Netlify..."
+                echo "No netlify file detected or site is not found, creating a new site on Netlify..."
 
                 RESULT=$(curl -H "Content-Type: application/zip" -H "Authorization: Bearer $NETLIFY_KEY" --data-binary "@build/$PACKAGE_FILE" $NETLIFY_API/sites)
                 SITE_ID=$(echo $RESULT | jq -r ".id")
                 SITE_NAME=$(echo $RESULT | jq -r ".subdomain")
                 SITE_URL=https://$SITE_NAME.netlify.com
 
-                echo "$SITE_ID" > .netlify
+                echo "$SITE_ID" > .circleci/netlify
 
                 git config user.name "$CIRCLE_PROJECT_USERNAME"
                 git config user.email "$CIRCLE_PROJECT_USERNAME@users.noreply.github.com"
-                git add ./.netlify
-                git commit -m "[Skip CI] Adding generated .netlify file"
+                git add ./.circleci/netlify
+                git commit -m "[Skip CI] Adding generated netlify file"
                 git push -f $GIT_ORIGIN_URL
 
                 echo -e "\nDone! Your site URL is:"
@@ -157,7 +157,7 @@ jobs:
                 git push -f $GIT_ORIGIN_URL gh-pages
 
                 echo -e "\nSuccessfuly deployed to GitHub pages"
-              fi 
+              fi
             else
               echo "Skipping because this is not the staging branch"
             fi

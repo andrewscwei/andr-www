@@ -25,7 +25,7 @@
         transform-origin: center
 
   section.name
-    +labels()
+    #{select-headings()}, #{select-texts()}
       +display('(block)')
 
       &.full-name
@@ -34,7 +34,7 @@
         text-transform: uppercase
 
   section.position
-    +labels()
+    #{select-headings()}, #{select-texts()}
       +display('block')
       +font('ss', 'xs', 'n')
       color: get-color('dark-grey')
@@ -43,16 +43,16 @@
 
   section.connect
     +padding(20px 0)
-    +buttons()
+    #{select-buttons()}
       +size(20px)
       +space-between(12px)
       background: transparent
 
       +transition(transform opacity, .8s, cubic-bezier(.29,1.48,.24,.96))
-        +state('hover')
+        &:hover
           opacity: .6
 
-  +state('active')
+  +data('state', 'active')
     section
       opacity: 1
       transform: translate3d(0, 0, 0)

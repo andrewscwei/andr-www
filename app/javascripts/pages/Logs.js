@@ -1,6 +1,6 @@
 // © Andrew Wei
 
-import { dom, ui } from 'requiem';
+import m, { dom } from 'meno';
 import Page from './Page';
 import 'gsap';
 
@@ -54,5 +54,7 @@ class Logs extends Page {
     });
   }
 }
+
+m.register(Logs);
 
 export default Logs;

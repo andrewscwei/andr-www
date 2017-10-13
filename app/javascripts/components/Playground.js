@@ -2,7 +2,8 @@
 
 import 'gsap';
 import _ from 'lodash';
-import { enums, ui, utils } from 'requiem';
+import m, { DirtyType } from 'meno';
+import getViewportRect from 'meno/lib/utils/getViewportRect';
 import TCC from 'three-camera-controller';
 
 window.THREE = require('three');
@@ -10,7 +11,7 @@ window.THREE = require('three');
 const MESH_RADIUS = 100;
 const MESH_GAP = MESH_RADIUS * ((35 - 20.2) / 5.3);
 
-class Playground extends ui.Element(HTMLCanvasElement) {
+class Playground extends m.Element(HTMLCanvasElement) {
   /** @inheritdoc */
   static get tag() { return 'x-playground'; }
 
@@ -34,7 +35,7 @@ class Playground extends ui.Element(HTMLCanvasElement) {
 
   get camera() {
     if (this.__private__.camera) return this.__private__.camera;
-    const rect = utils.getViewportRect();
+    const rect = getViewportRect();
     this.__private__.camera = new THREE.PerspectiveCamera(75, rect.width / rect.height, 1, 10000);
     return this.__private__.camera;
   }
@@ -86,7 +87,7 @@ class Playground extends ui.Element(HTMLCanvasElement) {
   set activeCube(val) {
     if (this.activeCube === val) return;
     this.__private__.activeCube = val;
-    this.setDirty(enums.DirtyType.DATA);
+    this.setDirty(DirtyType.DATA);
   }
 
   get angle() {
@@ -102,7 +103,7 @@ class Playground extends ui.Element(HTMLCanvasElement) {
   get mouse() {
     if (!this.__private__.mouse && (isNaN(this.updateDelegate.mouse.pointerX) || isNaN(this.updateDelegate.mouse.pointerY)) && (isNaN(_.get(this.__touch, 'x')) && isNaN(_.get(this.__touch, 'y')))) return null;
     if (!this.__private__.mouse) this.__private__.mouse = new THREE.Vector2(0, 0);
-    const rect = utils.getViewportRect();
+    const rect = getViewportRect();
     const x = ((isNaN(this.updateDelegate.mouse.pointerX) ? _.get(this.__touch, 'x') : this.updateDelegate.mouse.pointerX) / rect.width) * 2 - 1;
     const y = -((isNaN(this.updateDelegate.mouse.pointerY) ? _.get(this.__touch, 'y') : this.updateDelegate.mouse.pointerY) / rect.height) * 2 + 1;
     if (!isNaN(x)) this.__private__.mouse.x = x;
@@ -110,11 +111,15 @@ class Playground extends ui.Element(HTMLCanvasElement) {
     return this.__private__.mouse;
   }
 
+  get responsiveness() {
+    return {
+      resize: 10.0,
+      enterframe: 0.0,
+      orientation: 0.0,
+      mousemove: 0.0
+    };
+  }
   init() {
-    this.respondsTo(10.0, enums.EventType.OBJECT.RESIZE);
-    this.respondsTo(enums.EventType.MISC.ENTER_FRAME);
-    this.respondsTo(enums.EventType.DEVICE.DEVICE_ORIENTATION, enums.EventType.MOUSE.MOUSE_MOVE);
-
     this.createWall();
 
     this.scene.add(this.grid);
@@ -128,9 +133,6 @@ class Playground extends ui.Element(HTMLCanvasElement) {
     this.camera.rotation.x = 1.117;
     this.camera.rotation.y = 0.244;
     this.camera.rotation.z = 0.076;
-
-
-    super.init();
   }
 
   destroy() {
@@ -143,31 +145,27 @@ class Playground extends ui.Element(HTMLCanvasElement) {
     delete this.__private__.camera;
     delete this.__private__.renderer;
     delete this.__private__.raycaster;
-
-    super.destroy();
   }
 
   update(dirty) {
-    if (this.isDirty(enums.DirtyType.SIZE))
+    if (this.isDirty(DirtyType.SIZE))
       this._updateBounds();
 
-    if (this.isDirty(enums.DirtyType.INPUT|enums.DirtyType.ORIENTATION))
+    if (this.isDirty(DirtyType.INPUT|DirtyType.ORIENTATION))
       this._updateControls();
 
-    if (this.isDirty(enums.DirtyType.FRAME)) {
+    if (this.isDirty(DirtyType.FRAME)) {
       if (!this.paused) {
         this._updateRenderer();
         this.controls.update();
       }
     }
-
-    super.update();
   }
 
   createWall() {
     this.destroyWall();
 
-    const rect = utils.getViewportRect();
+    const rect = getViewportRect();
     const positions = [
       new THREE.Vector2(-2, 1),
       new THREE.Vector2(-2, 0),
@@ -208,7 +206,7 @@ class Playground extends ui.Element(HTMLCanvasElement) {
   }
 
   _updateBounds() {
-    const rect = utils.getViewportRect();
+    const rect = getViewportRect();
 
     this.createWall();
 
@@ -220,7 +218,7 @@ class Playground extends ui.Element(HTMLCanvasElement) {
   }
 
   _updateControls() {
-    const rect = utils.getViewportRect();
+    const rect = getViewportRect();
 
     let dx, dy;
 
@@ -267,5 +265,7 @@ class Playground extends ui.Element(HTMLCanvasElement) {
     }
   }
 }
+
+m.register(Playground);
 
 export default Playground;

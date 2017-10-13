@@ -14,8 +14,8 @@ gulp.init({
   base: path.join(baseDir, $.sourceDir),
   dest: path.join(baseDir, $.buildDir),
   scripts: {
-    entry: { 
-      application: 'application.js' 
+    entry: {
+      application: 'application.js'
     },
     module: {
       rules: [{
@@ -29,7 +29,27 @@ gulp.init({
         path.join(baseDir, $.configDir, 'data'),
         path.join(baseDir, $.viewsDir, 'includes'),
         path.join(baseDir, 'node_modules')
-      ] 
+      ]
+    },
+    envs: {
+      development: {
+        plugins: [
+          new (require('webpack').DefinePlugin)({
+            'process.env': {
+              NODE_ENV: JSON.stringify(`development`)
+            }
+          })
+        ]
+      },
+      production: {
+        plugins: [
+          new (require('webpack').DefinePlugin)({
+            'process.env': {
+              NODE_ENV: JSON.stringify(`production`)
+            }
+          })
+        ]
+      }
     }
   },
   views: process.env.SSR_ENABLED ? false : {

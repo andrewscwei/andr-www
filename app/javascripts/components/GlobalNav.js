@@ -1,12 +1,9 @@
 // © Andrew Wei
 
-import { dom, enums, ui, utils } from 'requiem';
+import m from 'meno';
 import 'gsap';
 
-class GlobalNav extends ui.Element() {
-  /** @inheritdoc */
-  static get tag() { return 'global-nav'; }
-
+class GlobalNav extends m.Element('global-nav') {
   /** @inheritdoc */
   static get extends() { return 'nav'; }
 
@@ -49,5 +46,7 @@ class GlobalNav extends ui.Element() {
     this.timeline.add(() => { if (done) done(); });
   }
 }
+
+m.register(GlobalNav);
 
 export default GlobalNav;

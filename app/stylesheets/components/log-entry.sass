@@ -8,7 +8,7 @@
     +padding(40px 30px)
     +size(100%)
 
-  +labels()
+  #{select-headings()}, #{select-texts()}
     &.title
       +font('ss', 'm', 'n')
       color: get-color('white')
@@ -20,7 +20,7 @@
       +edge(null null 40px 30px)
       +font('m', 'd', 'n')
       color: get-color('grey')
-  
+
     &.number
       +size(auto 80px)
       +align(bottom right)
@@ -28,5 +28,5 @@
       +font('s', 'xl', 'n')
       color: get-color('grey', .2)
 
-  +state('hover')
+  &:hover
     background: get-color('black')
