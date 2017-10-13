@@ -1,6 +1,6 @@
 {
   "name": "andr-www",
-  "version": "2.8.0",
+  "version": "2.9.0",
   "private": true,
   "license": "MIT",
   "files": [
@@ -48,7 +48,7 @@
     "hammerjs": "^2.0.8",
     "jstransformer-pug": "^0.2.3",
     "klaw": "^2.1.0",
-    "meno": "^0.23.0",
+    "meno": "^0.24.0",
     "minuet": "^1.1.0",
     "mocha": "^4.0.1",
     "nodemon": "^1.12.1",
