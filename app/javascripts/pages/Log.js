@@ -1,7 +1,9 @@
 // © Andrew Wei
 
 import _ from 'lodash';
-import { dom, enums, utils } from 'requiem';
+import m, { dom, DirtyType } from 'meno';
+import getRect from 'meno/lib/utils/getRect';
+import getIntersectRect from 'meno/lib/utils/getIntersectRect';
 import Page from './Page';
 import 'gsap';
 import 'gsap/src/uncompressed/plugins/ScrollToPlugin';
@@ -12,11 +14,24 @@ class Log extends Page {
   /** @inheritdoc */
   static get tag() { return 'page-log'; }
 
+  get responsiveness() {
+    return Object.assign(super.responsiveness, {
+      'scroll': {
+        conductor: this,
+        delay: 10.0
+      },
+      'resize': {
+        conductor: this,
+        delay: 10.0
+      }
+    });
+  }
+
   /** @inheritdoc */
   init() {
-    this.respondsTo(this, 10.0, enums.EventType.OBJECT.SCROLL, enums.EventType.OBJECT.RESIZE);
-
-    this.getChild('footer.top-button').addEventListener(enums.EventType.MOUSE.CLICK, (event) => TweenLite.to(this, .5, { scrollTo: { y: 0 }, ease: 'Power2.easeOut' }));
+    this.getChild('footer.top-button').addEventListener('click', (event) => {
+      TweenLite.to(this, .5, { scrollTo: { y: 0 }, ease: 'Power2.easeOut' });
+    });
 
     const nodes = this.querySelectorAll(FADE_IN_ELEMENT_SELECTOR);
 
@@ -28,16 +43,16 @@ class Log extends Page {
   }
 
   /** @inheritdoc */
-  update() {
-    if (this.isDirty(enums.DirtyType.POSITION|enums.DirtyType.SIZE)) {
-      let rect = utils.getRect(document.getElementById('inner-page') || this);
+  update(info) {
+    if (this.isDirty(DirtyType.POSITION|DirtyType.SIZE)) {
+      let rect = getRect(document.getElementById('inner-page') || this);
       let cover = dom.getChild('cover');
 
       if (rect.top < -100) {
-        if (cover) dom.setState(dom.getChild('cover'), 'hidden');
+        if (cover) dom.setAttribute(dom.getChild('cover'), 'state', 'hidden');
       }
       else {
-        if (cover) dom.setState(dom.getChild('cover'), 'none');
+        if (cover) dom.setAttribute(dom.getChild('cover'), 'state', 'none');
       }
 
       let nodes = this.querySelectorAll(FADE_IN_ELEMENT_SELECTOR);
@@ -46,14 +61,14 @@ class Log extends Page {
       for (let i=0, node; node = nodes[i++];) {
         if ((node.nodeType !== Node.ELEMENT_NODE) || (node.tagName.toLowerCase() === 'hr') || (node.isIn)) continue;
 
-        if (utils.getIntersectRect(node).height > 0) {
+        if (getIntersectRect(node).height > 0) {
           node.isIn = true;
           TweenLite.to(node, .3, { opacity: 1, x: 0, y: 0, z: 0, ease: 'Expo.easeOut', delay: (d++)*.1 });
         }
       }
     }
 
-    super.update();
+    super.update(info);
   }
 
   /** @inheritdoc */
@@ -98,5 +113,7 @@ class Log extends Page {
     this.timeline.add(() => { if (done) done(); });
   }
 }
+
+m.register(Log);
 
 export default Log;

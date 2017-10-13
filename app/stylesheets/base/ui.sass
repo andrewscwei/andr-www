@@ -5,19 +5,6 @@ body
   background: get-color('grey')
   perspective: 800px
 
-#home
-  +align(fixed)
-  +overflow(hidden)
-  +size(100%)
-
-  +state('none', true)
-    +pointable(false)
-    z-index: 0
-
-  +state('active')
-    +pointable(true)
-    z-index: 10
-
 #cover
   +align(fixed)
   +size(100vw 100vh)
@@ -43,7 +30,7 @@ body
       content: ''
       opacity: .3
 
-  +state('hidden')
+  +data('state', 'hidden')
     +name('background')
       transform: translate3d(0, 0, -300px)
       &::before
@@ -58,20 +45,20 @@ body
   transform: translate3d(0, 100px, 0)
   z-index: 1000
 
-  +buttons()
+  #{select-buttons()}
     +margin(null 2px)
     +transition(opacity transform, .4s, ease-out)
+    opacity: .6
+    transform: scale(1)
 
-    +state('none', true)
-      opacity: .6
-      transform: scale(1)
-
-    +state('hover' 'active')
+    &:hover
       opacity: 1
       transform: scale(1.1)
 
-    +state('active')
+    +data('state', 'active')
       pointer-events: none
+      opacity: 1
+      transform: scale(1.1)
 
     &.arrow
       +margin(-4px 10px 0)

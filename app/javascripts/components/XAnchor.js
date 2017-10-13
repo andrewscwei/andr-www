@@ -1,8 +1,8 @@
 // © Andrew Wei
 
-import { enums, ui } from 'requiem';
+import m from 'meno';
 
-class XAnchor extends ui.Element(HTMLAnchorElement) {
+class XAnchor extends m.Element(HTMLAnchorElement) {
   /** @inheritdoc */
   static get tag() { return 'x-a'; }
 
@@ -19,9 +19,11 @@ class XAnchor extends ui.Element(HTMLAnchorElement) {
 
   /** @inheritdoc */
   init() {
-    this.on(enums.EventType.MOUSE.CLICK, () => this.disabled = true);
+    this.addEventListener('click', () => this.disabled = true);
     super.init();
   }
 }
+
+m.register(XAnchor);
 
 export default XAnchor;

@@ -1,10 +1,21 @@
 // © Andrew Wei
 
-+element('page-home')
+#home
+  +align(fixed)
   +display('boxv', left center)
+  +overflow(hidden)
   +padding(0 10%)
+  +size(100%)
   background: get-color('black')
   perspective: 800px
+
+  +data('state', 'none')
+    +pointable(false)
+    z-index: 0
+
+  +data('state', 'active')
+    +pointable(true)
+    z-index: 10
 
   +element('x-playground')
     +align()

@@ -1,6 +1,6 @@
 // © Andrew Wei
 
-+buttons()
+#{select-buttons()}
   &.home
     +size(30px)
     svg
@@ -12,7 +12,7 @@
         fill: get-color('white')
         transform-origin: center
 
-    +state('hover')
+    &:hover
       svg
         circle
           fill: get-color('black')
@@ -38,7 +38,7 @@
     +size(18px)
     background: transparent
 
-    +labels()
+    #{select-headings()}, #{select-texts()}
       +font('m', 'xs', 'l')
       +margin(null null 0px null)
       +transition(transform opacity, .4s, cubic-bezier(.17,.67,.3,1.23))
@@ -54,8 +54,8 @@
         +transition(fill, .3s, cubic-bezier(.17,.67,.3,1.23))
         fill: get-color('white')
 
-    +state('hover')
-      +labels()
+    &:hover
+      #{select-headings()}, #{select-texts()}
         opacity: 1
         transform: translate3d(0, 0, 0)
 
@@ -129,7 +129,7 @@
     +transition(opacity, .3s, ease-out)
     background: transparent
 
-    +state('hover')
+    &:hover
       opacity: .6
 
   &.arrow
@@ -137,7 +137,7 @@
     +transition(opacity, .3s, ease-out)
     background: transparent
 
-    +state('hover')
+    &:hover
       opacity: .6 !important
 
   &.triangle
@@ -146,10 +146,10 @@
     background: transparent
     border: 6px solid transparent
 
-    +state('hover')
+    &:hover
       opacity: .6
 
-    +labels()
+    #{select-headings()}, #{select-texts()}
       +align()
       +display('boxv')
       +font('m', 'xs', 'l')
@@ -159,7 +159,7 @@
       border-bottom-color: get-color('white')
       transform-origin: bottom center
 
-      +labels()
+      #{select-headings()}, #{select-texts()}
         +edge(unset unset -26px -50px)
         +size(100px auto)
         text-align: center
@@ -168,7 +168,7 @@
       border-top-color: get-color('white')
       transform-origin: top center
 
-      +labels()
+      #{select-headings()}, #{select-texts()}
         +edge(-26px unset unset -50px)
         +size(100px auto)
         text-align: center
@@ -177,7 +177,7 @@
       border-left-color: get-color('white')
       transform-origin: left center
 
-      +labels()
+      #{select-headings()}, #{select-texts()}
         +edge(-13px 12px unset unset)
         +size(auto 26px)
         text-align: right
@@ -186,7 +186,7 @@
       border-right-color: get-color('white')
       transform-origin: right center
 
-      +labels()
+      #{select-headings()}, #{select-texts()}
         +edge(-13px unset unset 12px)
         +size(auto 26px)
         text-align: right
@@ -197,15 +197,15 @@
     background: get-color('white')
     border-radius: 4px
 
-    +labels()
+    #{select-headings()}, #{select-texts()}
       +font('m', 'xs', 'l')
       +transition(color, .3s, ease-out)
       color: get-color('black')
 
-    +state('hover')
+    &:hover
       background: get-color('black')
 
-      +labels()
+      #{select-headings()}, #{select-texts()}
         color: get-color('white')
 
   &.dot
@@ -220,25 +220,25 @@
     background: transparent
     border: 1px solid get-color('white', .1)
 
-    +icons()
+    #{select-icons()}
       +size(15px)
 
-    +labels()
+    #{select-headings()}, #{select-texts()}
       color: get-color('white')
       text-transform: capitalize
 
-    +state('hover')
+    &:hover
       border: 1px solid get-color('white')
 
     &.prev
       +display('box<', right center)
 
-      +icons()
+      #{select-icons()}
         +margin(null null null 10px)
 
     &.next
       +display('box>', left center)
 
-      +icons()
+      #{select-icons()}
         +margin(null 10px null null)
 

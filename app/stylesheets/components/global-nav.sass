@@ -3,39 +3,39 @@
 +element('global-nav')
   +pointable(false)
 
-  +buttons()
+  #{select-buttons()}
     +pointable(true)
 
-  +button('home-button')
+  +name('home-button')
     +align(top center)
     +edge(10px null null null)
     transform: translate3d(0, -100px, 0)
 
-  +button('grid-button')
+  +name('grid-button')
     +align(top center)
     +edge(10px null null null)
     transform: translate3d(0, -100px, 0)
 
-  +button('logs-button')
+  +name('logs-button')
     +align(bottom center)
     +edge(null null 10px null)
     transform: translate3d(0, 100px, 0)
 
-  +button('up-button')
+  +name('up-button')
     +align(top center)
     display: none
 
-  +button('down-button')
+  +name('down-button')
     +align(bottom center)
     +edge(null null 10px null)
     display: none
 
-  +button('right-button')
+  +name('right-button')
     +align(right center)
     +edge(null 10px null null)
     display: none
 
-  +button('left-button')
+  +name('left-button')
     +align(left center)
     +edge(null null null 10px)
     display: none
