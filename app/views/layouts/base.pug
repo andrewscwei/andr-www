@@ -42,8 +42,12 @@ html(lang=locale)
     meta(name='msapplication-starturl' content='/')
 
     if _.get(env, 'GOOGLE_ANALYTICS_ID')
+      script(async src=`https://www.googletagmanager.com/gtag/js?id=#{env.GOOGLE_ANALYTICS_ID}`)
       script.
-        (function(e,t,n,r,i,s){e.GoogleAnalyticsObject=r;e[r]||(e[r]=function(){(e[r].q=e[r].q||[]).push(arguments)});e[r].l=+(new Date);i=t.createElement(n);s=t.getElementsByTagName(n)[0];i.src='//www.google-analytics.com/analytics.js';s.parentNode.insertBefore(i,s)})(window,document,'script','ga');ga('create','#{env.GOOGLE_ANALYTICS_ID}');ga('send','pageview')
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', '#{env.GOOGLE_ANALYTICS_ID}');
 
     block styles
       link(rel='stylesheet' href=p('/assets/stylesheets/application.css'))
