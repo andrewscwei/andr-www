@@ -7,6 +7,7 @@
                                               if this is an object, its
                                               properties will define the button.
   @param {string}  [$descriptor.iconClass]  - Icon class.
+  @param {string}  [$descriptor.iconUrl]    - Icon url.
   @param {string}  [$descriptor.label]      - Label of the button.
   @param {string}  [$descriptor.labelClass] - Label class.
   @param {string}  [$descriptor.localized]  - Specifies whether the label is
@@ -35,7 +36,9 @@ mixin button($descriptor)
 
   @see +button()
 mixin button-body($descriptor)
-  if ($descriptor.iconClass)
+  if ($descriptor.iconUrl)
+    span(type='icon' style=`background-image: url(${$descriptor.iconUrl})`)
+  else if ($descriptor.iconClass)
     span(type='icon' class=$descriptor.iconClass)
   if ($descriptor.label)
     if ($descriptor.localized === true || $descriptor.localized === undefined)
