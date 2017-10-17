@@ -54,6 +54,8 @@ class Home extends Page {
       this.timeline.add(() => { if (done) done(); });
     }
     else {
+      dom.setAttribute(this.getChild('name-card'), 'data-state', 'active');
+      TweenLite.to(this, 0, { z: -600, opacity: .3, ease: 'Expo.easeOut' });
       if (done) done();
     }
   }

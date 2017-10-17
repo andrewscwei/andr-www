@@ -7,7 +7,7 @@ if (process.env.NODE_ENV === 'development') {
   var debug = require('debug')('app:Page');
 }
 
-class Page extends m.Element() {
+class Page extends m.Element(`page-base`) {
   static get extends() { return 'div'; }
 
   /**
@@ -162,5 +162,7 @@ class Page extends m.Element() {
     }
   }
 }
+
+m.register(Page);
 
 export default Page;
