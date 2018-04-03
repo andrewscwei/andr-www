@@ -19,8 +19,8 @@ const morgan = require('morgan');
 const path = require('path');
 const pluralize = require('pluralize');
 const prismDOM = require('prism-dom');
-const prismic = require('gulp-sys-metalprismic/helpers/prismic-helpers');
-const view = require('gulp-sys-metalprismic/helpers/view-helpers');
+const prismic = require('gulp-prismic-mpa-builder/helpers/prismic-helpers');
+const view = require('gulp-prismic-mpa-builder/helpers/view-helpers');
 
 const baseDir = path.join(__dirname, '../');
 
