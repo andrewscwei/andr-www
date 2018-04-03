@@ -5,7 +5,7 @@
  */
 
 const $ = require('../');
-const gulp = require('gulp-sys-metalprismic');
+const gulp = require('gulp-prismic-mpa-builder');
 const path = require('path');
 
 const baseDir = path.join(__dirname, '../../');
