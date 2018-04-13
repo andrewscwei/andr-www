@@ -1,6 +1,6 @@
 {
   "name": "andr-www",
-  "version": "2.14.0",
+  "version": "2.15.0",
   "private": true,
   "license": "MIT",
   "files": [
@@ -17,7 +17,9 @@
     "build": "gulp --gulpfile config/tasks/index.js",
     "previewer": "NODE_ENV=development SSR_ENABLED=true npm run build && NODE_ENV=development DEBUG=app nodemon --verbose --watch previewer --watch config --ext js,json,pug --inspect previewer",
     "dev": "NODE_ENV=development npm run build -- --watch --serve",
-    "prod": "NODE_ENV=production npm run build -- --serve"
+    "prod": "NODE_ENV=production npm run build -- --serve",
+    "lint": "eslint . --ignore-path .gitignore",
+    "lint:fix": "npm run lint -- --fix"
   },
   "dependencies": {
     "body-parser": "^1.18.2",
@@ -42,6 +44,7 @@
     "async": "^2.6.0",
     "chalk": "^2.3.2",
     "document-register-element": "^1.8.0",
+    "eslint": "^4.19.1",
     "gsap": "1.20.4",
     "gulp": "^3.9.1",
     "gulp-prismic-mpa-builder": "^7.0.2",

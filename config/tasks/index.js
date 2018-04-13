@@ -1,21 +1,20 @@
-// © Andrew Wei
 /**
  * @file Default task - builds the entire app with the option to watch for
  *       changes and serve the app in the dev server.
  */
 
-const $ = require('../');
-const gulp = require('gulp-prismic-mpa-builder');
-const path = require('path');
+const $ = require(`../`);
+const gulp = require(`gulp-prismic-mpa-builder`);
+const path = require(`path`);
 
-const baseDir = path.join(__dirname, '../../');
+const baseDir = path.join(__dirname, `../../`);
 
 gulp.init({
   base: path.join(baseDir, $.sourceDir),
   dest: path.join(baseDir, $.buildDir),
   scripts: {
     entry: {
-      application: 'application.js'
+      application: `application.js`
     },
     module: {
       rules: [{
@@ -24,17 +23,17 @@ gulp.init({
       }]
     },
     resolve: {
-      extensions: ['.pug'],
+      extensions: [`.pug`],
       modules: [
-        path.join(baseDir, $.configDir, 'data'),
-        path.join(baseDir, $.viewsDir, 'includes'),
-        path.join(baseDir, 'node_modules')
+        path.join(baseDir, $.configDir, `data`),
+        path.join(baseDir, $.viewsDir, `includes`),
+        path.join(baseDir, `node_modules`)
       ]
     },
     envs: {
       development: {
         plugins: [
-          new (require('webpack').DefinePlugin)({
+          new (require(`webpack`).DefinePlugin)({
             'process.env': {
               NODE_ENV: JSON.stringify(`development`)
             }
@@ -43,7 +42,7 @@ gulp.init({
       },
       production: {
         plugins: [
-          new (require('webpack').DefinePlugin)({
+          new (require(`webpack`).DefinePlugin)({
             'process.env': {
               NODE_ENV: JSON.stringify(`production`)
             }
@@ -54,15 +53,15 @@ gulp.init({
   },
   views: process.env.SSR_ENABLED ? false : {
     i18n: {
-      locales: $.locales || ['en'],
-      directory: path.join(baseDir, $.configDir, 'locales')
+      locales: $.locales || [`en`],
+      directory: path.join(baseDir, $.configDir, `locales`)
     },
     metadata: {
-      _: require('lodash'),
+      _: require(`lodash`),
       $: $,
-      data: require('require-dir')(path.join(baseDir, $.configDir, 'data'), { recurse: true }),
+      data: require(`require-dir`)(path.join(baseDir, $.configDir, `data`), { recurse: true }),
       env: process.env,
-      m: require('moment')
+      m: require(`moment`)
     },
     collections: $.collections,
     mathjax: true,
@@ -73,7 +72,7 @@ gulp.init({
       text: (doc) => (doc.markdown)
     },
     tags: $.tags,
-    watch: { files: [path.join(baseDir, $.configDir, '**/*')] }
+    watch: { files: [path.join(baseDir, $.configDir, `**/*`)] }
   },
   sitemap: {
     siteUrl: $.url
