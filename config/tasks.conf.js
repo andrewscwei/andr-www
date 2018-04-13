@@ -3,15 +3,15 @@
  *       changes and serve the app in the dev server.
  */
 
-const $ = require(`./app.conf`);
+const appConfig = require(`./app.conf`);
 const gulp = require(`gulp-prismic-mpa-builder`);
 const path = require(`path`);
 
 const baseDir = path.join(__dirname, `../`);
 
 module.exports = {
-  base: path.join(baseDir, $.sourceDir),
-  dest: path.join(baseDir, $.buildDir),
+  base: path.join(baseDir, appConfig.sourceDir),
+  dest: path.join(baseDir, appConfig.buildDir),
   extras: {
     base: path.join(baseDir, `app`, `static`)
   },
@@ -22,14 +22,14 @@ module.exports = {
     module: {
       rules: [{
         test: /\.pug/,
-        loader: `pug-loader?root=${path.join(baseDir, $.viewsDir)}`
+        loader: `pug-loader?root=${path.join(baseDir, appConfig.viewsDir)}`
       }]
     },
     resolve: {
       extensions: [`.pug`],
       modules: [
-        path.join(baseDir, $.configDir, `data`),
-        path.join(baseDir, $.viewsDir, `includes`),
+        path.join(baseDir, appConfig.configDir, `data`),
+        path.join(baseDir, appConfig.viewsDir, `includes`),
         path.join(baseDir, `node_modules`)
       ]
     },
@@ -56,16 +56,15 @@ module.exports = {
   },
   views: process.env.SSR_ENABLED ? false : {
     i18n: {
-      locales: $.locales || [`en`],
-      directory: path.join(baseDir, $.configDir, `locales`)
+      locales: appConfig.locales || [`en`],
+      directory: path.join(baseDir, appConfig.configDir, `locales`)
     },
     metadata: {
-      $: $,
-      env: process.env,
-      _: require(`lodash`),
-      m: require(`moment`)
+      $config: appConfig,
+      $env: process.env,
+      $data: require(`require-dir`)(path.join(baseDir, appConfig.configDir, `data`), { recurse: true })
     },
-    collections: $.collections,
+    collections: appConfig.collections,
     mathjax: true,
     prism: true,
     related: {
@@ -73,14 +72,11 @@ module.exports = {
       max: 3,
       text: (doc) => (doc.markdown)
     },
-    tags: $.tags,
-    watch: { files: [path.join(baseDir, $.configDir, `**/*`)] }
-  },
-  serve: {
-    port: 8080
+    tags: appConfig.tags,
+    watch: { files: [path.join(baseDir, appConfig.configDir, `**/*`)] }
   },
   sitemap: {
-    siteUrl: $.url
+    siteUrl: appConfig.url
   }
 };
 

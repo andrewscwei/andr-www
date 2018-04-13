@@ -18,7 +18,7 @@ version:=$(shell cat package.json | grep version | head -1 | awk -F: '{ print $$
 env:=production
 net:=bridge
 host:=$(shell echo $$(ifconfig | sed -En 's/127.0.0.1//;s/.*inet (addr:)?(([0-9]*\.){3}[0-9]*).*/\2/p'))
-port:=3000
+port:=8080
 
 ENV:=$(shell echo $$(([[ "$(env)" = "dev" ]] || [[ "$(env)" = "devel" ]] || [[ "$(env)" = "development" ]]) && echo "development" || echo "production"))
 SUFFIX:=$(shell echo $$(([[ "$(ENV)" = "development" ]]) && echo "-dev" || echo $(SUFFIX)))

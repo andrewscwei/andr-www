@@ -22,7 +22,7 @@ block page
         div.grid
           each entry, index in pagination.files
             +log-entry(entry)(name='entry')
-      else if data.log
+      else if $data.log
         div.grid
-          each entry, index in data.log
+          each entry, index in $data.log
             +log-entry(entry)(name='entry')

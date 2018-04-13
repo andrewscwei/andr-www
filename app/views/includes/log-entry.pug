@@ -1,7 +1,7 @@
 mixin log-entry($entry)
   -
     function getIdx(log) {
-      const entries = (collections && collections.log) || (data && data.log);
+      const entries = (collections && collections.log) || ($data && $data.log);
       if (!entries) return -1;
 
       const l = entries.length;
@@ -12,8 +12,8 @@ mixin log-entry($entry)
 
       return -1;
     }
-  a(type='button' is='log-entry' href=p($entry.path))&attributes(attributes)
+  a(type='button' is='log-entry' href=$asset($entry.path))&attributes(attributes)
     div.wrapper
       h2.title= $entry.title
-      span.date(type='label')= m($entry.date).format('MMM DD YY')
+      span.date(type='label')= $moment($entry.date).format('MMM DD YY')
       span.number(type='label')= getIdx($entry)

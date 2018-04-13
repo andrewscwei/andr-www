@@ -1,5 +1,5 @@
-const $ = require(`../config/app.conf`);
 const _ = require(`lodash`);
+const appConfig = require(`../config/app.conf`);
 const bodyParser = require(`body-parser`);
 const compress = require(`compression`);
 const cookieParser = require(`cookie-parser`);
@@ -11,42 +11,41 @@ const i18n = require(`i18n`);
 const log = require(`debug`)(`app`);
 const mathjaxDOM = require(`mathjax-dom`);
 const methodOverride = require(`method-override`);
+const moment = require(`moment`);
 const morgan = require(`morgan`);
 const path = require(`path`);
 const pluralize = require(`pluralize`);
 const prismDOM = require(`prism-dom`);
 const prismic = require(`gulp-prismic-mpa-builder/helpers/prismic-helpers`);
-const view = require(`gulp-prismic-mpa-builder/helpers/view-helpers`);
+const { getPath, getDocumentPath, getPaginationData } = require(`gulp-prismic-mpa-builder/helpers/view-helpers`);
 
 const baseDir = path.join(__dirname, `../`);
 
 // Create app and define global/local members.
 const app = express();
-app.set(`port`, process.env.PORT || 3000);
-app.set(`views`, path.join(baseDir, $.viewsDir));
+app.set(`port`, process.env.PORT || 8080);
+app.set(`views`, path.join(baseDir, appConfig.viewsDir));
 app.set(`view engine`, `pug`);
-app.locals.basedir = path.join(baseDir, $.viewsDir);
-_.merge(app.locals, {
-  _: _,
-  $: $,
-  data: require(`require-dir`)(path.join(baseDir, $.configDir, `data`), { recurse: true }),
-  env: process.env,
-  m: require(`moment`),
-  p: p => (view.getPath(p, path.join(baseDir, $.buildDir, `rev-manifest.json`)))
-});
+app.locals.basedir = path.join(baseDir, appConfig.viewsDir);
+app.locals.$config = appConfig;
+app.locals.$data = require(`require-dir`)(path.join(baseDir, appConfig.configDir, `data`), { recurse: true });
+app.locals.$env = process.env;
+app.locals.$moment = moment;
+app.locals.$asset = p => (getPath(p, path.join(baseDir, appConfig.buildDir, `rev-manifest.json`)));
+app.locals._ = _;
 
 // Localization setup.
 // @see {@link https://www.npmjs.com/package/i18n}
 i18n.configure({
-  default: (($.locales instanceof Array) ? $.locales[0] : $.locales) || `en`,
-  locales: $.locales || [`en`],
-  directory: path.join(baseDir, $.configDir, `locales`)
+  default: ((appConfig.locales instanceof Array) ? appConfig.locales[0] : appConfig.locales) || `en`,
+  locales: appConfig.locales || [`en`],
+  directory: path.join(baseDir, appConfig.configDir, `locales`)
 });
 app.use(i18n.init);
 
 // Favicon serving setup.
 // @see {@link https://www.npmjs.com/package/serve-favicon}
-app.use(favicon(path.join(baseDir, $.buildDir, `favicon.png`)));
+app.use(favicon(path.join(baseDir, appConfig.buildDir, `favicon.png`)));
 
 // Enable gzip compression.
 // @see {@link https://www.npmjs.com/package/compression}
@@ -71,7 +70,7 @@ app.use(cookieParser());
 app.use(methodOverride());
 
 // Serve static files and add expire headers.
-app.use(express.static(path.join(baseDir, $.buildDir), {
+app.use(express.static(path.join(baseDir, appConfig.buildDir), {
   setHeaders: function(res, path) {
     if (!/^\/assets\//.test(res.req.url)) return;
 
@@ -86,16 +85,16 @@ app.use(`/`, (req, res, next) => {
     .getAPI(process.env.PRISMIC_API_ENDPOINT, { accessToken: process.env.PRISMIC_ACCESS_TOKEN })
     .then(api => {
       const ref = req.cookies[prismic.previewCookie] || api.master();
-      const orderings = _.flatMap($.collections, (val, key) => (`my.${key}.${val.sortBy}${val.reverse ? ` desc` : ``}`));
+      const orderings = _.flatMap(appConfig.collections, (val, key) => (`my.${key}.${val.sortBy}${val.reverse ? ` desc` : ``}`));
       res.locals.ctx = { api: api, ref: ref };
       return prismic.getEverything(api, ref, ``, orderings);
     })
     .then(response => {
-      const docs = prismic.reduce(response.results, true, $);
+      const docs = prismic.reduce(response.results, true, appConfig);
       for (let docType in docs) {
-        const c = _.get($, `collections.${docType}`);
+        const c = _.get(appConfig, `collections.${docType}`);
         if (c && c.permalink) docs[docType].forEach(doc => {
-          doc.path = view.getDocumentPath(doc, $.collections);
+          doc.path = getDocumentPath(doc, appConfig.collections);
         });
       }
       _.merge(req.app.locals.data, docs);
@@ -113,7 +112,7 @@ app.get(`/preview`, (req, res, next) => {
   }
   else {
     ctx.api
-      .previewSession(previewToken, (doc) => (view.getDocumentPath(doc, $.collections) || `/`), `/`)
+      .previewSession(previewToken, (doc) => (getDocumentPath(doc, appConfig.collections) || `/`), `/`)
       .then(url => {
         res.cookie(prismic.previewCookie, previewToken, { maxAge: 60 * 30, path: `/`, httpOnly: false });
         res.redirect(url);
@@ -127,10 +126,10 @@ app.get(`/preview`, (req, res, next) => {
 app.get(`/:collection`, (req, res, next) => {
   const collection = req.params[`collection`];
   const docType = pluralize(collection, 1);
-  const config = $.collections[docType];
+  const config = appConfig.collections[docType];
 
   if (config) {
-    res.locals.pagination = view.getPaginationData(collection, req.app.locals.data[docType], 1, $.collections);
+    res.locals.pagination = getPaginationData(collection, req.app.locals.data[docType], 1, appConfig.collections);
     res.render(`layouts/${collection}`);
   }
   else {
@@ -147,7 +146,7 @@ app.get(`/:collection/:page`, (req, res, next) => {
   else {
     const collection = req.params[`collection`];
     const docType = pluralize(collection, 1);
-    const pagination = view.getPaginationData(collection, req.app.locals.data[docType], page, $.collections);
+    const pagination = getPaginationData(collection, req.app.locals.data[docType], page, appConfig.collections);
 
     if (!pagination) {
       next();
