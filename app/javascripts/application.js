@@ -1,12 +1,9 @@
-// © Andrew Wei
-
-'use strict';
+/* global Typekit:true */
 
 import 'document-register-element';
 import $ from '../../config';
-import _ from 'lodash';
 import pm from 'page-manager';
-import m, { dom, NodeState } from 'meno';
+import { dom, NodeState } from 'meno';
 
 import './components/XAnchor';
 import './components/GlobalNav';
@@ -14,8 +11,8 @@ import './pages/Home';
 import './pages/Logs';
 import './pages/Log';
 
-if (process.env.NODE_ENV === 'development') {
-  localStorage.debug = `app*,meno*`;
+if (process.env.NODE_ENV === `development`) {
+  window.localStorage.debug = `app*,meno*`;
 }
 
 pm.locales = $.locales;
@@ -23,10 +20,10 @@ pm.autoRouting = $.autoRouting;
 
 // Put page routing/transitioning/loading logic here.
 pm.request((newDocument, oldDocument, next) => {
-  let oldMJStyles = oldDocument.getElementById('MathJax_SVG_styles');
-  let oldMJDefs = oldDocument.getElementById('MathJax_SVG_glyphs');
-  let newMJStyles = newDocument.getElementById('MathJax_SVG_styles');
-  let newMJDefs = newDocument.getElementById('MathJax_SVG_glyphs');
+  let oldMJStyles = oldDocument.getElementById(`MathJax_SVG_styles`);
+  let oldMJDefs = oldDocument.getElementById(`MathJax_SVG_glyphs`);
+  let newMJStyles = newDocument.getElementById(`MathJax_SVG_styles`);
+  let newMJDefs = newDocument.getElementById(`MathJax_SVG_glyphs`);
 
   if (oldMJStyles) oldMJStyles.parentNode.removeChild(oldMJStyles);
   if (oldMJDefs) oldMJDefs.parentNode.parentNode.removeChild(oldMJDefs.parentNode);
@@ -37,25 +34,25 @@ pm.request((newDocument, oldDocument, next) => {
   next();
 });
 
-pm.transition('in', '/', (next) => {
-  transitionIn(dom.getChild('global-nav'));
-  transitionIn(dom.getChild('home'), next);
+pm.transition(`in`, `/`, (next) => {
+  transitionIn(dom.getChild(`global-nav`));
+  transitionIn(dom.getChild(`home`), next);
 });
 
-pm.transition('out', '/', (next) => {
-  transitionOut(dom.getChild('global-nav'));
-  transitionOut(dom.getChild('home'), next);
+pm.transition(`out`, `/`, (next) => {
+  transitionOut(dom.getChild(`global-nav`));
+  transitionOut(dom.getChild(`home`), next);
 });
 
-pm.transition('in', '*', (next) => {
-  transitionOut(dom.getChild('home'));
-  transitionIn(dom.getChild('global-nav'));
-  transitionIn(dom.getChild('page'), next);
+pm.transition(`in`, `*`, (next) => {
+  transitionOut(dom.getChild(`home`));
+  transitionIn(dom.getChild(`global-nav`));
+  transitionIn(dom.getChild(`page`), next);
 });
 
-pm.transition('out', '*', (next) => {
-  transitionOut(dom.getChild('global-nav'));
-  transitionOut(dom.getChild('page'), next);
+pm.transition(`out`, `*`, (next) => {
+  transitionOut(dom.getChild(`global-nav`));
+  transitionOut(dom.getChild(`page`), next);
 });
 
 // Begin routing after all requirements are defined.
@@ -90,7 +87,7 @@ function transitionIn(element, next) {
   if (element.in && (element.nodeState === NodeState.INITIALIZED))
     element.in(next);
   else
-    element.addEventListener('nodeinitialize', event => { if (element.in) element.in(next); else if (next) next(); });
+    element.addEventListener(`nodeinitialize`, event => { if (element.in) element.in(next); else if (next) next(); });
 }
 
 /**
@@ -105,5 +102,5 @@ function transitionOut(element, next) {
   if (element.out && (element.nodeState === NodeState.INITIALIZED))
     element.out(next);
   else
-    element.addEventListener('nodeinitialize', event => { if (element.out) element.out(next); else if (next) next(); });
+    element.addEventListener(`nodeinitialize`, event => { if (element.out) element.out(next); else if (next) next(); });
 }

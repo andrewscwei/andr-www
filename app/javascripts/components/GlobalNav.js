@@ -1,11 +1,9 @@
-// © Andrew Wei
-
 import m from 'meno';
 import 'gsap';
 
-class GlobalNav extends m.Element('global-nav') {
+class GlobalNav extends m.Element(`global-nav`) {
   /** @inheritdoc */
-  static get extends() { return 'nav'; }
+  static get extends() { return `nav`; }
 
   /**
    * TimelineLite instance.
@@ -29,9 +27,9 @@ class GlobalNav extends m.Element('global-nav') {
     const duration = .2;
 
     this.timeline = new TimelineLite();
-    if (this.getChild('home-button')) this.timeline.add(TweenLite.to(this.getChild('home-button'), duration, { y: 0, ease: 'Expo.easeOut' }));
-    if (this.getChild('grid-button')) this.timeline.add(TweenLite.to(this.getChild('grid-button'), duration, { y: 0, ease: 'Expo.easeOut' }));
-    if (this.getChild('logs-button')) this.timeline.add(TweenLite.to(this.getChild('logs-button'), duration, { y: 0, ease: 'Expo.easeOut' }));
+    if (this.getChild(`home-button`)) this.timeline.add(TweenLite.to(this.getChild(`home-button`), duration, { y: 0, ease: `Expo.easeOut` }));
+    if (this.getChild(`grid-button`)) this.timeline.add(TweenLite.to(this.getChild(`grid-button`), duration, { y: 0, ease: `Expo.easeOut` }));
+    if (this.getChild(`logs-button`)) this.timeline.add(TweenLite.to(this.getChild(`logs-button`), duration, { y: 0, ease: `Expo.easeOut` }));
     this.timeline.add(() => { if (done) done(); });
   }
 
@@ -40,9 +38,9 @@ class GlobalNav extends m.Element('global-nav') {
     const duration = .2;
 
     this.timeline = new TimelineLite();
-    if (this.getChild('home-button')) this.timeline.add(TweenLite.to(this.getChild('home-button'), duration, { y: -100, ease: 'Expo.easeOut' }));
-    if (this.getChild('grid-button')) this.timeline.add(TweenLite.to(this.getChild('grid-button'), duration, { y: -100, ease: 'Expo.easeOut' }));
-    if (this.getChild('logs-button')) this.timeline.add(TweenLite.to(this.getChild('logs-button'), duration, { y: 100, ease: 'Expo.easeOut' }));
+    if (this.getChild(`home-button`)) this.timeline.add(TweenLite.to(this.getChild(`home-button`), duration, { y: -100, ease: `Expo.easeOut` }));
+    if (this.getChild(`grid-button`)) this.timeline.add(TweenLite.to(this.getChild(`grid-button`), duration, { y: -100, ease: `Expo.easeOut` }));
+    if (this.getChild(`logs-button`)) this.timeline.add(TweenLite.to(this.getChild(`logs-button`), duration, { y: 100, ease: `Expo.easeOut` }));
     this.timeline.add(() => { if (done) done(); });
   }
 }

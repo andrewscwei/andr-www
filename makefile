@@ -1,5 +1,3 @@
-# © Andrew Wei
-
 .PHONY: all test clean build run
 
 COLOR_PREFIX = "\\033["
@@ -30,7 +28,7 @@ all: build
 clean: CONTAINERS:=$(shell echo $$(docker ps -a -q))
 clean: IMAGE_NAME:=$(shell echo $(subst /,\\/,$(image)))
 clean: IMAGES:=$(shell echo $$(docker images | awk '$$1 ~ /^$(IMAGE_NAME)$$/ {print $$3}'))
-clean:	
+clean:
 	@docker system prune -f
 	@COUNT=$(strip $(shell echo $(CONTAINERS) | wc -w)); \
 	if [[ "$$COUNT" != "0" ]]; then \
