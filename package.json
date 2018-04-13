@@ -1,6 +1,6 @@
 {
   "name": "andr-www",
-  "version": "2.15.0",
+  "version": "2.16.0",
   "private": true,
   "license": "MIT",
   "files": [
@@ -13,8 +13,8 @@
   "scripts": {
     "start": "node previewer",
     "test": "mocha tests --recursive --reporter spec",
-    "clean": "gulp clean --gulpfile config/tasks/index.js",
-    "build": "gulp --gulpfile config/tasks/index.js",
+    "clean": "gulp clean --gulpfile config/tasks.conf.js",
+    "build": "gulp --gulpfile config/tasks.conf.js",
     "previewer": "NODE_ENV=development SSR_ENABLED=true npm run build && NODE_ENV=development DEBUG=app nodemon --verbose --watch previewer --watch config --ext js,json,pug --inspect previewer",
     "dev": "NODE_ENV=development npm run build -- --watch --serve",
     "prod": "NODE_ENV=production npm run build -- --serve",
@@ -43,7 +43,7 @@
   "devDependencies": {
     "async": "^2.6.0",
     "chalk": "^2.3.2",
-    "document-register-element": "^1.8.0",
+    "document-register-element": "^1.8.1",
     "eslint": "^4.19.1",
     "gsap": "1.20.4",
     "gulp": "^3.9.1",
@@ -52,10 +52,10 @@
     "klaw": "^2.1.1",
     "meno": "^0.27.0",
     "minuet": "^1.3.0",
-    "mocha": "^5.0.5",
+    "mocha": "^5.1.0",
     "nodemon": "^1.17.3",
     "page-manager": "^1.6.0",
-    "prismjs": "^1.13.0",
+    "prismjs": "^1.14.0",
     "pug-loader": "^2.4.0",
     "superagent": "^3.8.2",
     "supertest": "^3.0.0"

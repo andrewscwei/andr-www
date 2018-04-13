@@ -1,7 +1,7 @@
 /* global Typekit:true */
 
 import 'document-register-element';
-import $ from '../../config';
+import $ from '../../config/app.conf';
 import pm from 'page-manager';
 import { dom, NodeState } from 'meno';
 

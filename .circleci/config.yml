@@ -25,7 +25,7 @@ jobs:
             echo "export IS_RELEASE=`[[ $(git describe --tags) =~ ^v[0-9]+(\.[0-9]+)+(-rc[0-9]+)?(-alpha[0-9]+)?$ ]] && echo true || echo false`" >> .env
       - restore_cache:
           keys:
-            - dependency-cache-{{ checksum "package.json" }}
+            - dependency-cache-{{ checksum "yarn.lock" }}
             - dependency-cache-
       - run:
           name: Install NPM dependencies
@@ -33,7 +33,7 @@ jobs:
             source .env
             yarn --pure-lockfile
       - save_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
+          key: dependency-cache-{{ checksum "yarn.lock" }}
           paths:
             - "node_modules"
       - run:
