@@ -1,6 +1,6 @@
 import m, { dom } from 'meno';
 import Page from './Page';
-import 'gsap';
+import anime from 'animejs';
 
 class Logs extends Page {
   /** @inheritdoc */
@@ -14,19 +14,19 @@ class Logs extends Page {
 
     if (entries && !(entries instanceof Array)) entries = [].concat(entries);
 
-    this.timeline = new TimelineLite();
+    this.timeline = anime.timeline();
     if (paginator)
-      this.timeline.add(TweenLite.to(paginator, .2, { y: 0, opacity: 1, ease: `Expo.easeOut` }));
+      this.timeline.add({ targets: paginator, duration: 200, translateY: [100, 0], opacity: [0, 1], easing: `easeOutExpo` });
     if (tags)
-      this.timeline.add(TweenLite.to(tags, .2, { y: 0, opacity: 1, ease: `Expo.easeOut` }));
+      this.timeline.add({ targets: tags, duration: 200, translateY: [-20, 0], opacity: [0, 1], easing: `easeOutExpo` });
     if (entries && entries.length) {
       entries.forEach(entry => {
-        this.timeline.add(TweenLite.to(entry, .2, { opacity: 1, y: 0, ease: `Expo.easeOut` }), `-=${.13}`);
+        this.timeline.add({ targets: entry, duration: 200, opacity: [0, 1], translateY: [100, 0], easing: `easeOutExpo`, offset: `-=${130}` });
       });
     }
-    this.timeline.add(() => {
+    this.timeline.complete = () => {
       if (done) done();
-    });
+    };
   }
 
   /** @inheritdoc */
@@ -37,19 +37,19 @@ class Logs extends Page {
 
     if (entries && !(entries instanceof Array)) entries = [].concat(entries);
 
-    this.timeline = new TimelineLite();
+    this.timeline = anime.timeline();
     if (paginator)
-      this.timeline.add(TweenLite.to(paginator, .2, { y: 100, opacity: 0, ease: `Expo.easeOut` }));
+      this.timeline.add({ targets: paginator, duration: 200, translateY: 100, opacity: 0, easing: `easeOutExpo` });
     if (tags)
-      this.timeline.add(TweenLite.to(tags, .2, { y: -20, opacity: 0, ease: `Expo.easeOut` }));
+      this.timeline.add({ targets: tags, duration: 200, translateY: -20, opacity: 0, easing: `easeOutExpo` });
     if (entries && entries.length) {
       entries.forEach(entry => {
-        this.timeline.add(TweenLite.to(entry, .2, { opacity: 0, y: 100, ease: `Expo.easeInOut` }), `-=${.15}`);
+        this.timeline.add({ targets: entry, duration: 200, opacity: 0, translateY: 100, easing: `easeInOutExpo`, offset: `-=${150}` });
       });
     }
-    this.timeline.add(() => {
+    this.timeline.complete = () => {
       if (done) done();
-    });
+    };
   }
 }
 
