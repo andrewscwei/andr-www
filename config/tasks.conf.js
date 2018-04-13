@@ -32,26 +32,6 @@ module.exports = {
         path.join(baseDir, appConfig.viewsDir, `includes`),
         path.join(baseDir, `node_modules`)
       ]
-    },
-    envs: {
-      development: {
-        plugins: [
-          new (require(`webpack`).DefinePlugin)({
-            'process.env': {
-              NODE_ENV: JSON.stringify(`development`)
-            }
-          })
-        ]
-      },
-      production: {
-        plugins: [
-          new (require(`webpack`).DefinePlugin)({
-            'process.env': {
-              NODE_ENV: JSON.stringify(`production`)
-            }
-          })
-        ]
-      }
     }
   },
   views: process.env.SSR_ENABLED ? false : {

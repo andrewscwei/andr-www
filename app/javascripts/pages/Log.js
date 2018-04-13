@@ -2,8 +2,7 @@ import m, { dom, DirtyType } from 'meno';
 import getRect from 'meno/lib/utils/getRect';
 import getIntersectRect from 'meno/lib/utils/getIntersectRect';
 import Page from './Page';
-import 'gsap';
-import 'gsap/src/uncompressed/plugins/ScrollToPlugin';
+import anime from 'animejs';
 
 const FADE_IN_ELEMENT_SELECTOR = `pre, [name="footer"] [type="button"], [name="related"] [type="button"]`;
 
@@ -27,14 +26,21 @@ class Log extends Page {
   /** @inheritdoc */
   init() {
     this.getChild(`footer.top-button`).addEventListener(`click`, (event) => {
-      TweenLite.to(this, .5, { scrollTo: { y: 0 }, ease: `Power2.easeOut` });
+      const scroll = { y: this.scrollTop };
+
+      anime({
+        targets: scroll,
+        y: 0,
+        duration: 350,
+        easing: `easeInOutCubic`,
+        update: () => {
+          this.scrollTop = scroll.y;
+        }
+      });
     });
 
     const nodes = this.querySelectorAll(FADE_IN_ELEMENT_SELECTOR);
-
-    for (let i=0, node; node = nodes[i++];) {
-      TweenLite.to(node, 0, { opacity: 0, x: 0, y: 60, z: 0 });
-    }
+    anime({ targets: nodes, duration: 0, opacity: 0, translateX: 0, translateY: 60, translateZ: 0 });
 
     super.init();
   }
@@ -60,7 +66,7 @@ class Log extends Page {
 
         if (getIntersectRect(node).height > 0) {
           node.isIn = true;
-          TweenLite.to(node, .3, { opacity: 1, x: 0, y: 0, z: 0, ease: `Expo.easeOut`, delay: (d++)*.1 });
+          anime({ targets: node, duration: 300, opacity: 1, translateX: 0, translateY: 0, translateZ: 0, easing: `easeOutExpo`, delay: (d++)*100 });
         }
       }
     }
@@ -78,15 +84,15 @@ class Log extends Page {
     const footer = this.getChild(`footer`);
     const related = this.getChild(`footer`);
 
-    this.timeline = new TimelineLite();
-    if (contents) this.timeline.add(TweenLite.to(contents, 0, { y: 0, opacity: 1 }));
-    if (footer) this.timeline.add(TweenLite.to(footer, 0, { y: 0, opacity: 1 }));
-    if (related) this.timeline.add(TweenLite.to(related, 0, { y: 0, opacity: 1 }));
-    if (cover) this.timeline.add(TweenLite.to(cover, 1, { z: 0, opacity: 1, ease: `Expo.easeOut` }));
-    if (title) this.timeline.add(TweenLite.to(title, .3, { y: 0, opacity: 1, ease: `Expo.easeOut` }), `-=.2`);
-    if (date) this.timeline.add(TweenLite.to(date, .3, { y: 0, opacity: 1, ease: `Expo.easeOut` }), `-=.2`);
-    if (tags) this.timeline.add(TweenLite.to(tags, .3, { y: 0, opacity: 1, ease: `Expo.easeOut` }), `-=.2`);
-    this.timeline.add(() => { if (done) done(); });
+    this.timeline = anime.timeline();
+    if (contents) this.timeline.add({ targets: contents, duration: 0, translateY: [100, 0], opacity: [0, 1] });
+    if (footer) this.timeline.add({ targets: footer, duration: 0, translateY: [100, 0], opacity: [0, 1] });
+    if (related) this.timeline.add({ targets: related, duration: 0, translateY: [100, 0], opacity: [0, 1] });
+    if (cover) this.timeline.add({ targets: cover, duration: 1000, translateZ: [-300, 0], opacity: [0, 1], easing: `easeOutExpo` });
+    if (title) this.timeline.add({ targets: title, duration: 300, translateY: [40, 0], opacity: [0, 1], easing: `easeOutExpo`, offset: `-=200` });
+    if (date) this.timeline.add({ targets: date, duration: 300, translateY: [40, 0], opacity: [0, 1], easing: `easeOutExpo`, offset: `-=200` });
+    if (tags) this.timeline.add({ targets: tags, duration: 300, translateY: [40, 0], opacity: [0, 1], easing: `easeOutExpo`, offset: `-=200` });
+    this.timeline.complete = () => { if (done) done(); };
   }
 
   /** @inheritdoc */
@@ -99,15 +105,15 @@ class Log extends Page {
     const footer = this.getChild(`footer`);
     const related = this.getChild(`related`);
 
-    this.timeline = new TimelineLite();
-    if (contents) this.timeline.add(TweenLite.to(contents, .3, { y: 100, opacity: 0, ease: `Expo.easeIn` }));
-    if (footer) this.timeline.add(TweenLite.to(footer, .3, { y: 100, opacity: 0, ease: `Expo.easeIn` }), `-=.3`);
-    if (related) this.timeline.add(TweenLite.to(related, .3, { y: 100, opacity: 0, ease: `Expo.easeIn` }), `-=.3`);
-    if (title) this.timeline.add(TweenLite.to(title, .3, { y: 40, opacity: 0, ease: `Expo.easeIn` }), `-=.3`);
-    if (date) this.timeline.add(TweenLite.to(date, .3, { y: 40, opacity: 0, ease: `Expo.easeIn` }), `-=.2`);
-    if (tags) this.timeline.add(TweenLite.to(tags, .3, { y: 40, opacity: 0, ease: `Expo.easeIn` }), `-=.2`);
-    if (cover) this.timeline.add(TweenLite.to(cover, .3, { z: -300, opacity: 0, ease: `Expo.easeIn` }));
-    this.timeline.add(() => { if (done) done(); });
+    this.timeline = anime.timeline();
+    if (contents) this.timeline.add({ targets: contents, duration: 300, translateY: 100, opacity: 0, easing: `easeInExpo` });
+    if (footer) this.timeline.add({ targets: footer, duration: 300, translateY: 100, opacity: 0, easing: `easeInExpo`, offset: `-=300` });
+    if (related) this.timeline.add({ targets: related, duration: 300, translateY: 100, opacity: 0, easing: `easeInExpo`, offset: `-=300` });
+    if (title) this.timeline.add({ targets: title, duration: 300, translateY: 40, opacity: 0, easing: `easeInExpo`, offset: `-=300` });
+    if (date) this.timeline.add({ targets: date, duration: 300, translateY: 40, opacity: 0, easing: `easeInExpo`, offset: `-=200` });
+    if (tags) this.timeline.add({ targets: tags, duration: 300, translateY: 40, opacity: 0, easing: `easeInExpo`, offset: `-=200` });
+    if (cover) this.timeline.add({ targets: cover, duration: 300, translateZ: -300, opacity: 0, easing: `easeInExpo` });
+    this.timeline.complete = () => { if (done) done(); };
   }
 }
 

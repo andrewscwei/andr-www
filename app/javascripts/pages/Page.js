@@ -15,7 +15,7 @@ class Page extends m.Element(`page-base`) {
    */
   get timeline() { return this.get(`timeline`); }
   set timeline(val) {
-    if (this.timeline) this.timeline.kill();
+    if (this.timeline) this.timeline.pause();
     this.set(`timeline`, val);
   }
 

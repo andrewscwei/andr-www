@@ -1,6 +1,6 @@
+import anime from 'animejs';
 import m, { dom, DirtyType } from 'meno';
 import Page from './Page';
-import 'gsap';
 
 class Home extends Page {
   /** @inheritdoc */
@@ -32,12 +32,12 @@ class Home extends Page {
     let nameCard = this.getChild(`name-card`);
 
     this.data.state = `active`;
-    this.timeline = new TimelineLite();
-    this.timeline.add(TweenLite.to(this, .8, { z: 0, opacity: 1, ease: `Expo.easeOut` }));
-    this.timeline.add(() => {
+    this.timeline = anime.timeline();
+    this.timeline.add({ targets: this, duration: 800, translateZ: 0, opacity: 1, easing: `easeOutExpo` });
+    this.timeline.complete = () => {
       dom.setAttribute(nameCard, `data-state`, `active`);
       if (done) done();
-    });
+    };
 
   }
 
@@ -47,13 +47,13 @@ class Home extends Page {
       this.data.state = `none`;
       let nameCard = this.getChild(`name-card`);
       dom.setAttribute(nameCard, `data-state`, `active`);
-      this.timeline = new TimelineLite();
-      this.timeline.add(TweenLite.to(this, .8, { z: -600, opacity: .3, ease: `Expo.easeOut` }));
-      this.timeline.add(() => { if (done) done(); });
+      this.timeline = anime.timeline();
+      this.timeline.add({ targets: this, duration: 800, translateZ: -600, opacity: .3, easing: `easeOutExpo` });
+      this.timeline.complete = () => { if (done) done(); };
     }
     else {
       dom.setAttribute(this.getChild(`name-card`), `data-state`, `active`);
-      TweenLite.to(this, 0, { z: -600, opacity: .3, ease: `Expo.easeOut` });
+      anime({ targets: this, duration: 0, translateZ: -600, opacity: .3, easing: `easeOutExpo` });
       if (done) done();
     }
   }
