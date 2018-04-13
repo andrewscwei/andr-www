@@ -3,37 +3,37 @@ block vars
 doctype html
 html(lang=locale)
   head
-    title= (title || _.get($, 'title'))
+    title= (title || _.get($config, 'title'))
 
     meta(charset='utf-8')
-    meta(name='description' content=(description || _.get($, 'description')))
-    meta(name='keywords' content=(keywords || _.get($, 'keywords')))
+    meta(name='description' content=(description || _.get($config, 'description')))
+    meta(name='keywords' content=(keywords || _.get($config, 'keywords')))
     meta(name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover')
     meta(property='og:url' content=url)
     meta(property='og:image' content='/og-image.png')
-    meta(property='og:title' content=(title || _.get($, 'title')))
-    meta(property='og:description' content=(description || _.get($, 'description')))
+    meta(property='og:title' content=(title || _.get($config, 'title')))
+    meta(property='og:description' content=(description || _.get($config, 'description')))
 
-    link(rel='shortcut icon' href=p('/favicon.png'))
-    link(rel='manifest' href=p('/manifest.json'))
+    link(rel='shortcut icon' href=$asset('/favicon.png'))
+    link(rel='manifest' href=$asset('/manifest.json'))
 
     meta(name='mobile-web-app-capable' content='yes')
     meta(name='apple-mobile-web-app-capable' content='yes')
-    meta(name='apple-mobile-web-app-title' content=(title || _.get($, 'title')))
+    meta(name='apple-mobile-web-app-title' content=(title || _.get($config, 'title')))
 
-    link(href=p('/apple-touch-icon-180x180-precomposed.png') sizes='180x180' rel='apple-touch-icon')
-    link(href=p('/apple-touch-icon-152x152-precomposed.png') sizes='152x152' rel='apple-touch-icon')
-    link(href=p('/apple-touch-icon-144x144-precomposed.png') sizes='144x144' rel='apple-touch-icon')
-    link(href=p('/apple-touch-icon-120x120-precomposed.png') sizes='120x120' rel='apple-touch-icon')
-    link(href=p('/apple-touch-icon-114x114-precomposed.png') sizes='114x114' rel='apple-touch-icon')
-    link(href=p('/apple-touch-icon-76x76-precomposed.png') sizes='76x76' rel='apple-touch-icon')
-    link(href=p('/apple-touch-icon-72x72-precomposed.png') sizes='72x72' rel='apple-touch-icon')
-    link(href=p('/apple-touch-icon-60x60-precomposed.png') sizes='60x60' rel='apple-touch-icon')
-    link(href=p('/apple-touch-icon-57x57-precomposed.png') sizes='57x57' rel='apple-touch-icon')
-    link(href=p('/apple-touch-icon-precomposed.png') rel='apple-touch-icon')
+    link(href=$asset('/apple-touch-icon-180x180-precomposed.png') sizes='180x180' rel='apple-touch-icon')
+    link(href=$asset('/apple-touch-icon-152x152-precomposed.png') sizes='152x152' rel='apple-touch-icon')
+    link(href=$asset('/apple-touch-icon-144x144-precomposed.png') sizes='144x144' rel='apple-touch-icon')
+    link(href=$asset('/apple-touch-icon-120x120-precomposed.png') sizes='120x120' rel='apple-touch-icon')
+    link(href=$asset('/apple-touch-icon-114x114-precomposed.png') sizes='114x114' rel='apple-touch-icon')
+    link(href=$asset('/apple-touch-icon-76x76-precomposed.png') sizes='76x76' rel='apple-touch-icon')
+    link(href=$asset('/apple-touch-icon-72x72-precomposed.png') sizes='72x72' rel='apple-touch-icon')
+    link(href=$asset('/apple-touch-icon-60x60-precomposed.png') sizes='60x60' rel='apple-touch-icon')
+    link(href=$asset('/apple-touch-icon-57x57-precomposed.png') sizes='57x57' rel='apple-touch-icon')
+    link(href=$asset('/apple-touch-icon-precomposed.png') rel='apple-touch-icon')
 
-    meta(name='msapplication-config' content=p('/browserconfig.xml'))
-    meta(name='application-name' content=(title || _.get($, 'title')))
+    meta(name='msapplication-config' content=$asset('/browserconfig.xml'))
+    meta(name='application-name' content=(title || _.get($config, 'title')))
     meta(name='msapplication-tooltip' content='Get the latest updates!')
     meta(name='msapplication-window' content='width=1024;height=768')
     meta(name='msapplication-navbutton-color' content='#ff3300')
@@ -45,22 +45,22 @@ html(lang=locale)
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
-        gtag('config', '#{env.GOOGLE_ANALYTICS_ID}');
+        gtag('config', '#{$env.GOOGLE_ANALYTICS_ID}');
 
     block styles
-      link(rel='stylesheet' href=p('/assets/stylesheets/application.css'))
+      link(rel='stylesheet' href=$asset('/assets/stylesheets/application.css'))
 
-    if (_.get($, 'cms') === 'prismic') && _.get(env, 'PRISMIC_API_ENDPOINT') && _.get(env, 'SSR_ENABLED')
+    if (_.get($config, 'cms') === 'prismic') && _.get($env, 'PRISMIC_API_ENDPOINT') && _.get($env, 'SSR_ENABLED')
       script.
-        window.prismic = { endpoint: '#{env.PRISMIC_API_ENDPOINT}' };
+        window.prismic = { endpoint: '#{$env.PRISMIC_API_ENDPOINT}' };
       script(type='text/javascript' src='//static.cdn.prismic.io/prismic.min.js')
-    if (_.get($, 'webFont'))
-      if ($.webFont.typekit)
-        script(src=`https://use.typekit.net/${$.webFont.typekit.id}.js`)
-    script(src=p('/assets/javascripts/common.js'))
+    if (_.get($config, 'webFont'))
+      if ($config.webFont.typekit)
+        script(src=`https://use.typekit.net/${$config.webFont.typekit.id}.js`)
+    script(src=$asset('/assets/javascripts/common.js'))
 
   body
     block body
 
     block scripts
-      script(src=p('/assets/javascripts/application.js'))
+      script(src=$asset('/assets/javascripts/application.js'))

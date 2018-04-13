@@ -6,14 +6,14 @@ append vars
   -
     nav = {};
 
-    const n = _.get(data, 'log.length');
-    const perPage = _.get($, 'collections.log.paginate.perPage');
+    const n = _.get($data, 'log.length');
+    const perPage = _.get($config, 'collections.log.paginate.perPage');
 
     if (n && perPage) {
       let index = 0;
 
       for (let i = 0; i < n; i++)
-        if (data.log[i].uid === uid) { index = i; break; }
+        if ($data.log[i].uid === uid) { index = i; break; }
 
       let page = Math.floor(index/perPage + 1);
 
@@ -26,7 +26,7 @@ block page
       div(name='header')
         div(name='info')
           h1(name='title')= title
-          span(name='date' type='label')= m(date).format('MMM DD YY')
+          span(name='date' type='label')= $moment(date).format('MMM DD YY')
           if tags && tags.length
             div(name='tags')
               each tag in tags

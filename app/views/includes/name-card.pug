@@ -12,6 +12,6 @@ mixin name-card()
       span(type='label').position #{__('experience-designer')}
       span(type='label').position #{__('illustrator')}
     section.connect
-      if _.get(data, 'identity.length')
-        each identity in data.identity
+      if _.get($data, 'identity.length')
+        each identity in $data.identity
           +button({ iconClass: _.toLower(identity.medium), iconUrl: identity.image, href: identity.link })

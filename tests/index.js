@@ -1,5 +1,5 @@
-const $ = require(`../config/app.conf`);
 const _ = require(`lodash`);
+const appConfig = require(`../config/app.conf`);
 const async = require(`async`);
 const browserSync = require(`browser-sync`);
 const chalk = require(`chalk`);
@@ -19,7 +19,7 @@ describe(`app`, function() {
     browserSync.reset();
 
     app = browserSync.init({
-      server: { baseDir: path.join(baseDir, $.buildDir) },
+      server: { baseDir: path.join(baseDir, appConfig.buildDir) },
       open: false,
       logLevel: `silent`
     }, done).instance;
@@ -33,7 +33,7 @@ describe(`app`, function() {
     let paths = [];
     let error;
 
-    klaw(path.join(baseDir, $.buildDir))
+    klaw(path.join(baseDir, appConfig.buildDir))
       .on(`data`, function(item) {
         if (item.stats.isDirectory() || !_.endsWith(item.path, `.html`)) return;
         let res = fs.readFileSync(item.path, `utf-8`).match(/=["|']((\/)([a-zA-Z0-9\-\_\/\.]+))["|']/g);

@@ -1,7 +1,7 @@
 /* global Typekit:true */
 
 import 'document-register-element';
-import $ from '../../config/app.conf';
+import appConfig from '../../config/app.conf';
 import pm from 'page-manager';
 import { dom, NodeState } from 'meno';
 
@@ -15,8 +15,8 @@ if (process.env.NODE_ENV === `development`) {
   window.localStorage.debug = `app*,meno*`;
 }
 
-pm.locales = $.locales;
-pm.autoRouting = $.autoRouting;
+pm.locales = appConfig.locales;
+pm.autoRouting = appConfig.autoRouting;
 
 // Put page routing/transitioning/loading logic here.
 pm.request((newDocument, oldDocument, next) => {
@@ -56,8 +56,8 @@ pm.transition(`out`, `*`, (next) => {
 });
 
 // Begin routing after all requirements are defined.
-if ($.webFont) {
-  if ($.webFont.typekit) {
+if (appConfig.webFont) {
+  if (appConfig.webFont.typekit) {
     try {
       Typekit.load({
         async: true,
