@@ -1,4 +1,4 @@
-const $ = require(`../config`);
+const $ = require(`../config/app.conf`);
 const _ = require(`lodash`);
 const async = require(`async`);
 const browserSync = require(`browser-sync`);

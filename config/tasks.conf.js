@@ -3,15 +3,18 @@
  *       changes and serve the app in the dev server.
  */
 
-const $ = require(`../`);
+const $ = require(`./app.conf`);
 const gulp = require(`gulp-prismic-mpa-builder`);
 const path = require(`path`);
 
-const baseDir = path.join(__dirname, `../../`);
+const baseDir = path.join(__dirname, `../`);
 
-gulp.init({
+module.exports = {
   base: path.join(baseDir, $.sourceDir),
   dest: path.join(baseDir, $.buildDir),
+  extras: {
+    base: path.join(baseDir, `app`, `static`)
+  },
   scripts: {
     entry: {
       application: `application.js`
@@ -57,10 +60,9 @@ gulp.init({
       directory: path.join(baseDir, $.configDir, `locales`)
     },
     metadata: {
-      _: require(`lodash`),
       $: $,
-      data: require(`require-dir`)(path.join(baseDir, $.configDir, `data`), { recurse: true }),
       env: process.env,
+      _: require(`lodash`),
       m: require(`moment`)
     },
     collections: $.collections,
@@ -74,7 +76,12 @@ gulp.init({
     tags: $.tags,
     watch: { files: [path.join(baseDir, $.configDir, `**/*`)] }
   },
+  serve: {
+    port: 8080
+  },
   sitemap: {
     siteUrl: $.url
   }
-});
+};
+
+gulp.init(module.exports);

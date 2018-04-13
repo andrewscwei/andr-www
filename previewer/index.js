@@ -1,4 +1,4 @@
-const $ = require(`../config`);
+const $ = require(`../config/app.conf`);
 const _ = require(`lodash`);
 const bodyParser = require(`body-parser`);
 const compress = require(`compression`);
