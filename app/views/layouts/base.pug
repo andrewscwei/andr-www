@@ -57,7 +57,6 @@ html(lang=locale)
     if (_.get($config, 'webFont'))
       if ($config.webFont.typekit)
         script(src=`https://use.typekit.net/${$config.webFont.typekit.id}.js`)
-    script(src=$asset('/assets/javascripts/common.js'))
 
   body
     block body
