@@ -61,7 +61,6 @@ module.exports = {
     },
     metadata: {
       $config: appConfig,
-      $env: process.env,
       $data: require(`require-dir`)(path.join(baseDir, appConfig.configDir, `data`), { recurse: true })
     },
     collections: appConfig.collections,
