@@ -1,6 +1,6 @@
 {
   "name": "andr-www",
-  "version": "2.20.0",
+  "version": "3.0.0",
   "private": true,
   "license": "MIT",
   "files": [
@@ -58,7 +58,8 @@
     "prismjs": "^1.14.0",
     "pug-loader": "^2.4.0",
     "superagent": "^3.8.2",
-    "supertest": "^3.0.0"
+    "supertest": "^3.0.0",
+    "three": "^0.91.0"
   },
   "engines": {
     "node": "8.9.4"
