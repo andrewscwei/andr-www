@@ -1,6 +1,6 @@
+import anime from 'animejs';
 import m, { dom } from 'meno';
 import Page from './Page';
-import anime from 'animejs';
 
 class Logs extends Page {
   /** @inheritdoc */

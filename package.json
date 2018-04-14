@@ -57,6 +57,7 @@
     "page-manager": "^1.6.0",
     "prismjs": "^1.14.0",
     "pug-loader": "^2.4.0",
+    "spase": "^0.4.2",
     "superagent": "^3.8.2",
     "supertest": "^3.0.0",
     "three": "^0.91.0"

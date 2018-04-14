@@ -1,8 +1,7 @@
-import m, { dom, DirtyType } from 'meno';
-import getRect from 'meno/lib/utils/getRect';
-import getIntersectRect from 'meno/lib/utils/getIntersectRect';
-import Page from './Page';
 import anime from 'animejs';
+import m, { dom, DirtyType } from 'meno';
+import Page from './Page';
+import { getRect, getIntersectRect } from 'spase';
 
 const FADE_IN_ELEMENT_SELECTOR = `pre, [name="footer"] [type="button"], [name="related"] [type="button"]`;
 

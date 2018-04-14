@@ -5,8 +5,9 @@ import appConfig from '../../config/app.conf';
 import pm from 'page-manager';
 import { dom, NodeState } from 'meno';
 
-import './components/XAnchor';
+import './components/Link';
 import './components/GlobalNav';
+import './components/Infographic';
 import './pages/Home';
 import './pages/Logs';
 import './pages/Log';
