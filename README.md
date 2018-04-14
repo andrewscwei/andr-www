@@ -4,8 +4,8 @@ My personal website. It is a static site content managed by [Prismic.io](http://
 
 ## Stack
 
-1. [Requiem](http://npmjs.com/package/requiem): UI JS library
-2. [Minuet](http://npmjs.com/package/minuet): Sass library
+1. [Meno](http://npmjs.com/package/meno): Experimental view library
+2. [Minuet](http://npmjs.com/package/minuet): Experimental Sass library
 3. [Metalsmith](http://metalsmith.io): Static site generator
 4. [Gulp](http://gulpjs.com): Task scheduler
 5. [Express](http://expressjs.com): Server for previewing [Prismic](http://prismic.io) content
