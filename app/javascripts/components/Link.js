@@ -1,6 +1,6 @@
-import m from 'meno';
+import m, { Element } from 'meno';
 
-class XAnchor extends m.Element(HTMLAnchorElement) {
+class Link extends Element(HTMLAnchorElement) {
   /** @inheritdoc */
   static get tag() { return `x-a`; }
 
@@ -22,6 +22,6 @@ class XAnchor extends m.Element(HTMLAnchorElement) {
   }
 }
 
-m.register(XAnchor);
+m.register(Link);
 
-export default XAnchor;
+export default Link;
