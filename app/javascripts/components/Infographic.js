@@ -3,7 +3,6 @@ import _ from 'lodash';
 import m, { DirtyType, Element } from 'meno';
 import { getViewportRect } from 'spase';
 
-
 const MESH_RADIUS = 100;
 const MESH_GAP = MESH_RADIUS * ((35 - 20.2) / 5.3);
 
