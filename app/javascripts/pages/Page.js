@@ -1,17 +1,17 @@
-import m, { DirtyType } from 'meno';
+import m, { DirtyType, Element } from 'meno';
 import Hammer from 'hammerjs';
 
 if (process.env.NODE_ENV === `development`) {
   var debug = require(`debug`)(`app:Page`);
 }
 
-class Page extends m.Element(`page-base`) {
+class Page extends Element(`page-base`) {
   static get extends() { return `div`; }
 
   /**
-   * TimelineLite instance.
+   * Timeline instance.
    *
-   * @type {TimelineLite}
+   * @type {Timeline}
    */
   get timeline() { return this.get(`timeline`); }
   set timeline(val) {
@@ -154,9 +154,6 @@ class Page extends m.Element(`page-base`) {
       else {
         if (process.env.NODE_ENV === `development`) debug(`<${this.constructor.name}> Target button is disabled`);
       }
-    }
-    else {
-      if (process.env.NODE_ENV === `development`) debug(`<${this.constructor.name}> Target button not found`);
     }
   }
 }

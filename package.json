@@ -47,7 +47,7 @@
     "document-register-element": "^1.8.1",
     "eslint": "^4.19.1",
     "gulp": "^3.9.1",
-    "gulp-prismic-mpa-builder": "^7.2.0",
+    "gulp-prismic-mpa-builder": "^7.3.0",
     "hammerjs": "^2.0.8",
     "klaw": "^2.1.1",
     "meno": "^0.27.0",

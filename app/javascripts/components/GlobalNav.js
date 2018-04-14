@@ -1,14 +1,14 @@
-import m from 'meno';
+import m, { Element } from 'meno';
 import anime from 'animejs';
 
-class GlobalNav extends m.Element(`global-nav`) {
+class GlobalNav extends Element(`global-nav`) {
   /** @inheritdoc */
   static get extends() { return `nav`; }
 
   /**
-   * TimelineLite instance.
+   * Timeline instance.
    *
-   * @type {TimelineLite}
+   * @type {Timeline}
    */
   get timeline() { return this.__private__.timeline; }
   set timeline(val) {
