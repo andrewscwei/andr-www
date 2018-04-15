@@ -158,6 +158,4 @@ class Page extends Element(`page-base`) {
   }
 }
 
-m.register(Page);
-
-export default Page;
+export default m.register(Page);

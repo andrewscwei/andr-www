@@ -22,6 +22,4 @@ class Link extends Element(HTMLAnchorElement) {
   }
 }
 
-m.register(Link);
-
-export default Link;
+export default m.register(Link);

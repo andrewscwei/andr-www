@@ -47,6 +47,4 @@ class GlobalNav extends Element(`global-nav`) {
   }
 }
 
-m.register(GlobalNav);
-
-export default GlobalNav;
+export default m.register(GlobalNav);
