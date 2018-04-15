@@ -53,6 +53,4 @@ class Logs extends Page {
   }
 }
 
-m.register(Logs);
-
-export default Logs;
+export default m.register(Logs);;
