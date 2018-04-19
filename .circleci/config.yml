@@ -36,20 +36,17 @@ jobs:
       - store_artifacts:
           path: ~/repo/build
 
-  deploy:
+  build-test-and-deploy:
     working_directory: ~/repo
     docker:
       - image: node:8.4.0
     steps:
-      - add_ssh_keys:
-          fingerprints:
-            - "06:b0:72:25:39:b6:2a:ee:c1:fd:37:bc:a8:dc:f4:0a"
       - checkout
       - run:
           name: Install APT packages
           command: |
             apt-get update -y
-            apt-get install jq -y
+            apt-get install jq zip -y
       - restore_cache:
           keys:
             - dependency-cache-{{ checksum "yarn.lock" }}
@@ -63,39 +60,32 @@ jobs:
             - "node_modules"
       - run:
           name: Build
-          command: |
-            if [ "${CIRCLE_BRANCH}" == "development" ] && [ "${STAGE_TARGET}" == "heroku" ]; then
-              NODE_ENV=development SSR_ENABLED=true npm run build
-            else
-              npm run build
-            fi
+          command: npm run build
+      - run:
+          name: Test
+          command: npm test
+      - run:
+          name: Pack
+          command: bash .circleci/pack.sh
+      - store_artifacts:
+          path: ~/repo/public
+      - store_artifacts:
+          path: ~/repo/build
       - deploy:
-          name: Deploy to production environment
-          command: |
-            if [ "${CIRCLE_BRANCH}" == "master" ] && [ "${IS_RELEASE}" == "true" ]; then
-              bash .circleci/deploy-to-netlify.sh
-            else
-              echo "Skipping deploy — publish a release with tag format \"v1.0.0\" to enable this feature"
-            fi
-      - deploy:
-          name: Deploy to staging environment
-          command: |
-            if [ "${CIRCLE_BRANCH}" == "development" ]; then
-              if [ "${STAGE_TARGET}" == "heroku" ]; then
-                bash .circleci/deploy-to-heroku.sh
-              else
-                bash .circleci/deploy-to-gh-pages.sh
-              fi
-            else
-              echo "Skipping because this is not the staging branch"
-            fi
+          name: Deploy
+          command: bash .circleci/deploy-to-netlify.sh
 
 workflows:
   version: 2
+  build-and-test:
+    jobs:
+      - build-and-test:
+          filters:
+            tags:
+              ignore: /^v.*/
   build-test-and-deploy:
     jobs:
-      - build-and-test
-      - deploy:
+      - build-test-and-deploy:
           filters:
             branches:
               ignore: /.*/
