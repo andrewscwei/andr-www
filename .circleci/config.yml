@@ -30,8 +30,7 @@ jobs:
       - run:
           name: Install NPM dependencies
           command: |
-            source .env
-            yarn --pure-lockfile
+            yarn
       - save_cache:
           key: dependency-cache-{{ checksum "yarn.lock" }}
           paths:
@@ -39,18 +38,19 @@ jobs:
       - run:
           name: Build
           command: |
-            source .env
             if [ "${CIRCLE_BRANCH}" == "development" ] && [ "${STAGE_TARGET}" == "heroku" ]; then
               NODE_ENV=development SSR_ENABLED=true npm run build
             else
               npm run build
             fi
       - run:
+          name: Test
+          command: |
+            npm test
+      - run:
           name: Pack
           command: |
-            source .env
-            mkdir -p build
-            zip -r build/$PACKAGE_FILE $PUBLIC_DIR
+            bash .circleci/pack.sh
       - store_artifacts:
           path: ~/repo/public
       - store_artifacts:
@@ -58,53 +58,8 @@ jobs:
       - deploy:
           name: Deploy to production environment
           command: |
-            source .env
-
             if [ "${CIRCLE_BRANCH}" == "master" ] && [ "${IS_RELEASE}" == "true" ]; then
-              NETLIFY_API=https://api.netlify.com/api/v1
-              SITE_ID=""
-
-              if [ -f ./.circleci/netlify ]; then
-                SITE_ID=$(cat .circleci/netlify)
-                echo "Existing site ID ($SITE_ID) found in repo, verifying that site exists..."
-                RESULT=$(curl -H "User-Agent: $CIRCLE_PROJECT_USERNAME ($CIRCLE_PROJECT_USERNAME@users.noreply.github.com)" $NETLIFY_API/sites/$SITE_ID?access_token=$NETLIFY_KEY)
-                echo $RESULT
-                RESPONSE_CODE=$(echo $RESULT | jq -r ".code")
-
-                # Site not found.
-                if [[ $RESPONSE_CODE == "404" ]]; then
-                  SITE_ID=""
-                fi
-              fi
-
-              if [[ $SITE_ID == "" ]]; then
-                echo "No netlify file detected or site is not found, creating a new site on Netlify..."
-
-                RESULT=$(curl -H "Content-Type: application/zip" -H "Authorization: Bearer $NETLIFY_KEY" --data-binary "@build/$PACKAGE_FILE" $NETLIFY_API/sites)
-                SITE_ID=$(echo $RESULT | jq -r ".id")
-                SITE_NAME=$(echo $RESULT | jq -r ".subdomain")
-                SITE_URL=https://$SITE_NAME.netlify.com
-
-                echo "$SITE_ID" > .circleci/netlify
-
-                git config user.name "$CIRCLE_PROJECT_USERNAME"
-                git config user.email "$CIRCLE_PROJECT_USERNAME@users.noreply.github.com"
-                git add ./.circleci/netlify
-                git commit -m "[Skip CI] Adding generated netlify file"
-                git push -f $GIT_ORIGIN_URL
-
-                echo -e "\nDone! Your site URL is:"
-                echo $SITE_URL
-              else
-                echo "Deploying to site ${SITE_ID}..."
-
-                RESULT=$(curl -H "Content-Type: application/zip" -H "Authorization: Bearer $NETLIFY_KEY" --data-binary "@build/$PACKAGE_FILE" $NETLIFY_API/sites/$SITE_ID/deploys)
-                SITE_URL=$(echo $RESULT | jq -r ".url")
-
-                echo $RESULT
-                echo -e "\nDone! Your site URL is:"
-                echo $SITE_URL
-              fi
+              bash .circleci/deploy-to-netlify.sh
             else
               echo "Skipping deploy — publish a release with tag format \"v1.0.0\" to enable this feature"
             fi
@@ -161,3 +116,9 @@ jobs:
             else
               echo "Skipping because this is not the staging branch"
             fi
+
+workflows:
+  version: 2
+  build-test-and-deploy:
+    jobs:
+      - build
