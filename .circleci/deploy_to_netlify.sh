@@ -2,7 +2,7 @@
 
 set -e
 
-source .circleci/get-opts.sh
+source .circleci/get_opts.sh
 
 NETLIFY_API=https://api.netlify.com/api/v1
 SITE_ID=""

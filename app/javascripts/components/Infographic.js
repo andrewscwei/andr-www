@@ -19,16 +19,16 @@ class Infographic extends Element(HTMLCanvasElement, `x-infographic`) {
   }
 
   init() {
-    const res = request
-      .get(`${GITHUB_API_URL}/user/repos`)
-      .set(`Accept`, REQUEST_ACCEPT_HEADER)
-      .set(`Authorization`, `token 5804cee1658cbd7c1311b4629e5bca3946a2ff05`)
-      .query({ visibility: `all` })
-      .query({ per_page: 100 })
-      .query({ affiliation: `owner,collaborator` })
-      .then(res => {
-        console.log(res.body);
-      });
+    // const res = request
+    //   .get(`${GITHUB_API_URL}/user/repos`)
+    //   .set(`Accept`, REQUEST_ACCEPT_HEADER)
+    //   .set(`Authorization`, `token #`)
+    //   .query({ visibility: `all` })
+    //   .query({ per_page: 100 })
+    //   .query({ affiliation: `owner,collaborator` })
+    //   .then(res => {
+    //     console.log(res.body);
+    //   });
   }
 
   destroy() {
