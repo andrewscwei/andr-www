@@ -2,6 +2,18 @@
 
 My personal website. It is a static site content managed by [Prismic.io](http://prismic.io), served on [Netlify](http://netlify.com).
 
+## Setup
+
+### Environment Variables
+
+```sh
+GOOGLE_ANALYTICS_ID
+HEROKU_API_KEY
+HEROKU_LOGIN
+NETLIFY_KEY
+PRISMIC_API_ENDPOINT
+```
+
 ## Stack
 
 1. [Meno](http://npmjs.com/package/meno): Experimental view library

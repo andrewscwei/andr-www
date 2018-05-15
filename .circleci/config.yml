@@ -1,6 +1,6 @@
 version: 2
 jobs:
-  build-and-test:
+  build_and_test:
     working_directory: ~/repo
     docker:
       - image: node:8.9.4
@@ -36,7 +36,7 @@ jobs:
       - store_artifacts:
           path: ~/repo/build
 
-  build-test-and-deploy:
+  build_test_and_deploy:
     working_directory: ~/repo
     docker:
       - image: node:8.9.4
@@ -73,19 +73,19 @@ jobs:
           path: ~/repo/build
       - deploy:
           name: Deploy
-          command: .circleci/deploy-to-netlify.sh
+          command: .circleci/deploy_to_netlify.sh
 
 workflows:
   version: 2
-  build-and-test:
+  build_and_test:
     jobs:
-      - build-and-test:
+      - build_and_test:
           filters:
             tags:
               ignore: /^v.*/
-  build-test-and-deploy:
+  build_test_and_deploy:
     jobs:
-      - build-test-and-deploy:
+      - build_test_and_deploy:
           filters:
             branches:
               ignore: /.*/

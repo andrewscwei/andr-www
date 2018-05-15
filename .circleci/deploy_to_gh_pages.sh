@@ -2,7 +2,7 @@
 
 set -e
 
-source .circleci/get-opts.sh
+source .circleci/get_opts.sh
 
 # Publish docs to gh-pages branch.
 echo "Publishing to gh-pages branch..."

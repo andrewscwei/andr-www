@@ -2,7 +2,7 @@
 
 set -e
 
-source .circleci/get-opts.sh
+source .circleci/get_opts.sh
 
 wget https://cli-assets.heroku.com/branches/stable/heroku-linux-amd64.tar.gz
 mkdir -p /usr/local/lib /usr/local/bin
