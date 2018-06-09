@@ -6,12 +6,14 @@ My personal website. It is a static site content managed by [Prismic.io](http://
 
 ### Environment Variables
 
+The following are all the supported environment variables. `*` indicates that the variable is required.
+
 ```sh
+PRISMIC_API_ENDPOINT*
 GOOGLE_ANALYTICS_ID
 HEROKU_API_KEY
 HEROKU_LOGIN
 NETLIFY_KEY
-PRISMIC_API_ENDPOINT
 ```
 
 ## Stack
