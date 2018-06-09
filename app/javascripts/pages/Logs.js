@@ -15,10 +15,8 @@ class Logs extends Page {
     if (entries && !(entries instanceof Array)) entries = [].concat(entries);
 
     this.timeline = anime.timeline();
-    if (paginator)
-      this.timeline.add({ targets: paginator, duration: 200, translateY: [100, 0], opacity: [0, 1], easing: `easeOutExpo` });
-    if (tags)
-      this.timeline.add({ targets: tags, duration: 200, translateY: [-20, 0], opacity: [0, 1], easing: `easeOutExpo` });
+    if (paginator) this.timeline.add({ targets: paginator, duration: 200, translateY: [100, 0], opacity: [0, 1], easing: `easeOutExpo` });
+    if (tags) this.timeline.add({ targets: tags, duration: 200, translateY: [-20, 0], opacity: [0, 1], easing: `easeOutExpo` });
     if (entries && entries.length) {
       entries.forEach(entry => {
         this.timeline.add({ targets: entry, duration: 200, opacity: [0, 1], translateY: [100, 0], easing: `easeOutExpo`, offset: `-=${130}` });
@@ -38,10 +36,8 @@ class Logs extends Page {
     if (entries && !(entries instanceof Array)) entries = [].concat(entries);
 
     this.timeline = anime.timeline();
-    if (paginator)
-      this.timeline.add({ targets: paginator, duration: 200, translateY: 100, opacity: 0, easing: `easeOutExpo` });
-    if (tags)
-      this.timeline.add({ targets: tags, duration: 200, translateY: -20, opacity: 0, easing: `easeOutExpo` });
+    if (paginator) this.timeline.add({ targets: paginator, duration: 200, translateY: 100, opacity: 0, easing: `easeOutExpo` });
+    if (tags) this.timeline.add({ targets: tags, duration: 200, translateY: -20, opacity: 0, easing: `easeOutExpo` });
     if (entries && entries.length) {
       entries.forEach(entry => {
         this.timeline.add({ targets: entry, duration: 200, opacity: 0, translateY: 100, easing: `easeInOutExpo`, offset: `-=${150}` });
@@ -53,4 +49,4 @@ class Logs extends Page {
   }
 }
 
-export default m.register(Logs);;
+export default m.register(Logs);

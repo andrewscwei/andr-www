@@ -59,4 +59,4 @@ class Home extends Page {
   }
 }
 
-export default m.register(Home);;
+export default m.register(Home);

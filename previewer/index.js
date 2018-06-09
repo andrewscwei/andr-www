@@ -53,7 +53,8 @@ app.use(compress());
 
 // HTTP request logger setup.
 // @see {@link https://www.npmjs.com/package/morgan}
-try { fs.mkdirSync(__dirname + `/logs`); } catch (err) { /* Do nothing */ }
+try { fs.mkdirSync(__dirname + `/logs`); }
+catch (err) { /* Do nothing */ }
 app.use(morgan(`combined`, { stream: fs.createWriteStream(__dirname + `/logs/access.log`, { flags: `a` }) }));
 
 // Form body parsing setup.

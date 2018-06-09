@@ -45,8 +45,8 @@ class Page extends Element(`page-base`) {
 
   get responsiveness() {
     return {
-      'wheel': 10.0,
-      'keyup': 10.0
+      wheel: 10.0,
+      keyup: 10.0
     };
   }
 
@@ -151,9 +151,7 @@ class Page extends Element(`page-base`) {
       if (!targetButton.disabled) {
         targetButton.click();
       }
-      else {
-        if (process.env.NODE_ENV === `development`) debug(`<${this.constructor.name}> Target button is disabled`);
-      }
+      else if (process.env.NODE_ENV === `development`) debug(`<${this.constructor.name}> Target button is disabled`);
     }
   }
 }

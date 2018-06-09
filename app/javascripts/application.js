@@ -85,10 +85,8 @@ else {
 function transitionIn(element, next) {
   if (!element) { if (next) next(); return; }
 
-  if (element.in && (element.nodeState === NodeState.INITIALIZED))
-    element.in(next);
-  else
-    element.addEventListener(`nodeinitialize`, event => { if (element.in) element.in(next); else if (next) next(); });
+  if (element.in && (element.nodeState === NodeState.INITIALIZED)) element.in(next);
+  else element.addEventListener(`nodeinitialize`, event => { if (element.in) element.in(next); else if (next) next(); });
 }
 
 /**
@@ -100,8 +98,6 @@ function transitionIn(element, next) {
 function transitionOut(element, next) {
   if (!element) { if (next) next(); return; }
 
-  if (element.out && (element.nodeState === NodeState.INITIALIZED))
-    element.out(next);
-  else
-    element.addEventListener(`nodeinitialize`, event => { if (element.out) element.out(next); else if (next) next(); });
+  if (element.out && (element.nodeState === NodeState.INITIALIZED)) element.out(next);
+  else element.addEventListener(`nodeinitialize`, event => { if (element.out) element.out(next); else if (next) next(); });
 }

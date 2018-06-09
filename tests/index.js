@@ -36,7 +36,7 @@ describe(`app`, function() {
     klaw(path.join(baseDir, appConfig.buildDir))
       .on(`data`, function(item) {
         if (item.stats.isDirectory() || !_.endsWith(item.path, `.html`)) return;
-        let res = fs.readFileSync(item.path, `utf-8`).match(/=["|']((\/)([a-zA-Z0-9\-\_\/\.]+))["|']/g);
+        let res = fs.readFileSync(item.path, `utf-8`).match(/=["|']((\/)([a-zA-Z0-9\-_\/.]+))["|']/g);
         res.forEach((v, i) => {
           let p = v.replace(/("|')/g, ``);
           if (_.startsWith(p, `=`)) p = p.substr(1);
@@ -58,10 +58,8 @@ describe(`app`, function() {
               callback();
             });
         }, function() {
-          if (error)
-            throw error;
-          else
-            done();
+          if (error) throw error;
+          else done();
         });
       });
 

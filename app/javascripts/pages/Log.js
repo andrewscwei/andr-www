@@ -11,11 +11,11 @@ class Log extends Page {
 
   get responsiveness() {
     return Object.assign(super.responsiveness, {
-      'scroll': {
+      scroll: {
         conductor: this,
         delay: 10.0
       },
-      'resize': {
+      resize: {
         conductor: this,
         delay: 10.0
       }
@@ -53,14 +53,12 @@ class Log extends Page {
       if (rect.top < -100) {
         if (cover) dom.setAttribute(dom.getChild(`cover`), `state`, `hidden`);
       }
-      else {
-        if (cover) dom.setAttribute(dom.getChild(`cover`), `state`, `none`);
-      }
+      else if (cover) dom.setAttribute(dom.getChild(`cover`), `state`, `none`);
 
       let nodes = this.querySelectorAll(FADE_IN_ELEMENT_SELECTOR);
       let d = 0;
 
-      for (let i=0, node; node = nodes[i++];) {
+      for (let i=0, node=nodes[i]; i < nodes.length; i++) {
         if ((node.nodeType !== Node.ELEMENT_NODE) || (node.tagName.toLowerCase() === `hr`) || (node.isIn)) continue;
 
         if (getIntersectRect(node).height > 0) {
