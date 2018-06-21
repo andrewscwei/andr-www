@@ -1,6 +1,6 @@
-$font-family-sans-serif: 'proxima-nova', 'Proxima Nova', sans-serif
-$font-family-serif: 'roboto-slab', 'Roboto Slab', serif
-$font-family-monospace: 'inconsolata', 'Inconsolata', monospace
+$font-family-sans-serif: roboto
+$font-family-serif: roboto-slab
+$font-family-monospace: inconsolata
 
 $font-size-extra-small: 14px
 $font-size-small: 18px
@@ -14,9 +14,69 @@ $font-weight-sans-serif-bold: 600
 $font-weight-serif-light: 300
 $font-weight-serif-normal: 400
 $font-weight-serif-bold: 700
-$font-weight-monospace-light: 500
-$font-weight-monospace-normal: 500
-$font-weight-monospace-bold: 500
+$font-weight-monospace-light: 400
+$font-weight-monospace-normal: 400
+$font-weight-monospace-bold: 400
+
+@font-face
+  font-family: roboto
+  src: url(/assets/fonts/Roboto-Thin.ttf) format('opentype')
+  font-style: normal
+  font-weight: 100
+
+@font-face
+  font-family: roboto
+  src: url(/assets/fonts/Roboto-Regular.ttf) format('opentype')
+  font-style: normal
+  font-weight: 300
+
+@font-face
+  font-family: roboto
+  src: url(/assets/fonts/Roboto-Bold.ttf) format('opentype')
+  font-style: normal
+  font-weight: 600
+
+@font-face
+  font-family: roboto
+  src: url(/assets/fonts/Roboto-ThinItalic.ttf) format('opentype')
+  font-style: italic
+  font-weight: 100
+
+@font-face
+  font-family: roboto
+  src: url(/assets/fonts/Roboto-Italic.ttf) format('opentype')
+  font-style: italic
+  font-weight: 300
+
+@font-face
+  font-family: roboto
+  src: url(/assets/fonts/Roboto-BoldItalic.ttf) format('opentype')
+  font-style: italic
+  font-weight: 600
+
+@font-face
+  font-family: roboto-slab
+  src: url(/assets/fonts/RobotoSlab-Light.ttf) format('opentype')
+  font-style: normal
+  font-weight: 300
+
+@font-face
+  font-family: roboto-slab
+  src: url(/assets/fonts/RobotoSlab-Regular.ttf) format('opentype')
+  font-style: normal
+  font-weight: 400
+
+@font-face
+  font-family: roboto-slab
+  src: url(/assets/fonts/RobotoSlab-Bold.ttf) format('opentype')
+  font-style: normal
+  font-weight: 700
+
+@font-face
+  font-family: inconsolata
+  src: url(/assets/fonts/Inconsolata-Regular.ttf) format('opentype')
+  font-style: normal
+  font-weight: 400
 
 #{select-texts()}
   +font('ss', 'd', 'l')

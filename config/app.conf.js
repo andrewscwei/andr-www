@@ -11,11 +11,6 @@ module.exports = {
   configDir: `config`,
   viewsDir: `app/views`,
   cms: `prismic`,
-  webFont: {
-    typekit: {
-      id: `tof7bnk`
-    }
-  },
   collections: {
     identity: {
       sortBy: `title`,

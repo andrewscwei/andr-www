@@ -56,9 +56,12 @@ class Log extends Page {
       else if (cover) dom.setAttribute(dom.getChild(`cover`), `state`, `none`);
 
       let nodes = this.querySelectorAll(FADE_IN_ELEMENT_SELECTOR);
+      let n = nodes.length;
       let d = 0;
 
-      for (let i=0, node=nodes[i]; i < nodes.length; i++) {
+      for (let i=0; i < n; i++) {
+        const node = nodes[i];
+
         if ((node.nodeType !== Node.ELEMENT_NODE) || (node.tagName.toLowerCase() === `hr`) || (node.isIn)) continue;
 
         if (getIntersectRect(node).height > 0) {
