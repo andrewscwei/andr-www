@@ -1,8 +1,8 @@
 extends /layouts/page
 
-//- append vars
-//-   -
-//-     nav = {
-//-         logs: '/logs/'
-//-       }
+append vars
+  -
+    nav = !$config.blogEnabled ? undefined : {
+      logs: '/logs/'
+    }
 block page
