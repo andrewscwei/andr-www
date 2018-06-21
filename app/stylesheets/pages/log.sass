@@ -2,7 +2,7 @@
   +padding(null 30px)
   +screen('>mobile')
     +padding(null 50px)
-  +screen('>phablet')
+  +screen('>mobile')
     +padding(null 80px)
   +screen('>tablet')
     +padding(null 20%)
@@ -11,7 +11,7 @@
   +margin(null 50px)
   +screen('>mobile')
     +margin(null 25%)
-  +screen('>phablet')
+  +screen('>mobile')
     +margin(null 30%)
 
 =log-paragraph-space($spacing:1.5em)
@@ -37,10 +37,11 @@
   +name('header')
     +display('boxv')
     +size(100% 100vh)
+    +min-size(_ 480px)
     transform: translate3d(0, 0, 0)
 
     +name('info')
-      +max-size(450px none)
+      +max-size(700px none)
       +padding(10%)
       +size(100% auto)
 
@@ -50,6 +51,10 @@
     +name('title')
       opacity: 0
       transform: translate3d(0, 40px, 0)
+      hyphens: auto
+
+      +screen('>mobile')
+        hyphens: none
 
     +name('date')
       +display('block')
@@ -108,7 +113,7 @@
       +log-leading-space(4em)
       +log-trailing-space(4em)
 
-      +screen('>phablet')
+      +screen('>mobile')
         +margin(null 30px)
 
     .MathJax_SVG svg *,

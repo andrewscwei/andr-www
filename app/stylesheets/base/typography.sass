@@ -6,9 +6,9 @@ $font-size-extra-small: 14px
 $font-size-small: 18px
 $font-size-medium: 24px
 $font-size-large: 36px
-$font-size-extra-large: 60px
+$font-size-extra-large: 50px
 
-$font-weight-sans-serif-light: 100
+$font-weight-sans-serif-light: 200
 $font-weight-sans-serif-normal: 300
 $font-weight-sans-serif-bold: 600
 $font-weight-serif-light: 300
@@ -20,9 +20,9 @@ $font-weight-monospace-bold: 400
 
 @font-face
   font-family: roboto
-  src: url(/assets/fonts/Roboto-Thin.ttf) format('opentype')
+  src: url(/assets/fonts/Roboto-Light.ttf) format('opentype')
   font-style: normal
-  font-weight: 100
+  font-weight: 200
 
 @font-face
   font-family: roboto
@@ -38,9 +38,9 @@ $font-weight-monospace-bold: 400
 
 @font-face
   font-family: roboto
-  src: url(/assets/fonts/Roboto-ThinItalic.ttf) format('opentype')
+  src: url(/assets/fonts/Roboto-LightItalic.ttf) format('opentype')
   font-style: italic
-  font-weight: 100
+  font-weight: 200
 
 @font-face
   font-family: roboto
@@ -110,7 +110,7 @@ blockquote
   +padding(40px 30px)
   border: 1px solid get-color('white', .1)
 
-  +screen('>phablet')
+  +screen('>mobile')
     +padding(60px 50px)
 
 strong
@@ -151,13 +151,12 @@ ul
         list-style: lower-roman
 
 h1
-  +font('s', 'xl', 'n')
-  font-size: get-font-size('xl', .7)
+  +font('s', 'l', 'n')
   letter-spacing: 1px
   line-height: 1em
   text-transform: uppercase
 
-  +screen('>phablet')
+  +screen('>mobile')
     +font('s', 'xl', 'n')
 
 h2

@@ -43,12 +43,14 @@
 
   section.connect
     +padding(20px 0)
+
     #{select-buttons()}
+      +display('(block)')
       +size(20px)
       +space-between(12px)
       background: transparent
 
-      +transition(transform opacity, .2s, cubic-bezier(.29,1.48,.24,.96))
+      +transition(transform opacity, .6s, cubic-bezier(.29,1.48,.24,.96))
         &:hover
           opacity: .6
 
