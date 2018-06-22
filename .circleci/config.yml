@@ -86,6 +86,7 @@ workflows:
   build_test_and_deploy:
     jobs:
       - build_test_and_deploy:
+          context: netlify_deployment
           filters:
             branches:
               ignore: /.*/
