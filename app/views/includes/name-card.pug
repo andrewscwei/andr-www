@@ -8,9 +8,7 @@ mixin name-card()
     section.name
       h1.full-name #{__('full-name')}
     section.position
-      span(type='label').position #{__('software-engineer')}
-      span(type='label').position #{__('experience-designer')}
-      span(type='label').position #{__('illustrator')}
+      span(type='label').position #{__('roles')}
     section.connect
       if _.get($data, 'identity.length')
         each identity in $data.identity

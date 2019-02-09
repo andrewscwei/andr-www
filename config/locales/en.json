@@ -3,8 +3,8 @@
 	"500": "500",
 	"full-name": "Andrew Wei",
 	"codename": "mu",
-	"software-engineer": "Software Engineer",
-	"experience-designer": "Experience Designer",
+	"software-engineer": "Engineer",
+	"experience-designer": "Designer",
 	"illustrator": "Illustrator",
 	"last-name": "Wei",
 	"first-name": "Andrew",
@@ -13,6 +13,7 @@
 	"prev": "prev",
 	"related": "related",
 	"logs": "logs",
-  "404-message": "Page does not exist.",
-	"500-message": "There appears to be a server error, please try again later."
+	"404-message": "Page does not exist.",
+	"500-message": "There appears to be a server error, please try again later.",
+	"roles": "Engineer / Designer / Illustrator"
 }
