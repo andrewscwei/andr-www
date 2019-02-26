@@ -27,7 +27,3 @@ NETLIFY_KEY
 7. [Heroku](http://heroku.com): Hosting of [Prismic](http://prismic.io) preview server
 8. [Netlify](http://netlify.com): Production static site hosting
 9. [CircleCI](http://circleci.com): CI
-
-## License
-
-This software is released under the [MIT License](http://opensource.org/licenses/MIT).
