@@ -34,11 +34,7 @@ class Home extends Page {
     this.data.state = `active`;
     this.timeline = anime.timeline();
     this.timeline.add({ targets: this, duration: 800, translateZ: 0, opacity: 1, easing: `easeOutExpo` });
-    this.timeline.complete = () => {
-      dom.setAttribute(nameCard, `data-state`, `active`);
-      if (done) done();
-    };
-
+    this.timeline.complete = () => { if (done) done(); };
   }
 
   /** @inheritdoc */

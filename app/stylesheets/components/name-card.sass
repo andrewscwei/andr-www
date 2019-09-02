@@ -1,17 +1,9 @@
 +element('name-card')
   +min-size(250px 0)
 
-  section
-    +transition(opacity transform, .8s, cubic-bezier(.17,.67,.17,1.2))
-      opacity: 0
-      transform: translate3d(-50px, 0px, 0px)
-
-      @for $i from 1 through 4
-        &:nth-of-type(#{$i})
-          transition-delay: #{.1 * ($i - 1)}s
-
   section.logo
     +padding(10px 0)
+    transform: translate3d(0, 0, 0)
 
     svg
       +size(70px)
@@ -53,8 +45,3 @@
       +transition(transform opacity, .6s, cubic-bezier(.29,1.48,.24,.96))
         &:hover
           opacity: .6
-
-  +data('state', 'active')
-    section
-      opacity: 1
-      transform: translate3d(0, 0, 0)
