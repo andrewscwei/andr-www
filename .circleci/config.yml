@@ -13,13 +13,13 @@ jobs:
             apt-get install jq zip -y
       - restore_cache:
           keys:
-            - dependency-cache-{{ checksum "yarn.lock" }}
+            - dependency-cache-{{ checksum "package-lock.json" }}
             - dependency-cache-
       - run:
           name: Install NPM dependencies
-          command: yarn
+          command: npm install
       - save_cache:
-          key: dependency-cache-{{ checksum "yarn.lock" }}
+          key: dependency-cache-{{ checksum "package-lock.json" }}
           paths:
             - "node_modules"
       - run:
@@ -49,13 +49,13 @@ jobs:
             apt-get install jq zip -y
       - restore_cache:
           keys:
-            - dependency-cache-{{ checksum "yarn.lock" }}
+            - dependency-cache-{{ checksum "package-lock.json" }}
             - dependency-cache-
       - run:
           name: Install NPM dependencies
-          command: yarn
+          command: npm install
       - save_cache:
-          key: dependency-cache-{{ checksum "yarn.lock" }}
+          key: dependency-cache-{{ checksum "package-lock.json" }}
           paths:
             - "node_modules"
       - run:
