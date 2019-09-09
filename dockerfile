@@ -1,10 +1,11 @@
-FROM node:10.16.3
+FROM node:8.4.0
 
 # Install NPM dependencies
 COPY package.json /var/andr-www/
-COPY package-lock.json /var/andr-www/
+COPY yarn.lock /var/andr-www/
 WORKDIR /var/andr-www
-RUN npm isntall
+RUN yarn global add node-gyp
+RUN yarn
 
 # Clone source files
 ADD app.js /var/andr-www/

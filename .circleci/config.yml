@@ -3,7 +3,7 @@ jobs:
   build_and_test:
     working_directory: ~/repo
     docker:
-      - image: node:10.16.3
+      - image: node:8.9.4
     steps:
       - checkout
       - run:
@@ -13,13 +13,13 @@ jobs:
             apt-get install jq zip -y
       - restore_cache:
           keys:
-            - dependency-cache-{{ checksum "package-lock.json" }}
+            - dependency-cache-{{ checksum "yarn.lock" }}
             - dependency-cache-
       - run:
           name: Install NPM dependencies
-          command: npm install
+          command: yarn
       - save_cache:
-          key: dependency-cache-{{ checksum "package-lock.json" }}
+          key: dependency-cache-{{ checksum "yarn.lock" }}
           paths:
             - "node_modules"
       - run:
@@ -39,7 +39,7 @@ jobs:
   build_test_and_deploy:
     working_directory: ~/repo
     docker:
-      - image: node:10.16.3
+      - image: node:8.9.4
     steps:
       - checkout
       - run:
@@ -49,13 +49,13 @@ jobs:
             apt-get install jq zip -y
       - restore_cache:
           keys:
-            - dependency-cache-{{ checksum "package-lock.json" }}
+            - dependency-cache-{{ checksum "yarn.lock" }}
             - dependency-cache-
       - run:
           name: Install NPM dependencies
-          command: npm install
+          command: yarn
       - save_cache:
-          key: dependency-cache-{{ checksum "package-lock.json" }}
+          key: dependency-cache-{{ checksum "yarn.lock" }}
           paths:
             - "node_modules"
       - run:
