@@ -39,6 +39,8 @@ html(lang=locale)
     meta(name='msapplication-navbutton-color' content='#ff3300')
     meta(name='msapplication-starturl' content='/')
 
+    script(type='text/javascript' src='https://unpkg.com/@webcomponents/webcomponentsjs@2.2.10/webcomponents-bundle.js')
+
     if _.get(env, 'GOOGLE_ANALYTICS_ID')
       script(async src=`https://www.googletagmanager.com/gtag/js?id=${env.GOOGLE_ANALYTICS_ID}`)
       script.
@@ -62,4 +64,5 @@ html(lang=locale)
     block body
 
     block scripts
+      script(src=$asset('/assets/javascripts/common.js'))
       script(src=$asset('/assets/javascripts/application.js'))

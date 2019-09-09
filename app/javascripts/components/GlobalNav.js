@@ -1,5 +1,5 @@
-import m, { Element } from 'meno';
 import anime from 'animejs';
+import { Element, register } from 'meno';
 
 class GlobalNav extends Element(`global-nav`) {
   /** @inheritdoc */
@@ -47,4 +47,4 @@ class GlobalNav extends Element(`global-nav`) {
   }
 }
 
-export default m.register(GlobalNav);
+export default register(GlobalNav);

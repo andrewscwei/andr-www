@@ -1,5 +1,5 @@
-import m, { DirtyType, Element } from 'meno';
 import Hammer from 'hammerjs';
+import { DirtyType, Element, register } from 'meno';
 
 if (process.env.NODE_ENV === `development`) {
   var debug = require(`debug`)(`app:Page`);
@@ -156,4 +156,4 @@ class Page extends Element(`page-base`) {
   }
 }
 
-export default m.register(Page);
+export default register(Page);

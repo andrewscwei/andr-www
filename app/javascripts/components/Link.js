@@ -1,4 +1,4 @@
-import m, { Element } from 'meno';
+import { Element, register } from 'meno';
 
 class Link extends Element(HTMLAnchorElement) {
   /** @inheritdoc */
@@ -22,4 +22,4 @@ class Link extends Element(HTMLAnchorElement) {
   }
 }
 
-export default m.register(Link);
+export default register(Link);

@@ -1,7 +1,7 @@
 import anime from 'animejs';
-import m, { dom, DirtyType } from 'meno';
+import { DirtyType, dom, register } from 'meno';
+import { getIntersectRect, getRect } from 'spase';
 import Page from './Page';
-import { getRect, getIntersectRect } from 'spase';
 
 const FADE_IN_ELEMENT_SELECTOR = `pre, [name="footer"] [type="button"], [name="related"] [type="button"]`;
 
@@ -117,4 +117,4 @@ class Log extends Page {
   }
 }
 
-export default m.register(Log);
+export default register(Log);

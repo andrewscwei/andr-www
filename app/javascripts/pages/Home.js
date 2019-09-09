@@ -1,5 +1,5 @@
 import anime from 'animejs';
-import m, { dom, DirtyType } from 'meno';
+import { DirtyType, dom, register } from 'meno';
 import Page from './Page';
 
 class Home extends Page {
@@ -55,4 +55,4 @@ class Home extends Page {
   }
 }
 
-export default m.register(Home);
+export default register(Home);
