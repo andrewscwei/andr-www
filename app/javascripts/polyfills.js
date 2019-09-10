@@ -1,1 +1,2 @@
-import '@webcomponents/webcomponentsjs/custom-elements-es5-adapter';
+import 'document-register-element';
+import 'core-js/stable';

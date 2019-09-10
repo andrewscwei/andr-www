@@ -65,7 +65,9 @@ function transitionIn(element, next) {
   if (!element) { if (next) next(); return; }
 
   if (element.in && (element.nodeState === NodeState.INITIALIZED)) element.in(next);
-  else element.addEventListener('nodeinitialize', event => { if (element.in) element.in(next); else if (next) next(); });
+  else element.addEventListener('nodeinitialize', event => {
+    if (element.in) element.in(next); else if (next) next();
+  });
 }
 
 /**
