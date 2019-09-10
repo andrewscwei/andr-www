@@ -1,15 +1,20 @@
-import appConfig from '../../config/app.conf';
-import pm from 'page-manager';
+import isTouchDevice from 'is-touch-device';
 import { dom, NodeState } from 'meno';
-
-import './components/Link';
+import pm from 'page-manager';
+import appConfig from '../../config/app.conf';
 import './components/GlobalNav';
+import './components/Link';
 import './pages/Home';
-import './pages/Logs';
 import './pages/Log';
+import './pages/Logs';
 
 if (process.env.NODE_ENV === 'development') {
   window.localStorage.debug = 'app*,meno*';
+}
+
+// Detect touch device.
+if (isTouchDevice()) {
+  document.documentElement.classList.add('touch');
 }
 
 pm.locales = appConfig.locales;

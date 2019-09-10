@@ -1,17 +1,19 @@
 =log-padding-h()
   +padding(null 30px)
-  +screen('>mobile')
-    +padding(null 50px)
-  +screen('>mobile')
+
+  +gtmobile
     +padding(null 80px)
-  +screen('>tablet')
+
+  +gttablet
     +padding(null 20%)
 
 =log-margin-h()
   +margin(null 50px)
-  +screen('>mobile')
+
+  +gtmobile
     +margin(null 25%)
-  +screen('>mobile')
+
+  +gttablet
     +margin(null 30%)
 
 =log-paragraph-space($spacing:1.5em)
@@ -163,5 +165,5 @@
     +element('log-entry')
       background: get-color('very-dark-grey')
 
-      &:hover
+      +hwot
         background: get-color('black')

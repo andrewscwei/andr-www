@@ -10,7 +10,7 @@
         fill: get-color('white')
         transform-origin: center
 
-    &:hover
+    +hwot
       svg
         circle
           fill: get-color('black')
@@ -52,7 +52,7 @@
         +transition(fill, .3s, cubic-bezier(.17,.67,.3,1.23))
         fill: get-color('white')
 
-    &:hover
+    +hwot
       #{select-headings()}, #{select-texts()}
         opacity: 1
         transform: translate3d(0, 0, 0)
@@ -127,7 +127,7 @@
     +transition(opacity, .3s, ease-out)
     background: transparent
 
-    &:hover
+    +hwot
       opacity: .6
 
   &.arrow
@@ -135,7 +135,7 @@
     +transition(opacity, .3s, ease-out)
     background: transparent
 
-    &:hover
+    +hwot
       opacity: .6 !important
 
   &.triangle
@@ -144,7 +144,7 @@
     background: transparent
     border: 6px solid transparent
 
-    &:hover
+    +hwot
       opacity: .6
 
     #{select-headings()}, #{select-texts()}
@@ -200,7 +200,7 @@
       +transition(color, .3s, ease-out)
       color: get-color('black')
 
-    &:hover
+    +hwot
       background: get-color('black')
 
       #{select-headings()}, #{select-texts()}
@@ -225,7 +225,7 @@
       color: get-color('white')
       text-transform: capitalize
 
-    &:hover
+    +hwot
       border: 1px solid get-color('white')
 
     &.prev
