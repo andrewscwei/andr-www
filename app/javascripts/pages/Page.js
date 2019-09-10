@@ -1,13 +1,11 @@
 import Hammer from 'hammerjs';
-import { DirtyType, Element, register } from 'meno';
+import { DirtyType, Element } from 'meno';
 
 if (process.env.NODE_ENV === 'development') {
   var debug = require('debug')('app:Page');
 }
 
-class Page extends Element('page-base') {
-  static get extends() { return 'div'; }
-
+class Page extends Element() {
   /**
    * Timeline instance.
    *
@@ -156,4 +154,4 @@ class Page extends Element('page-base') {
   }
 }
 
-export default register(Page);
+export default Page;

@@ -10,7 +10,7 @@ append vars
     };
 
 block page
-  div(is='page-logs' name='page')
+  page-logs(id='logs' name='page')
     +nav-button('right', pagination.next && pagination.next.path)
     +nav-button('left', pagination.previous && pagination.previous.path)
     div#inner-page

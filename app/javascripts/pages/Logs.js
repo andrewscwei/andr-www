@@ -19,7 +19,7 @@ class Logs extends Page {
     if (tags) this.timeline.add({ targets: tags, duration: 200, translateY: [-20, 0], opacity: [0, 1], easing: 'easeOutExpo' });
     if (entries && entries.length) {
       entries.forEach(entry => {
-        this.timeline.add({ targets: entry, duration: 200, opacity: [0, 1], translateY: [100, 0], easing: 'easeOutExpo', offset: `-=${130}` });
+        this.timeline.add({ targets: entry, duration: 200, opacity: [0, 1], translateY: [100, 0], easing: 'easeOutExpo' }, `-=${130}`);
       });
     }
     this.timeline.complete = () => {
@@ -40,7 +40,7 @@ class Logs extends Page {
     if (tags) this.timeline.add({ targets: tags, duration: 200, translateY: -20, opacity: 0, easing: 'easeOutExpo' });
     if (entries && entries.length) {
       entries.forEach(entry => {
-        this.timeline.add({ targets: entry, duration: 200, opacity: 0, translateY: 100, easing: 'easeInOutExpo', offset: `-=${150}` });
+        this.timeline.add({ targets: entry, duration: 200, opacity: 0, translateY: 100, easing: 'easeInOutExpo' }, `-=${150}`);
       });
     }
     this.timeline.complete = () => {

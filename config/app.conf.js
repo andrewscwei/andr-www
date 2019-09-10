@@ -4,7 +4,7 @@ module.exports = {
   keywords: '',
   url: 'https://www.andr.mu',
   locales: ['en'],
-  blogEnabled: false,
+  blogEnabled: true,
   autoRouting: true,
   sourceDir: 'app',
   buildDir: 'public',

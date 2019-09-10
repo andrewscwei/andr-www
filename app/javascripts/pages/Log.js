@@ -89,9 +89,9 @@ class Log extends Page {
     if (footer) this.timeline.add({ targets: footer, duration: 0, translateY: [100, 0], opacity: [0, 1] });
     if (related) this.timeline.add({ targets: related, duration: 0, translateY: [100, 0], opacity: [0, 1] });
     if (cover) this.timeline.add({ targets: cover, duration: 1000, translateZ: [-300, 0], opacity: [0, 1], easing: 'easeOutExpo' });
-    if (title) this.timeline.add({ targets: title, duration: 300, translateY: [40, 0], opacity: [0, 1], easing: 'easeOutExpo', offset: '-=200' });
-    if (date) this.timeline.add({ targets: date, duration: 300, translateY: [40, 0], opacity: [0, 1], easing: 'easeOutExpo', offset: '-=200' });
-    if (tags) this.timeline.add({ targets: tags, duration: 300, translateY: [40, 0], opacity: [0, 1], easing: 'easeOutExpo', offset: '-=200' });
+    if (title) this.timeline.add({ targets: title, duration: 300, translateY: [40, 0], opacity: [0, 1], easing: 'easeOutExpo' }, '-=200ms');
+    if (date) this.timeline.add({ targets: date, duration: 300, translateY: [40, 0], opacity: [0, 1], easing: 'easeOutExpo' }, '-=200');
+    if (tags) this.timeline.add({ targets: tags, duration: 300, translateY: [40, 0], opacity: [0, 1], easing: 'easeOutExpo' }, '-=200');
     this.timeline.complete = () => { if (done) done(); };
   }
 
@@ -107,11 +107,11 @@ class Log extends Page {
 
     this.timeline = anime.timeline();
     if (contents) this.timeline.add({ targets: contents, duration: 300, translateY: 100, opacity: 0, easing: 'easeInExpo' });
-    if (footer) this.timeline.add({ targets: footer, duration: 300, translateY: 100, opacity: 0, easing: 'easeInExpo', offset: '-=300' });
-    if (related) this.timeline.add({ targets: related, duration: 300, translateY: 100, opacity: 0, easing: 'easeInExpo', offset: '-=300' });
-    if (title) this.timeline.add({ targets: title, duration: 300, translateY: 40, opacity: 0, easing: 'easeInExpo', offset: '-=300' });
-    if (date) this.timeline.add({ targets: date, duration: 300, translateY: 40, opacity: 0, easing: 'easeInExpo', offset: '-=200' });
-    if (tags) this.timeline.add({ targets: tags, duration: 300, translateY: 40, opacity: 0, easing: 'easeInExpo', offset: '-=200' });
+    if (footer) this.timeline.add({ targets: footer, duration: 300, translateY: 100, opacity: 0, easing: 'easeInExpo' }, '-=300');
+    if (related) this.timeline.add({ targets: related, duration: 300, translateY: 100, opacity: 0, easing: 'easeInExpo' }, '-=300');
+    if (title) this.timeline.add({ targets: title, duration: 300, translateY: 40, opacity: 0, easing: 'easeInExpo' }, '-=300');
+    if (date) this.timeline.add({ targets: date, duration: 300, translateY: 40, opacity: 0, easing: 'easeInExpo' }, '-=200');
+    if (tags) this.timeline.add({ targets: tags, duration: 300, translateY: 40, opacity: 0, easing: 'easeInExpo' }, '-=200');
     if (cover) this.timeline.add({ targets: cover, duration: 300, translateZ: -300, opacity: 0, easing: 'easeInExpo' });
     this.timeline.complete = () => { if (done) done(); };
   }

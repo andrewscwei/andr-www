@@ -4,15 +4,15 @@ include /includes/name-card
 include /includes/nav-button
 
 block body
-  div(id='home' is='page-home' name='home')
+  page-home(id='home' name='home')
     if $config.blogEnabled
       +nav-button('down', '/logs/')
-    canvas(is='x-infographic' name='infographic')
+
     +name-card()(name='name-card')
 
   main(id='page')
     if cover
-      div(id='cover' is='page-cover' name='cover')
+      page-cover(id='cover' name='cover')
         figure(name='background' style=`background-image:url(${cover})`)
 
     if nav

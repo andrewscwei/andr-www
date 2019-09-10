@@ -1,6 +1,5 @@
 {
 	"404": "404",
-	"500": "500",
 	"full-name": "Andrew Wei",
 	"codename": "mu",
 	"software-engineer": "Engineer",
@@ -14,6 +13,5 @@
 	"related": "related",
 	"logs": "logs",
 	"404-message": "Page does not exist.",
-	"500-message": "There appears to be a server error, please try again later.",
 	"roles": "Engineer / Designer / Illustrator"
 }
