@@ -10,7 +10,6 @@ module.exports = {
   buildDir: 'public',
   configDir: 'config',
   viewsDir: 'app/views',
-  cms: 'prismic',
   collections: {
     identity: {
       sortBy: 'title',

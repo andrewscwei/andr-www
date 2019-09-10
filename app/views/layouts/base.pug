@@ -52,14 +52,6 @@ html(lang=locale)
     block styles
       link(rel='stylesheet' href=$asset('/assets/stylesheets/application.css'))
 
-    if (_.get($config, 'cms') === 'prismic') && _.get($env, 'PRISMIC_API_ENDPOINT') && _.get($env, 'SSR_ENABLED')
-      script.
-        window.prismic = { endpoint: '#{$env.PRISMIC_API_ENDPOINT}' };
-      script(type='text/javascript' src='//static.cdn.prismic.io/prismic.min.js')
-    if (_.get($config, 'webFont'))
-      if ($config.webFont.typekit)
-        script(src=`https://use.typekit.net/${$config.webFont.typekit.id}.js`)
-
   body
     block body
 

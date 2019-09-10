@@ -1,5 +1,3 @@
-/* global Typekit:true */
-
 import appConfig from '../../config/app.conf';
 import pm from 'page-manager';
 import { dom, NodeState } from 'meno';
@@ -55,24 +53,7 @@ pm.transition('out', '*', (next) => {
 });
 
 // Begin routing after all requirements are defined.
-if (appConfig.webFont) {
-  if (appConfig.webFont.typekit) {
-    try {
-      Typekit.load({
-        async: true,
-        classes: false,
-        active: pm.startRouting,
-        inactive: pm.startRouting,
-      });
-    }
-    catch (err) {
-      pm.startRouting();
-    }
-  }
-}
-else {
-  pm.startRouting();
-}
+pm.startRouting();
 
 /**
  * Custom async transition-in behavior.
