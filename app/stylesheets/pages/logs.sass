@@ -1,26 +1,29 @@
 #logs
-  +align()
-  +overflow(hidden scroll)
-  +size(100%)
+  +tl
+  height: 100%
+  overflow-x: hidden
+  overflow-y: scroll
+  width: 100%
 
   #inner-page
-    +min-size(100%)
-    +size(100% auto)
-    +display('boxv', top center)
-    +padding(100px 0)
+    +fvtc
+    min-height: 100%
+    min-width: 100%
+    padding: 100px 0
+    width: 100%
 
     +screen('w<=%s' 'h>%s', 650px 1800)
-      +display('boxv', center)
+      +fvcc
 
     +screen('w>%s' 'h>%s', 650px 1170px)
-      +display('boxv', center)
+      +fvcc
 
     +screen('w>%s' 'h>%s', 900px 870px)
-      +display('boxv', center)
+      +fvcc
 
   .tags
-    +display('box>')
-    +margin(0 0 50px 0)
+    +fhcl
+    margin: 0 0 50px 0
     opacity: 0
     transform: translate3d(0, -20px, 0)
 

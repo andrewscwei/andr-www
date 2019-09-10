@@ -26,13 +26,18 @@
   +margin(null null $spacing null)
 
 #log
-  +overflow(hidden scroll)
-  +size(100%)
+  +tl
+  -webkit-overflow-scrolling: touch
+  height: 100%
+  overflow-x: hidden
+  overflow-y: scroll
+  width: 100%
 
   #inner-page
-    +min-size(100%)
-    +size(100% auto)
+    min-height: 100%
+    min-width: 100%
     transform: translate3d(0, 0, 0)
+    width: 100%
 
   +name('header')
     +display('boxv')

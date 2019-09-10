@@ -51,9 +51,13 @@ class Log extends Page {
       let cover = dom.getChild('cover');
 
       if (rect.top < -100) {
-        if (cover) dom.setAttribute(dom.getChild('cover'), 'state', 'hidden');
+        if (cover) {
+          dom.setAttribute(dom.getChild('cover'), 'data-state', 'hidden');
+        }
       }
-      else if (cover) dom.setAttribute(dom.getChild('cover'), 'state', 'none');
+      else if (cover) {
+        dom.setAttribute(dom.getChild('cover'), 'data-state', 'none');
+      }
 
       let nodes = this.querySelectorAll(FADE_IN_ELEMENT_SELECTOR);
       let n = nodes.length;

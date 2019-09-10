@@ -31,6 +31,7 @@ body
   +data('state', 'hidden')
     +name('background')
       transform: translate3d(0, 0, -300px)
+
       &::before
         opacity: 0
 
@@ -67,6 +68,7 @@ body
   z-index: 1000
 
 #page
-  +align()
-  +overflow(hidden)
-  +size(100%)
+  +tl
+  height: 100%
+  overflow: hidden
+  width: 100%
