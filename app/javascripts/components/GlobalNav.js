@@ -1,9 +1,9 @@
 import anime from 'animejs';
 import { Element, register } from 'meno';
 
-class GlobalNav extends Element(`global-nav`) {
+class GlobalNav extends Element('global-nav') {
   /** @inheritdoc */
-  static get extends() { return `nav`; }
+  static get extends() { return 'nav'; }
 
   /**
    * Timeline instance.
@@ -27,9 +27,9 @@ class GlobalNav extends Element(`global-nav`) {
     const duration = 400;
 
     this.timeline = anime.timeline({ autoplay: false });
-    if (this.getChild(`home-button`)) this.timeline.add({ targets: this.getChild(`home-button`), duration: duration, translateY: [-100, 0], easing: `easeOutExpo` });
-    if (this.getChild(`grid-button`)) this.timeline.add({ targets: this.getChild(`grid-button`), duration: duration, translateY: [100, 0], easing: `easeOutExpo` });
-    if (this.getChild(`logs-button`)) this.timeline.add({ targets: this.getChild(`logs-button`), duration: duration, translateY: [100, 0], easing: `easeOutExpo` });
+    if (this.getChild('home-button')) this.timeline.add({ targets: this.getChild('home-button'), duration: duration, translateY: [-100, 0], easing: 'easeOutExpo' });
+    if (this.getChild('grid-button')) this.timeline.add({ targets: this.getChild('grid-button'), duration: duration, translateY: [100, 0], easing: 'easeOutExpo' });
+    if (this.getChild('logs-button')) this.timeline.add({ targets: this.getChild('logs-button'), duration: duration, translateY: [100, 0], easing: 'easeOutExpo' });
     this.timeline.complete = () => { if (done) done(); };
     this.timeline.play();
   }
@@ -39,9 +39,9 @@ class GlobalNav extends Element(`global-nav`) {
     const duration = 600;
 
     this.timeline = anime.timeline({ autoplay: false });
-    if (this.getChild(`home-button`)) this.timeline.add({ targets: this.getChild(`home-button`), duration, translateY: [0, -100], easing: `easeOutExpo` });
-    if (this.getChild(`grid-button`)) this.timeline.add({ targets: this.getChild(`grid-button`), duration, translateY: [0, -100], easing: `easeOutExpo` });
-    if (this.getChild(`logs-button`)) this.timeline.add({ targets: this.getChild(`logs-button`), duration, translateY: [0, 100], easing: `easeOutExpo` });
+    if (this.getChild('home-button')) this.timeline.add({ targets: this.getChild('home-button'), duration, translateY: [0, -100], easing: 'easeOutExpo' });
+    if (this.getChild('grid-button')) this.timeline.add({ targets: this.getChild('grid-button'), duration, translateY: [0, -100], easing: 'easeOutExpo' });
+    if (this.getChild('logs-button')) this.timeline.add({ targets: this.getChild('logs-button'), duration, translateY: [0, 100], easing: 'easeOutExpo' });
     this.timeline.complete = () => { if (done) done(); };
     this.timeline.play();
   }
