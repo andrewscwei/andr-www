@@ -1,94 +1,79 @@
-$font-family-sans-serif: roboto
-$font-family-serif: roboto-slab
-$font-family-monospace: inconsolata
++font-face(roboto, '/assets/fonts/Roboto-Light.ttf')
++font-face(roboto, '/assets/fonts/Roboto-LightItalic.ttf')
++font-face(roboto, '/assets/fonts/Roboto-Regular.ttf')
++font-face(roboto, '/assets/fonts/Roboto-Italic.ttf')
++font-face(roboto, '/assets/fonts/Roboto-Bold.ttf')
++font-face(roboto, '/assets/fonts/Roboto-BoldItalic.ttf')
++font-face(roboto-slab, '/assets/fonts/RobotoSlab-Light.ttf')
++font-face(roboto-slab, '/assets/fonts/RobotoSlab-Regular.ttf')
++font-face(roboto-slab, '/assets/fonts/RobotoSlab-Bold.ttf')
++font-face(inconsolata, '/assets/fonts/Inconsolata-Regular.ttf')
 
-$font-size-extra-small: 14px
-$font-size-small: 18px
-$font-size-medium: 24px
-$font-size-large: 36px
-$font-size-extra-large: 50px
-
-$font-weight-sans-serif-light: 200
-$font-weight-sans-serif-normal: 300
-$font-weight-sans-serif-bold: 600
-$font-weight-serif-light: 300
-$font-weight-serif-normal: 400
-$font-weight-serif-bold: 700
-$font-weight-monospace-light: 400
-$font-weight-monospace-normal: 400
-$font-weight-monospace-bold: 400
-
-@font-face
-  font-family: roboto
-  src: url(/assets/fonts/Roboto-Light.ttf) format('opentype')
-  font-style: normal
-  font-weight: 200
-
-@font-face
-  font-family: roboto
-  src: url(/assets/fonts/Roboto-Regular.ttf) format('opentype')
-  font-style: normal
-  font-weight: 300
-
-@font-face
-  font-family: roboto
-  src: url(/assets/fonts/Roboto-Bold.ttf) format('opentype')
-  font-style: normal
-  font-weight: 600
-
-@font-face
-  font-family: roboto
-  src: url(/assets/fonts/Roboto-LightItalic.ttf) format('opentype')
-  font-style: italic
-  font-weight: 200
-
-@font-face
-  font-family: roboto
-  src: url(/assets/fonts/Roboto-Italic.ttf) format('opentype')
-  font-style: italic
-  font-weight: 300
-
-@font-face
-  font-family: roboto
-  src: url(/assets/fonts/Roboto-BoldItalic.ttf) format('opentype')
-  font-style: italic
-  font-weight: 600
-
-@font-face
+=title
   font-family: roboto-slab
-  src: url(/assets/fonts/RobotoSlab-Light.ttf) format('opentype')
-  font-style: normal
-  font-weight: 300
-
-@font-face
-  font-family: roboto-slab
-  src: url(/assets/fonts/RobotoSlab-Regular.ttf) format('opentype')
-  font-style: normal
+  font-size: 50px
   font-weight: 400
 
-@font-face
+=h1
   font-family: roboto-slab
-  src: url(/assets/fonts/RobotoSlab-Bold.ttf) format('opentype')
-  font-style: normal
-  font-weight: 700
+  font-size: 36px
+  font-weight: 400
 
-@font-face
+=h2
+  font-family: roboto
+  font-size: 36px
+  font-weight: 400
+
+=h3
+  font-family: roboto
+  font-size: 24px
+  font-weight: 400
+
+=h4
+  font-family: roboto
+  font-size: 18px
+  font-weight: 400
+
+=p1
+  font-family: roboto
+  font-size: 18px
+  font-weight: 300
+
+=p2
+  font-family: roboto
+  font-size: 14px
+  font-weight: 400
+
+=p3
   font-family: inconsolata
-  src: url(/assets/fonts/Inconsolata-Regular.ttf) format('opentype')
-  font-style: normal
+  font-size: 18px
   font-weight: 400
+
+=a1
+  font-family: roboto
+  font-size: 18px
+  font-weight: 400
+
+=b1
+  font-family: inconsolata
+  font-size: 14px
+  font-weight: 400
+
+=c1
+  font-family: inconsolata
+  font-size: 400
 
 #{select-texts()}
-  +font('ss', 'd', 'l')
+  +p1
   color: get-color('white')
   line-height: 1.8em
 
   a
-    +font('ss', 'd', 'n')
+    +a1
 
 code
   +padding(3px 4px)
-  +font('m', null, 'n')
+  +c1
   background: get-color('very-dark-grey') !important
   border-radius: 3px
   color: get-color('white') !important
@@ -114,18 +99,18 @@ blockquote
     +padding(60px 50px)
 
 strong
-  font-weight: get-font-weight('b', 'ss')
+  font-weight: 700
 
 #{select-headings()}
   color: get-color('white')
 
 #{select-list-items()}
-  +font('ss', 'd', 'l')
+  +p1
   color: get-color('white')
   line-height: 1.8em
 
   a
-    +font('ss', 'd', 'n')
+    +a1
 
   ol &
     list-style: decimal
@@ -151,25 +136,25 @@ ul
         list-style: lower-roman
 
 h1
-  +font('s', 'l', 'n')
+  +h1
   letter-spacing: 1px
   line-height: 1em
   text-transform: uppercase
 
   +screen('>mobile')
-    +font('s', 'xl', 'n')
+    +title
 
 h2
-  +font('ss', 'l', 'n')
+  +h2
   letter-spacing: 1px
   text-transform: uppercase
 
 h3
-  +font('ss', 'm', 'n')
+  +h3
   letter-spacing: 1px
   text-transform: none
 
 h4
-  +font('ss', 's', 'n')
+  +h4
   letter-spacing: 1px
   text-transform: none

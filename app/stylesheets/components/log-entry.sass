@@ -8,7 +8,7 @@
 
   #{select-headings()}, #{select-texts()}
     &.title
-      +font('ss', 'm', 'n')
+      +h3
       color: get-color('white')
       letter-spacing: 0px
       text-transform: none
@@ -17,14 +17,14 @@
     &.date
       +align(bottom left)
       +edge(null null 40px 30px)
-      +font('m', 'd', 'n')
+      +p3
       color: get-color('grey')
 
     &.number
       +size(auto 80px)
       +align(bottom right)
       +edge(null 15px 15px null)
-      +font('s', 'xl', 'n')
+      +title
       color: get-color('grey', .2)
 
   &:hover
