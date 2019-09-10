@@ -17,6 +17,7 @@ module.exports = {
   },
   scripts: {
     entry: {
+      polyfills: 'polyfills.js',
       application: 'application.js',
     },
     module: {
