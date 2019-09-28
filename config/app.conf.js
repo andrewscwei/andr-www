@@ -1,9 +1,10 @@
 module.exports = {
   title: 'Andrew Wei',
   description: 'Andrew Wei, codenamed mu, is a software engineer, experience designer and illustrator.',
-  keywords: '',
+  keywords: 'andrew,wei,andr,mu,engineer,designer,illustrator',
   url: 'https://www.andr.mu',
   locales: ['en'],
+  ga: 'UA-108117457-1',
   blogEnabled: true,
   autoRouting: true,
   sourceDir: 'app',

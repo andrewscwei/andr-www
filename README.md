@@ -10,10 +10,6 @@ The following are all the supported environment variables. `*` indicates that th
 
 ```sh
 PRISMIC_API_ENDPOINT*
-GOOGLE_ANALYTICS_ID
-HEROKU_API_KEY
-HEROKU_LOGIN
-NETLIFY_KEY
 ```
 
 ## Stack
