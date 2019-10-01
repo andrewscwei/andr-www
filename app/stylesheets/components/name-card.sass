@@ -45,3 +45,16 @@
       +transition(transform opacity, .6s, cubic-bezier(.29,1.48,.24,.96))
         +hwot
           opacity: .6
+
+      &.inactive
+        pointer-events: none
+
+        > *
+          opacity: .2
+
+        &::after
+          +cc
+          width: 100%
+          height: 1px
+          content: ''
+          background: get-color('light-grey')

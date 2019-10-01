@@ -1,4 +1,4 @@
-# andr-www [![CircleCI](https://circleci.com/gh/andrewscwei/andr-www.svg?style=svg)](https://circleci.com/gh/andrewscwei/andr-www)
+# andr-www [![CircleCI](https://img.shields.io/circleci/build/github/andrewscwei/andr-www.svg)](https://circleci.com/gh/andrewscwei/andr-www) [![](https://img.shields.io/netlify/e1f30fd3-f80a-4354-8339-947de1d70beb)](https://app.netlify.com/sites/aristotl)
 
 My personal website. It is a static site content managed by [Prismic.io](http://prismic.io), served on [Netlify](http://netlify.com).
 

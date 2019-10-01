@@ -12,4 +12,4 @@ mixin name-card()
     section.connect
       if _.get($data, 'identity.length')
         each identity in $data.identity
-          +button({ iconClass: _.toLower(identity.medium), iconUrl: identity.image, href: identity.link })
+          +button({ iconClass: _.toLower(identity.medium), iconUrl: identity.image, href: identity.link })(class=(!identity.enabled && 'inactive'))
