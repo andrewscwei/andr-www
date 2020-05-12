@@ -34,14 +34,14 @@ jobs:
         with:
           name: package
           path: package/
-      - name: Persist build dir
+      - name: Persist public dir
         uses: actions/upload-artifact@v1
         with:
-          name: build
-          path: build/
+          name: public
+          path: public/
       - name: Test
         run: npm test
       - name: Deploy to Netlify
-        run: .github/workflows/deploy_to_netlify.sh
+        run: BUILD_DIR=public .github/workflows/deploy_to_netlify.sh
         env:
           NETLIFY_KEY: ${{ secrets.NETLIFY_KEY }}
