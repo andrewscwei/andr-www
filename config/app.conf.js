@@ -5,7 +5,7 @@ module.exports = {
   url: 'https://www.andr.mu',
   locales: ['en'],
   ga: 'UA-108117457-1',
-  blogEnabled: true,
+  blogEnabled: false,
   autoRouting: true,
   sourceDir: 'app',
   buildDir: 'public',
