@@ -8,8 +8,8 @@
   <div class="logo mb-2">
     <Logo />
   </div>
-  <h1 class="name text-2xl uppercase mb-1/2">Andrew Wei</h1>
-  <span class="description text-s">Engineer / Designer / Illustrator</span>
+  <h1 class="name uppercase mb-1/2">Andrew Wei</h1>
+  <span class="description text-xs">Engineer / Designer / Illustrator</span>
   <ul class="fhcl mt-5 wrap">
     {#each contacts as contact}
       <a class="link m-1/2 ts-opacity hover:a-70" href={contact.url} target="_blank">
@@ -18,7 +18,7 @@
         {/if}
       </a>
     {/each}
-    <div class="divider mh-1 mv-1/2"/>
+    <div class="divider mh-1 mv-1/2" />
     {#each projects as project}
       <a class="link m-1/2 ts-opacity hover:a-70" class:inactive={project.isActive === false} href={project.url} target="_blank">
         {#if project.icon && project.icon.length > 1}
@@ -31,18 +31,21 @@
 
 <style lang="postcss">
   main {
+    --link-radius: 1rem;
+    --tint-color: #fff;
+
     background: #1a1a1a;
     color: #fff;
-    padding: 5%;
+    padding: 10%;
   }
 
   .logo {
-    --tint-color: #fff;
     width: 7rem;
   }
 
   .name {
     letter-spacing: 0.2rem;
+    font-size: 3.4rem;
   }
 
   .description {
@@ -50,14 +53,14 @@
   }
 
   .divider {
-    width: .1rem;
+    width: 0.1rem;
     height: 1.4rem;
     background: #666;
   }
 
   .link {
-    height: 2rem;
-    width: 2rem;
+    height: calc(var(--link-radius) * 2);
+    width: calc(var(--link-radius) * 2);
     position: relative;
 
     &.inactive {
