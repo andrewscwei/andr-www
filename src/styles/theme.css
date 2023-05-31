@@ -1,0 +1,31 @@
+:root {
+  --bg-color: #999;
+}
+
+@font-face {
+  font-family: 'Space Mono';
+  font-style: normal;
+  font-weight: 400;
+  src: url('/fonts/SpaceMono-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Space Mono';
+  font-style: italic;
+  font-weight: 400;
+  src: url('/fonts/SpaceMono-Italic.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Space Mono';
+  font-style: normal;
+  font-weight: 800;
+  src: url('/fonts/SpaceMono-Bold.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Space Mono';
+  font-style: italic;
+  font-weight: 800;
+  src: url('/fonts/SpaceMono-BoldItalic.ttf') format('truetype');
+}

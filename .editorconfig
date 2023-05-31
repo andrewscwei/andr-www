@@ -8,5 +8,9 @@ charset = utf-8
 trim_trailing_whitespace = true
 insert_final_newline = true
 
+[Makefile]
+indent_style = tab # Makefiles accept tabs only
+
 [*.md]
+indent_size = 4 # GitHub README files expect 4 space indents
 trim_trailing_whitespace = false
