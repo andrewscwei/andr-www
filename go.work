@@ -1,0 +1,7 @@
+go 1.19
+
+use (
+	./functions/deploy-failed
+	./functions/deploy-succeeded
+	./functions/utils
+)
