@@ -32,7 +32,7 @@ export default [{
   icon: DiceIcon,
 }, {
   name: 'Flight Monitering Test',
-  url: 'https://monitoring-test.andr.mu',
+  url: 'https://monitor.andr.mu',
   icon: MonitoringTestIcon,
 }, {
   name: 'Aristotl',
