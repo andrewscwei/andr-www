@@ -1,4 +1,4 @@
-<figure class="fvcc h-max w-max">
+<figure class="fvcc">
   <slot />
 </figure>
 

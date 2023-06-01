@@ -18,7 +18,7 @@
         {/if}
       </a>
     {/each}
-    <div class="divider mh-1 mv-1/2" />
+    <div class="divider m-1/2" />
     {#each projects as project}
       <a class="link m-1/2 ts-opacity hover:a-70" class:inactive={project.isActive === false} href={project.url} target="_blank">
         {#if project.icon && project.icon.length > 1}
@@ -53,9 +53,22 @@
   }
 
   .divider {
-    width: 0.1rem;
-    height: 1.4rem;
-    background: #666;
+    height: calc(var(--link-radius) * 2);
+    width: calc(var(--link-radius) * 2);
+
+    &::after {
+      background: #666;
+      bottom: 0;
+      content: '';
+      height: 1.4rem;
+      left: 0;
+      margin: auto;
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 0.1rem;
+      z-index: 10;
+    }
   }
 
   .link {
