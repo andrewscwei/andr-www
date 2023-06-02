@@ -1,5 +1,4 @@
 <script lang="ts">
-  import colorScheme from './actions/colorScheme'
   import appConf from './app.conf'
   import AltFaviconDark from './assets/meta/favicon-dark.png'
   import FaviconDark from './assets/meta/favicon-dark.svg'
@@ -9,14 +8,11 @@
   import PinnedIcon from './assets/meta/pinned-icon.svg'
   import TwitterCard from './assets/meta/twitter-card.png'
   import Home from './containers/Home.svelte'
+  import colorScheme, { DARK_MODE } from './stores/colorScheme'
 
   const { title: pageTitle, description: pageDescription, url: pageURL } = appConf
 
-  let isDarkMode = false
-
-  function onDarkModeChange(flag: boolean) {
-    isDarkMode = flag
-  }
+  $: isDarkMode = $colorScheme === DARK_MODE
 </script>
 
 <svelte:head>
@@ -43,6 +39,6 @@
   <meta name='apple-mobile-web-app-title' content={pageTitle}/>
 </svelte:head>
 
-<div class="h-max w-max" use:colorScheme={{ handler: onDarkModeChange }}>
+<div class="h-max w-max">
   <Home/>
 </div>

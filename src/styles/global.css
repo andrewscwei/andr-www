@@ -5,9 +5,3 @@ html {
 body {
   font-family: 'Space Mono';
 }
-
-#root {
-  height: 100%;
-  overflow: hidden;
-  width: 100%;
-}
