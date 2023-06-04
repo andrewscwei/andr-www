@@ -1,4 +1,5 @@
 <script lang="ts">
+  import Identity from '../components/Identity.svelte'
   import Logo from '../components/Logo.svelte'
   import identities from '../data/identities'
 </script>
@@ -19,7 +20,7 @@
     {#each identities as identity, idx}
       <li class="clipped">
         {#if identity.type === 'divider'}
-          <div class="divider anim ease-out duration-200 m-1/2 after:cc" style:animation-delay={`${300 + idx * 20}ms`} />
+          <div class="divider anim ease-out duration-300 m-1/2 after:cc" style:animation-delay={`${300 + idx * 20}ms`} />
         {:else}
           <a
             class="link m-1/2 ts-opacity hover:a-70"
@@ -28,9 +29,9 @@
             target="_blank"
             type="button"
           >
-            <span class="anim duration-200 ease-out fvcc w-max h-max after:cc after:w-max" style:animation-delay={`${300 + idx * 20}ms`}>
-              <img class="h-max w-max text-xs" src={identity.icon} alt={identity.name} />
-            </span>
+            <div class="anim duration-300 ease-out fvcc w-max h-max after:cc after:w-max" style:animation-delay={`${300 + idx * 20}ms`}>
+              <Identity name={identity.name}/>
+            </div>
           </a>
         {/if}
       </li>
@@ -106,19 +107,19 @@
     height: calc(var(--link-radius) * 2);
     width: calc(var(--link-radius) * 2);
 
-    & span {
+    & div {
       animation-name: slide-up;
     }
 
     &.inactive {
       pointer-events: none;
 
-      & span::after {
+      & div::after {
         background: #fff;
         height: 0.1rem;
       }
 
-      & img {
+      & div > :global(*) {
         opacity: 0.3;
       }
     }

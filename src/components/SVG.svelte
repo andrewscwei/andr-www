@@ -4,7 +4,7 @@
   export let actions: ActionList = []
 </script>
 
-<figure class="fvcc" use:compose={actions}>
+<figure class="fvcc h-max w-max" use:compose={actions}>
   <slot />
 </figure>
 
