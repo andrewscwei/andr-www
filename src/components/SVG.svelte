@@ -1,4 +1,10 @@
-<figure class="fvcc">
+<script lang="ts">
+  import compose, { type ActionList } from '../actions/compose'
+
+  export let actions: ActionList = []
+</script>
+
+<figure class="fvcc" use:compose={actions}>
   <slot />
 </figure>
 

@@ -1,41 +1,68 @@
 <script lang="ts">
   import Logo from '../components/Logo.svelte'
-  import contacts from '../data/contacts'
-  import projects from '../data/projects'
+  import identities from '../data/identities'
 </script>
 
 <main class="fvcl h-max w-max">
-  <div class="logo mb-2">
-    <Logo />
+  <div class="logo clipped mb-2">
+    <div class="anim duration-500 ease-out">
+      <Logo />
+    </div>
   </div>
-  <h1 class="name uppercase mb-1/2">Andrew Wei</h1>
-  <span class="description text-xs">Engineer / Designer / Illustrator</span>
+  <div class="clipped mb-1/2">
+    <h1 class="name anim duration-500 delay-100 ease-out text-xl uppercase">Andrew Wei</h1>
+  </div>
+  <div class="clipped">
+    <div class="description anim duration-500 delay-200 ease-out text-xs">Engineer / Designer / Illustrator</div>
+  </div>
   <ul class="fhcl mt-5 wrap">
-    {#each contacts as contact}
-      <a class="link m-1/2 ts-opacity hover:a-70" href={contact.url} target="_blank" type="button">
-        {#if contact.icon && contact.icon.length > 1}
-          <img class="h-max w-max" src={contact.icon} alt={contact.name} />
+    {#each identities as identity, idx}
+      <li class="clipped">
+        {#if identity.type === 'divider'}
+          <div class="divider anim ease-out duration-200 m-1/2 after:cc" style:animation-delay={`${300 + idx * 20}ms`} />
+        {:else}
+          <a
+            class="link m-1/2 ts-opacity hover:a-70"
+            class:inactive={identity.isActive === false}
+            href={identity.url}
+            target="_blank"
+            type="button"
+          >
+            <span class="anim duration-200 ease-out fvcc w-max h-max after:cc after:w-max" style:animation-delay={`${300 + idx * 20}ms`}>
+              <img class="h-max w-max text-xs" src={identity.icon} alt={identity.name} />
+            </span>
+          </a>
         {/if}
-      </a>
-    {/each}
-    <div class="divider m-1/2 after:cc" />
-    {#each projects as project}
-      <a
-        class="link m-1/2 ts-opacity hover:a-70 after:cc after:w-max"
-        class:inactive={project.isActive === false}
-        href={project.url}
-        target="_blank"
-        type="button"
-      >
-        {#if project.icon && project.icon.length > 1}
-          <img class="h-max w-max" src={project.icon} alt={project.name} />
-        {/if}
-      </a>
+      </li>
     {/each}
   </ul>
 </main>
 
 <style lang="postcss">
+  @keyframes slide-up {
+    0% {
+      opacity: 0;
+      transform: translate3d(0, 100%, 0);
+    }
+
+    100% {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+  }
+
+  @keyframes slide-right {
+    0% {
+      opacity: 0;
+      transform: translate3d(0, 100%, 0);
+    }
+
+    100% {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+  }
+
   main {
     --link-radius: 1rem;
     --tint-color: #fff;
@@ -46,19 +73,25 @@
   }
 
   .logo {
-    width: 7rem;
+    width: 6.6rem;
+
+    & > * {
+      animation-name: slide-right;
+    }
   }
 
   .name {
+    animation-name: slide-up;
     letter-spacing: 0.2rem;
-    font-size: 3.4rem;
   }
 
   .description {
+    animation-name: slide-up;
     color: #666;
   }
 
   .divider {
+    animation-name: slide-up;
     height: calc(var(--link-radius) * 2);
     width: calc(var(--link-radius) * 2);
 
@@ -73,16 +106,20 @@
     height: calc(var(--link-radius) * 2);
     width: calc(var(--link-radius) * 2);
 
+    & span {
+      animation-name: slide-up;
+    }
+
     &.inactive {
       pointer-events: none;
 
-      & img {
-        opacity: 0.3;
-      }
-
-      &:after {
+      & span::after {
         background: #fff;
         height: 0.1rem;
+      }
+
+      & img {
+        opacity: 0.3;
       }
     }
   }

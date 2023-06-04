@@ -1,8 +1,11 @@
 <script lang="ts">
+  import type { ActionList } from '../actions/compose'
   import SVG from './SVG.svelte'
+
+  export let actions: ActionList = []
 </script>
 
-<SVG>
+<SVG actions={actions}>
   <svg
     viewBox="0 0 983 566"
     version="1.1"
