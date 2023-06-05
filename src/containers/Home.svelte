@@ -70,7 +70,7 @@
 
     background: #1a1a1a;
     color: #fff;
-    padding: 10%;
+    padding: 0 10%;
   }
 
   .logo {
