@@ -1,5 +1,5 @@
 export default {
-  description: 'Engineer, designer, illustrator.',
+  description: 'Engineer / Artist',
   title: 'Andrew Wei',
   url: 'https://andr.mu',
 }

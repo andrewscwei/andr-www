@@ -14,7 +14,7 @@
     <h1 class="name anim duration-500 delay-100 ease-out text-xl uppercase">Andrew Wei</h1>
   </div>
   <div class="clipped">
-    <div class="description anim duration-500 delay-200 ease-out text-xs">Engineer / Designer / Illustrator</div>
+    <div class="description anim duration-500 delay-200 ease-out text-xs">Engineer / Artist</div>
   </div>
   <ul class="fhcl mt-5 wrap">
     {#each identities as identity, idx}
