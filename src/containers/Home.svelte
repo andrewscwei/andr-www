@@ -30,7 +30,7 @@
             type="button"
           >
             <div class="anim duration-300 ease-out fvcc w-max h-max after:cc after:w-max" style:animation-delay={`${300 + idx * 20}ms`}>
-              <Identity name={identity.name}/>
+              <Identity name={identity.name} />
             </div>
           </a>
         {/if}
@@ -68,7 +68,6 @@
     --link-radius: 1rem;
     --tint-color: #fff;
 
-    background: #1a1a1a;
     color: #fff;
     padding: 0 10%;
   }
