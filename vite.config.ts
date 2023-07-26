@@ -15,6 +15,7 @@ const outDir = path.resolve(baseDir, 'build')
 
 export default defineConfig({
   root: srcDir,
+  envDir: baseDir,
   server: {
     host: '0.0.0.0',
   },

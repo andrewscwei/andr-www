@@ -39,6 +39,6 @@
   },
   "dependencies": {
     "@andrewscwei/super-error": "^2.4.0",
-    "gigue": "^1.16.0"
+    "gigue": "^1.17.0"
   }
 }
