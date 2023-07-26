@@ -15,8 +15,8 @@
     "lint:ts:fix": "npm run lint:ts -- --fix",
     "lint:css": "stylelint src/**/*.css src/**/*.svelte",
     "lint:css:fix": "npm run lint:css -- --fix",
-    "encrypt": "SOPS_AGE_RECIPIENTS=$(<./age-keys.txt) sops --encrypt --input-type dotenv .env > .env.dev.enc",
-    "decrypt": "SOPS_AGE_KEY_FILE=.key sops --decrypt --input-type dotenv --output-type dotenv .env.dev.enc > .env"
+    "encrypt": "SOPS_AGE_RECIPIENTS=$(<./age-keys.txt) sops --encrypt --input-type dotenv .env > .env.enc",
+    "decrypt": "SOPS_AGE_KEY_FILE=.key sops --decrypt --input-type dotenv --output-type dotenv .env.enc > .env"
   },
   "devDependencies": {
     "@fullhuman/postcss-purgecss": "^5.0.0",
