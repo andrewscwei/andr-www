@@ -2,6 +2,7 @@
   import Identity from '../components/Identity.svelte'
   import Logo from '../components/Logo.svelte'
   import identities from '../data/identities'
+  import query from '../stores/query'
 </script>
 
 <main class="fvcl h-max w-max">
@@ -22,10 +23,11 @@
         {#if identity.type === 'divider'}
           <div class="divider anim ease-out duration-300 m-1/2 after:cc" style:animation-delay={`${300 + idx * 20}ms`} />
         {:else}
+          {@const accessCode = $query.accessCode}
           <a
             class="link m-1/2 ts-opacity hover:a-70"
             class:inactive={identity.isActive === false}
-            href={identity.url}
+            href={identity.accessCode === true ? `${identity.url}${accessCode ? `?access=${accessCode}` : ''}` : identity.url}
             target="_blank"
             type="button"
           >
