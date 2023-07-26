@@ -14,29 +14,31 @@
     "lint:ts": "eslint --ext .ts --ext .svelte src",
     "lint:ts:fix": "npm run lint:ts -- --fix",
     "lint:css": "stylelint src/**/*.css src/**/*.svelte",
-    "lint:css:fix": "npm run lint:css -- --fix"
+    "lint:css:fix": "npm run lint:css -- --fix",
+    "encrypt": "SOPS_AGE_RECIPIENTS=$(<./age-keys.txt) sops --encrypt --input-type dotenv .env > .env.dev.enc",
+    "decrypt": "SOPS_AGE_KEY_FILE=.key sops --decrypt --input-type dotenv --output-type dotenv .env.dev.enc > .env"
   },
   "devDependencies": {
     "@fullhuman/postcss-purgecss": "^5.0.0",
-    "@sveltejs/vite-plugin-svelte": "^2.4.1",
-    "@tsconfig/svelte": "^4.0.1",
+    "@sveltejs/vite-plugin-svelte": "^2.4.3",
+    "@tsconfig/svelte": "^5.0.0",
     "@types/debug": "^4.1.8",
-    "@types/node": "^20.2.5",
-    "@typescript-eslint/eslint-plugin": "^5.59.8",
+    "@types/node": "^20.4.5",
+    "@typescript-eslint/eslint-plugin": "^6.2.0",
     "debug": "^4.3.4",
-    "eslint": "^8.42.0",
-    "eslint-plugin-svelte": "^2.30.0",
-    "postcss": "^8.4.24",
+    "eslint": "^8.45.0",
+    "eslint-plugin-svelte": "^2.32.4",
+    "postcss": "^8.4.27",
     "postcss-html": "^1.5.0",
-    "postcss-preset-env": "^8.4.2",
-    "stylelint": "^15.6.3",
-    "svelte": "^3.59.1",
+    "postcss-preset-env": "^9.1.0",
+    "stylelint": "^15.10.2",
+    "svelte": "^4.1.1",
     "ts-node": "^10.9.1",
-    "vite": "^4.3.9",
+    "vite": "^4.4.7",
     "vite-plugin-html": "^3.2.0"
   },
   "dependencies": {
     "@andrewscwei/super-error": "^2.4.0",
-    "gigue": "^1.9.0"
+    "gigue": "^1.16.0"
   }
 }
