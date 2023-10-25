@@ -11,7 +11,7 @@
       <Logo />
     </div>
   </div>
-  <div class="clipped mb-1/2">
+  <div class="clipped mb-5px">
     <h1 class="name anim duration-500 delay-100 ease-out text-xl uppercase">Andrew Wei</h1>
   </div>
   <div class="clipped">
@@ -21,11 +21,11 @@
     {#each identities as identity, idx}
       <li class="clipped">
         {#if identity.type === 'divider'}
-          <div class="divider anim ease-out duration-300 m-1/2 after:cc" style:animation-delay={`${300 + idx * 20}ms`} />
+          <div class="divider anim ease-out duration-300 m-5px after:cc" style:animation-delay={`${300 + idx * 20}ms`} />
         {:else}
           {@const accessCode = $query.accessCode}
           <a
-            class="link m-1/2 ts-opacity hover:a-70"
+            class="link m-5px ts-opacity hover:a-70"
             class:inactive={identity.isActive === false}
             href={identity.accessCode === true ? `${identity.url}${accessCode ? `?access=${accessCode}` : ''}` : identity.url}
             target="_blank"

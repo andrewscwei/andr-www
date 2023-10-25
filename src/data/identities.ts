@@ -27,6 +27,10 @@ export default [{
   type: 'project',
   url: 'https://grubbb.co',
 }, {
+  name: 'Vestige Story',
+  type: 'product',
+  url: 'https://www.vestigestory.com',
+}, {
   name: 'Verb',
   type: 'project',
   url: 'https://www.verb.studio',

@@ -1,3 +1,4 @@
+import '@andrewscwei/id'
 import App from './App.svelte'
 import { ERR_UNKNOWN } from './faults'
 import './index.css'
