@@ -1,17 +1,16 @@
 <script lang="ts">
-  import { ERR_UNKNOWN } from '../faults'
+  import Party8423Icon from './8423Icon.svelte'
   import AristotlIcon from './AristotlIcon.svelte'
   import DiceIcon from './DiceIcon.svelte'
   import EmailIcon from './EmailIcon.svelte'
   import EvenStevenIcon from './EvenStevenIcon.svelte'
+  import GHOZTIcon from './GHOZTIcon.svelte'
   import GitHubIcon from './GitHubIcon.svelte'
   import GrubbbIcon from './GrubbbIcon.svelte'
   import MonitoringTestIcon from './MonitoringTestIcon.svelte'
-  import Party8423Icon from './8423Icon.svelte'
   import PascalIcon from './PascalIcon.svelte'
   import SyblIcon from './SyblIcon.svelte'
   import TwitterIcon from './TwitterIcon.svelte'
-  import VARIANTEIcon from './VARIANTEIcon.svelte'
   import VerbIcon from './VerbIcon.svelte'
   import VestigeIcon from './VestigeIcon.svelte'
 
@@ -30,10 +29,10 @@
       case 'Pascal': return PascalIcon
       case 'Sybl': return SyblIcon
       case 'Twitter': return TwitterIcon
-      case 'VARIANTE': return VARIANTEIcon
+      case 'GHOZT': return GHOZTIcon
       case 'Verb': return VerbIcon
       case 'Vestige Story': return VestigeIcon
-      default: throw ERR_UNKNOWN
+      default: throw Error(`No identity found for "${componentName}"`)
     }
   }
 </script>

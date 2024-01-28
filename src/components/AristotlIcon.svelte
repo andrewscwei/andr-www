@@ -41,7 +41,7 @@
           style="fill:rgb(88,89,91);fill-rule:nonzero;"
         />
       </g>
-      <g id="Hair-and-beard" serif:id="Hair and beard">
+      <g id="Hair-and-beard">
         <path
           d="M195.984,122.221L197.357,116.977L197.107,107.112L191.238,100.369L188.506,85.664L185.968,100.714L184.995,114.729L198.793,131.39L195.984,122.221Z"
           style="fill:rgb(187,189,192);fill-rule:nonzero;"

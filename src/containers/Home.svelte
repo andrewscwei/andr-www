@@ -97,7 +97,7 @@
     height: calc(var(--link-radius) * 2);
     width: calc(var(--link-radius) * 2);
 
-    &::after {
+    &:after {
       background: #666;
       height: 1.4rem;
       width: 0.1rem;
@@ -115,7 +115,7 @@
     &.inactive {
       pointer-events: none;
 
-      & div::after {
+      & div:after {
         background: #fff;
         height: 0.1rem;
       }

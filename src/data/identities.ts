@@ -17,10 +17,9 @@ export default [{
   type: 'project',
   url: 'https://pascal.andr.mu/',
 }, {
-  isActive: false,
-  name: 'VARIANTE',
+  name: 'GHOZT',
   type: 'project',
-  url: 'https://variante.io',
+  url: 'https://github.com/ghoztsys',
 }, {
   isActive: false,
   name: 'Grubbb',

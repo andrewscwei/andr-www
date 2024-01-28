@@ -2,38 +2,28 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "type": "chrome",
-      "request": "launch",
       "name": "Debug (Chrome)",
-      "url": "http://localhost:8080",
-      "webRoot": "${workspaceFolder}",
-      "sourceMapPathOverrides": {
-        "webpack:///./~/*": "${webRoot}/node_modules/*",
-        "webpack://?:*/*": "${webRoot}/*"
-      }
+      "request": "launch",
+      "type": "chrome",
+      "preLaunchTask": "dev",
+      "url": "http://localhost:5173/",
+      "webRoot": "${workspaceFolder}/src"
     },
     {
-      "type": "firefox",
-      "request": "launch",
       "name": "Debug (Firefox)",
-      "url": "http://localhost:8080",
-      "webRoot": "${workspaceFolder}",
-      "pathMappings": [
-        {
-          "url": "webpack://react-static-starter-kit/node_modules",
-          "path": "${workspaceFolder}/node_modules"
-        },
-        {
-          "url": "webpack://react-static-starter-kit/src",
-          "path": "${workspaceFolder}/src"
-        }
-      ]
+      "request": "launch",
+      "reAttach": true,
+      "type": "firefox",
+      "preLaunchTask": "dev",
+      "url": "http://localhost:5173/",
+      "webRoot": "${workspaceFolder}/src"
     },
     {
-      "type": "msedge",
-      "request": "launch",
       "name": "Debug (Edge)",
-      "url": "http://localhost:8080",
+      "request": "launch",
+      "type": "msedge",
+      "preLaunchTask": "dev",
+      "url": "http://localhost:5173",
       "webRoot": "${workspaceFolder}"
     }
   ]
