@@ -25,7 +25,7 @@ export default defineConfig({
     }),
     createHtmlPlugin({
       minify: true,
-    })
+    }),
   ],
   css: {
     postcss: {

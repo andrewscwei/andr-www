@@ -12,7 +12,6 @@ export default function useDebug(subnamespace = '') {
     return debug(namespace)
   }
   else {
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
     return () => {}
   }
 }
