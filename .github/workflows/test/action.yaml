@@ -69,7 +69,7 @@ runs:
       run: ${{ inputs.prebuild-command }}
     - name: Build
       shell: bash
-      run: ${{ inputs.build-command || '${{ steps.prepare.outputs.package_manager }} run build' }}
+      run: ${{ inputs.build-command || format('${0} run build', steps.prepare.outputs.package_manager) }}
     - name: Postbuild
       if: ${{ inputs.postbuild-command }}
       shell: bash
