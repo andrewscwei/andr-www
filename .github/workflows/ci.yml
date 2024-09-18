@@ -11,7 +11,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Build
-        uses: andrewscwei/actions/node-build@v1
+        uses: ./.github/workflows/test
   notify:
     name: Notify
     needs: [build]
