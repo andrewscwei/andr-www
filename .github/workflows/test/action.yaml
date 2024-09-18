@@ -8,8 +8,8 @@ inputs:
     description: Artifacts path (relative to working directory)
     required: false
   package-manager:
-    default: npm
     description: Package manager to use (`npm`, `yarn` or `pnpm`)
+    required: false
   build-command:
     description: Build command
     required: false
@@ -29,24 +29,47 @@ outputs:
 runs:
   using: composite
   steps:
+    - name: Prepare
+      id: prepare
+      shell: bash
+      run: |
+        if [ ${{ inputs.package-manager }} != '' ]; then
+          echo "package_manager=${{ inputs.package-manager }}" >> $GITHUB_OUTPUT
+        elif [ -f pnpm-lock.yaml ]; then
+          echo "package_manager=pnpm" >> $GITHUB_OUTPUT
+        elif [ -f yarn.lock ]; then
+          echo "package_manager=yarn" >> $GITHUB_OUTPUT
+        else
+          echo "package_manager=npm" >> $GITHUB_OUTPUT
+        fi
+
+        if [ -f .node-version ]; then
+          echo "node_version_file=.node-version" >> $GITHUB_OUTPUT
+        elif [ -f .tool-versions ]; then
+          echo "node_version_file=.tool-versions" >> $GITHUB_OUTPUT
+        elif [ -f .nvmrc ]; then
+          echo "node_version_file=.nvmrc" >> $GITHUB_OUTPUT
+        else
+          echo "node_version_file=package.json" >> $GITHUB_OUTPUT
+        fi
     - name: Set up Node
       uses: actions/setup-node@v4
       with:
-        cache: ${{ inputs.package-manager }}
-        node-version-file: .node-version
+        cache: ${{ steps.prepare.outputs.package_manager }}
+        node-version-file: ${{ steps.prepare.outputs.node_version_file }}
     - name: Set up PNPM
-      if: ${{ inputs.package-manager == 'pnpm' }}
+      if: ${{ steps.prepare.outputs.package_manager == 'pnpm' }}
       uses: pnpm/action-setup@v4
     - name: Install Node modules
       shell: bash
-      run: ${{ inputs.package-manager == 'yarn' && 'yarn install' || inputs.package-manager == 'pnpm' && 'pnpm install' || 'npm install' }}
+      run: ${{ steps.prepare.outputs.package_manager }} install
     - name: Prebuild
       if: ${{ inputs.prebuild-command }}
       shell: bash
       run: ${{ inputs.prebuild-command }}
     - name: Build
       shell: bash
-      run: ${{ inputs.build-command || (inputs.package-manager == 'yarn' && 'yarn build' || inputs.package-manager == 'pnpm' && 'pnpm build' || 'npm run build') }}
+      run: ${{ inputs.build-command || '${{ steps.prepare.outputs.package_manager }} run build' }}
     - name: Postbuild
       if: ${{ inputs.postbuild-command }}
       shell: bash
