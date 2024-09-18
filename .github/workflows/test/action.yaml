@@ -33,7 +33,7 @@ runs:
       id: prepare
       shell: bash
       run: |
-        if [ ${{ inputs.package-manager }} != '' ]; then
+        if [ '${{ inputs.package-manager }}' != '' ]; then
           echo "package_manager=${{ inputs.package-manager }}" >> $GITHUB_OUTPUT
         elif [ -f pnpm-lock.yaml ]; then
           echo "package_manager=pnpm" >> $GITHUB_OUTPUT
@@ -52,14 +52,14 @@ runs:
         else
           echo "node_version_file=package.json" >> $GITHUB_OUTPUT
         fi
+    - name: Set up PNPM
+      if: ${{ steps.prepare.outputs.package_manager == 'pnpm' }}
+      uses: pnpm/action-setup@v4
     - name: Set up Node
       uses: actions/setup-node@v4
       with:
         cache: ${{ steps.prepare.outputs.package_manager }}
         node-version-file: ${{ steps.prepare.outputs.node_version_file }}
-    - name: Set up PNPM
-      if: ${{ steps.prepare.outputs.package_manager == 'pnpm' }}
-      uses: pnpm/action-setup@v4
     - name: Install Node modules
       shell: bash
       run: ${{ steps.prepare.outputs.package_manager }} install
