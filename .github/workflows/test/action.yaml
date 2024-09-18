@@ -7,11 +7,14 @@ inputs:
   artifact-path:
     description: Artifacts path (relative to working directory)
     required: false
+  node-version-file:
+    description: Node.js version file (automatically inferred if unprovided)
+    required: false
   package-manager:
-    description: Package manager to use (`npm`, `yarn` or `pnpm`)
+    description: Package manager to use (`npm`, `yarn` or `pnpm`, automatically inferred if unprovided)
     required: false
   build-command:
-    description: Build command
+    description: Build command (defaults to `<package_manager> run build`)
     required: false
   postbuild-command:
     description: Command to run after building
@@ -69,7 +72,7 @@ runs:
       run: ${{ inputs.prebuild-command }}
     - name: Build
       shell: bash
-      run: ${{ inputs.build-command || format('${0} run build', steps.prepare.outputs.package_manager) }}
+      run: ${{ inputs.build-command || format('{0} run build', steps.prepare.outputs.package_manager) }}
     - name: Postbuild
       if: ${{ inputs.postbuild-command }}
       shell: bash
