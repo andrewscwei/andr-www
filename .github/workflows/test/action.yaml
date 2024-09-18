@@ -11,8 +11,8 @@ inputs:
     default: npm
     description: Package manager to use (`npm`, `yarn` or `pnpm`)
   build-command:
-    default: ${{ inputs.package-manager == 'yarn' && 'yarn build' || inputs.package-manager == 'pnpm' && 'pnpm build' || 'npm run build' }}
     description: Build command
+    required: false
   postbuild-command:
     description: Command to run after building
     required: false
@@ -46,7 +46,7 @@ runs:
       run: ${{ inputs.prebuild-command }}
     - name: Build
       shell: bash
-      run: ${{ inputs.build-command }}
+      run: ${{ inputs.build-command || (inputs.package-manager == 'yarn' && 'yarn build' || inputs.package-manager == 'pnpm' && 'pnpm build' || 'npm run build') }}
     - name: Postbuild
       if: ${{ inputs.postbuild-command }}
       shell: bash
