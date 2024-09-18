@@ -1,7 +1,7 @@
 name: CI
 on:
   push:
-    branches: ["**"]
+    branches-ignore: [master]
     tags-ignore: ["v*"]
 jobs:
   build:
@@ -11,7 +11,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Build
-        uses: ./.github/workflows/test
+        uses: andrewscwei/actions/node-build@v1
   notify:
     name: Notify
     needs: [build]
