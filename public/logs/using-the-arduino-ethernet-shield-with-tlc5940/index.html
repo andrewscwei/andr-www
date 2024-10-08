@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Using the Arduino Ethernet Shield with TLC5940</title>
+    <meta charset="utf-8">
+    <meta name="description" content="Andrew Wei, codenamed mu, is a software engineer, experience designer and illustrator.">
+    <meta name="keywords" content="andrew,wei,andr,mu,engineer,designer,illustrator">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta property="og:url">
+    <meta property="og:image" content="/og-image-3c57fca1f2.png">
+    <meta property="og:title" content="Using the Arduino Ethernet Shield with TLC5940">
+    <meta property="og:description" content="Andrew Wei, codenamed mu, is a software engineer, experience designer and illustrator.">
+    <link rel="shortcut icon" href="/favicon.png">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="Using the Arduino Ethernet Shield with TLC5940">
+    <link href="/apple-touch-icon-180x180-precomposed-151af9722e.png" sizes="180x180" rel="apple-touch-icon">
+    <link href="/apple-touch-icon-152x152-precomposed-4d4481414b.png" sizes="152x152" rel="apple-touch-icon">
+    <link href="/apple-touch-icon-144x144-precomposed-c735943caf.png" sizes="144x144" rel="apple-touch-icon">
+    <link href="/apple-touch-icon-120x120-precomposed-81dd7e0ad6.png" sizes="120x120" rel="apple-touch-icon">
+    <link href="/apple-touch-icon-114x114-precomposed-1daf1d75d6.png" sizes="114x114" rel="apple-touch-icon">
+    <link href="/apple-touch-icon-76x76-precomposed-f49e287ced.png" sizes="76x76" rel="apple-touch-icon">
+    <link href="/apple-touch-icon-72x72-precomposed-a5412e18eb.png" sizes="72x72" rel="apple-touch-icon">
+    <link href="/apple-touch-icon-60x60-precomposed-55aaa7669c.png" sizes="60x60" rel="apple-touch-icon">
+    <link href="/apple-touch-icon-57x57-precomposed-e896f01ce1.png" sizes="57x57" rel="apple-touch-icon">
+    <link href="/apple-touch-icon-precomposed-609906461e.png" rel="apple-touch-icon">
+    <meta name="msapplication-config" content="/browserconfig.xml">
+    <meta name="application-name" content="Using the Arduino Ethernet Shield with TLC5940">
+    <meta name="msapplication-tooltip" content="Get the latest updates!">
+    <meta name="msapplication-window" content="width=1024;height=768">
+    <meta name="msapplication-navbutton-color" content="#ff3300">
+    <meta name="msapplication-starturl" content="/">
+    <script type="text/javascript" src="https://unpkg.com/@webcomponents/webcomponentsjs@2.2.10/webcomponents-bundle.js"></script>
+    <script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-108117457-1"></script>
+    <script>window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag('js', new Date());
+      gtag('config', 'UA-108117457-1');
+    </script>
+    <link rel="stylesheet" href="/assets/stylesheets/application-7fc252c149.css">
+  </head>
+  <body><page-home id="home" name="home"><a class="down triangle" is="x-a" type="button" href="/logs/" name="down-button" style="display:none;"></a>
+      <div is="name-card" name="name-card">
+        <section class="logo"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 70 70" style="enable-background:new 0 0 70 70;" xml:space="preserve" preserveAspectRatio="xMidYMid">
+            <circle class="dot-1" cx="5.3" cy="49.8" r="5.3"></circle>
+            <circle class="dot-2" cx="5.3" cy="35" r="5.3"></circle>
+            <circle class="dot-3" cx="5.3" cy="20.2" r="5.3"></circle>
+            <circle class="dot-4" cx="20.2" cy="20.2" r="5.3"></circle>
+            <circle class="dot-5" cx="35" cy="20.2" r="5.3"></circle>
+            <circle class="dot-6" cx="35" cy="35" r="5.3"></circle>
+            <circle class="dot-7" cx="35" cy="49.8" r="5.3"></circle>
+            <circle class="dot-8" cx="49.8" cy="49.8" r="5.3"></circle>
+            <circle class="dot-9" cx="64.7" cy="49.8" r="5.3"></circle>
+            <circle class="dot-10" cx="64.7" cy="35" r="5.3"></circle>
+            <circle class="dot-11" cx="64.7" cy="20.2" r="5.3"></circle>
+          </svg></section>
+        <section class="name">
+          <h1 class="full-name">Andrew Wei</h1>
+        </section>
+        <section class="position"><span class="position" type="label">Engineer / Designer / Illustrator</span></section>
+        <section class="connect"><a is="x-a" type="button" href="mailto:andrewscwei@gmail.com"><span type="icon" style="background-image: url(/assets/images/logs%2F439f2919-b36c-4403-837e-257d6bbde80c_email-icon.svg?auto=compress,format)"></span></a><a is="x-a" type="button" href="https://github.com/andrewscwei"><span type="icon" style="background-image: url(/assets/images/logs%2F92b82402-ce51-49db-a8b2-d2c8924cdbe0_github-icon.svg?auto=compress,format)"></span></a><a is="x-a" type="button" href="https://twitter.com/andrewscwei"><span type="icon" style="background-image: url(/assets/images/logs%2F719d8066-6750-4a08-afb7-a860a10482bc_twitter-icon.svg?auto=compress,format)"></span></a><a is="x-a" type="button" href="https://calculator3.andr.mu"><span type="icon" style="background-image: url(/assets/images/logs%2Fa4f8b935-bf95-45ae-bf82-7fbee9b994be_calculator3-icon.svg?auto=compress,format)"></span></a><a class="inactive" is="x-a" type="button" href="https://www.variante.io"><span type="icon" style="background-image: url(/assets/images/logs%2F3781e233-b368-4800-bebb-17c5e47955d1_vaiante-icon.svg?auto=compress,format)"></span></a><a class="inactive" is="x-a" type="button" href="https://www.grubbb.co"><span type="icon" style="background-image: url(/assets/images/logs%2F698dcb27-4e5e-4f9c-8473-0e5bb46af2d1_grubbb-icon.svg?auto=compress,format)"></span></a><a is="x-a" type="button" href="https://www.verb.studio"><span type="icon" style="background-image: url(/assets/images/logs%2F6bf8145f-5ea8-41d6-8cdd-d9c199a97806_verb-icon.svg?auto=compress,format)"></span></a><a is="x-a" type="button" href="https://dice.andr.mu"><span type="icon" style="background-image: url(/assets/images/logs%2F6d5406b1-3ec0-4915-abdf-f39a8ee95801_dice-icon.svg?auto=compress,format)"></span></a><a is="x-a" type="button" href="https://monitor.andr.mu"><span type="icon" style="background-image: url(/assets/images/logs%2F7021ac91-7a57-4815-90e7-90cf2011cdf7_monitoring-test-icon.svg?auto=compress,format)"></span></a><a is="x-a" type="button" href="https://www.aristotl.io"><span type="icon" style="background-image: url(/assets/images/logs%2F0240039f-2372-4fa9-af5c-18880f192e4c_aristotl-icon.svg?auto=compress,format)"></span></a><a is="x-a" type="button" href="https://www.sybl.io"><span type="icon" style="background-image: url(/assets/images/logs%2F5e961282-d08e-433d-960b-1e114a2bbc12_sybl.svg?auto=compress,format)"></span></a></section>
+      </div>
+    </page-home>
+    <main id="page"><page-cover id="cover" name="cover">
+        <figure name="background" style="background-image:url(/assets/images/logs/bde7128275eaf62add104151915603956336f1b3_arduino-ethernet-shield-cover.jpg?auto=compress,format)"></figure>
+      </page-cover>
+      <nav is="global-nav" id="global-nav" name="global-nav"><a class="logs" is="x-a" type="button" href="/logs/3/" name="grid-button"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 70 70" style="enable-background:new 0 0 70 70;" xml:space="preserve" preserveAspectRatio="xMidYMid">
+            <path class="tl" d="M30,33H3c-1.7,0-3-1.3-3-3V3c0-1.7,1.3-3,3-3h27c1.7,0,3,1.3,3,3v27C33,31.7,31.7,33,30,33L30,33z M6,27h21V6H6V27L6,27z"></path>
+            <path class="tr" d="M67,33H40c-1.7,0-3-1.3-3-3V3c0-1.7,1.3-3,3-3h27c1.7,0,3,1.3,3,3v27C70,31.7,68.7,33,67,33L67,33z M43,27h21V6H43V27    L43,27z"></path>
+            <path class="bl" d="M30,70H3c-1.7,0-3-1.3-3-3V40c0-1.7,1.3-3,3-3h27c1.7,0,3,1.3,3,3v27C33,68.7,31.7,70,30,70L30,70z M6,64h21V43H6V64L6,64    z"></path>
+            <path class="br" d="M67,70H40c-1.7,0-3-1.3-3-3V40c0-1.7,1.3-3,3-3h27c1.7,0,3,1.3,3,3v27C70,68.7,68.7,70,67,70L67,70z M43,64h21V43H43V64    L43,64z"></path>
+          </svg></a></nav><page-log id="log" name="page">
+        <div id="inner-page">
+          <div name="header">
+            <div name="info">
+              <h1 name="title">Using the Arduino Ethernet Shield with TLC5940</h1><span name="date" type="label">Jun 22 11</span>
+              <div name="tags"><a class="tag slug" is="x-a" type="button" href="/logs/tag/arduino/"><span type="label">arduino</span></a><a class="tag slug" is="x-a" type="button" href="/logs/tag/c/"><span type="label">c++</span></a></div>
+            </div>
+          </div>
+          <div name="contents">
+            <p>This log demonstrates how to use the TLC5940 chip with the Arduino Ethernet Shield, using the standard Arduino TLC5940 library.</p>
+            <h2 id="hardware-components">Hardware Components</h2>
+            <ol>
+              <li>an Arduino Ethernet Shield</li>
+              <li>an Arduino I/O board that is compatible with the Ethernet Shield (Arduino Uno or Arduino Mega2560)</li>
+              <li>a TLC5940 chip</li>
+            </ol>
+            <h2 id="software-components">Software Components</h2>
+            <ol>
+              <li><a href="http://arduino.cc/en/Main/Software">Arduino software</a> - version 0022 at the time of writing this log</li>
+              <li><a href="http://www.arduino.cc/playground/Learning/TLC5940">Arduino TLC5940 library</a></li>
+            </ol>
+            <p>The Arduino TLC5940 library conflicts with the standard Ethernet Shield library because both libraries depend on pin D10 on the I/O board. A potential solution is to make the Ethernet Shield use D8 instead of D10 as well as setting the TLC5940 to BITBANG mode instead of SPI mode. This can be accomplished by physically altering the pin mapping of the Ethernet Shield and making minor modifications to both libraries.</p>
+            <h2 id="hardware-modifications">Hardware Modifications</h2>
+            <ol>
+              <li>Bend or cut the leg of the D10 pin on the Ethernet Shield so it doesn't connect to the D10 pin of the I/O board</li>
+              <li>Connect D10 pin of Ethernet Shield to D8, using any method (wire it up, solder it, etc.)</li>
+              <li>Change the wiring from TLC5940 to Ethernet Shield:
+                BLANK -&gt; PB2 (D10)
+                XLAT -&gt; PB1 (D9)
+                SIN -&gt; PD7 (D7)
+                XERR -&gt; PD6 (D6)
+                SCLK -&gt; PD4 (D4)
+                GSCLK -&gt; PD3 (D3)</li>
+            </ol>
+            <h2 id="software-modifications">Software Modifications</h2>
+            <h3 id="step-1-edit-tlc_configh">Step 1: Edit <code>tlc_config.h</code></h3>
+            <p>Replace this line:</p>
+            <pre class=" line-numbers language-c"><code class=" language-c"><span class="token macro property">#<span class="token directive keyword">define</span> DATA_TRANSFER_MODE TLC_SPI</span><span class="line-numbers-rows"><span></span></span></code></pre>
+            <p>with this line:</p>
+            <pre class=" line-numbers language-c"><code class=" language-c"><span class="token macro property">#<span class="token directive keyword">define</span> DATA_TRANSFER_MODE TLC_BITBANG</span><span class="line-numbers-rows"><span></span></span></code></pre>
+            <h3 id="step2-open-w5100h">Step2: Open <code>w5100.h</code></h3>
+            <p>location in Win: <code>\arduino-0022\libraries\Ethernet\utility\</code>
+              location in Mac: <code>\Arduino.app\Contents\Resources\Java\libraries\Ethernet\utility\</code></p>
+            <p>Replace this block of code:</p>
+            <pre class=" line-numbers language-c"><code class=" language-c">private<span class="token operator">:</span>
+<span class="token macro property">#<span class="token directive keyword">if</span> defined(__AVR_ATmega1280__) || defined(__AVR_ATmega2560__)</span>
+<span class="token keyword">inline</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">initSS</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> DDRB <span class="token operator">|=</span> <span class="token function">_BV</span><span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token keyword">inline</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">setSS</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> PORTB <span class="token operator">&amp;=</span> <span class="token operator">~</span><span class="token function">_BV</span><span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token keyword">inline</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">resetSS</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> PORTB <span class="token operator">|=</span> <span class="token function">_BV</span><span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token macro property">#<span class="token directive keyword">else</span></span>
+<span class="token keyword">inline</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">initSS</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> DDRB <span class="token operator">|=</span> <span class="token function">_BV</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token keyword">inline</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">setSS</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> PORTB <span class="token operator">&amp;=</span> <span class="token operator">~</span><span class="token function">_BV</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token keyword">inline</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">resetSS</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> PORTB <span class="token operator">|=</span> <span class="token function">_BV</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token macro property">#<span class="token directive keyword">endif</span></span><span class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+            <p>with this block of code:</p>
+            <pre class=" line-numbers language-c"><code class=" language-c">private<span class="token operator">:</span>
+<span class="token macro property">#<span class="token directive keyword">if</span> defined(__AVR_ATmega1280__) || defined(__AVR_ATmega2560__)</span>
+<span class="token keyword">inline</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">initSS</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> DDRB <span class="token operator">|=</span> <span class="token function">_BV</span><span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token keyword">inline</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">setSS</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> PORTB <span class="token operator">&amp;=</span> <span class="token operator">~</span><span class="token function">_BV</span><span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token keyword">inline</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">resetSS</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> PORTB <span class="token operator">|=</span> <span class="token function">_BV</span><span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token macro property">#<span class="token directive keyword">else</span></span>
+<span class="token keyword">inline</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">initSS</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> DDRB <span class="token operator">|=</span> <span class="token function">_BV</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token keyword">inline</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">setSS</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> PORTB <span class="token operator">&amp;=</span> <span class="token operator">~</span><span class="token function">_BV</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token keyword">inline</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">resetSS</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> PORTB <span class="token operator">|=</span> <span class="token function">_BV</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token macro property">#<span class="token directive keyword">endif</span></span><span class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+            <h3 id="step-3-edit-pins_arduinoh">Step 3: Edit pins_arduino.h</h3>
+            <p>location in Win: <code>\arduino-0022\hardware\arduino\cores\arduino\</code>
+              location in Mac: <code>\Arduino.app\Contents\Resources\Java\hardware\arduino\cores\arduino\</code></p>
+            <p>Replace this block of code:</p>
+            <pre class=" line-numbers language-c"><code class=" language-c"><span class="token macro property">#<span class="token directive keyword">if</span> defined(__AVR_ATmega1280__) || defined(__AVR_ATmega2560__)</span>
+<span class="token keyword">const</span> <span class="token keyword">static</span> uint8_t SS <span class="token operator">=</span> <span class="token number">53</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> <span class="token keyword">static</span> uint8_t MOSI <span class="token operator">=</span> <span class="token number">51</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> <span class="token keyword">static</span> uint8_t MISO <span class="token operator">=</span> <span class="token number">50</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> <span class="token keyword">static</span> uint8_t SCK <span class="token operator">=</span> <span class="token number">52</span><span class="token punctuation">;</span>
+<span class="token macro property">#<span class="token directive keyword">else</span></span>
+<span class="token keyword">const</span> <span class="token keyword">static</span> uint8_t SS <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> <span class="token keyword">static</span> uint8_t MOSI <span class="token operator">=</span> <span class="token number">11</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> <span class="token keyword">static</span> uint8_t MISO <span class="token operator">=</span> <span class="token number">12</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> <span class="token keyword">static</span> uint8_t SCK <span class="token operator">=</span> <span class="token number">13</span><span class="token punctuation">;</span>
+<span class="token macro property">#<span class="token directive keyword">endif</span></span><span class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+            <p>with this block of code:</p>
+            <pre class=" line-numbers language-c"><code class=" language-c"><span class="token macro property">#<span class="token directive keyword">if</span> defined(__AVR_ATmega1280__) || defined(__AVR_ATmega2560__)</span>
+<span class="token keyword">const</span> <span class="token keyword">static</span> uint8_t SS <span class="token operator">=</span> <span class="token number">53</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> <span class="token keyword">static</span> uint8_t MOSI <span class="token operator">=</span> <span class="token number">51</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> <span class="token keyword">static</span> uint8_t MISO <span class="token operator">=</span> <span class="token number">50</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> <span class="token keyword">static</span> uint8_t SCK <span class="token operator">=</span> <span class="token number">52</span><span class="token punctuation">;</span>
+<span class="token macro property">#<span class="token directive keyword">else</span></span>
+<span class="token keyword">const</span> <span class="token keyword">static</span> uint8_t SS <span class="token operator">=</span> <span class="token number">8</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> <span class="token keyword">static</span> uint8_t MOSI <span class="token operator">=</span> <span class="token number">11</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> <span class="token keyword">static</span> uint8_t MISO <span class="token operator">=</span> <span class="token number">12</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> <span class="token keyword">static</span> uint8_t SCK <span class="token operator">=</span> <span class="token number">13</span><span class="token punctuation">;</span>
+<span class="token macro property">#<span class="token directive keyword">endif</span></span><span class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+            <h2 id="sources">Source(s)</h2>
+            <ol>
+              <li><a href="http://www.arduino.cc/cgi-bin/yabb2/YaBB.pl?num=1257363045">Arduino Forum Topic by toffe82</a></li>
+              <li><a href="http://code.google.com/p/tlc5940arduino/">TLC5940 Datasheet</a></li>
+              <li><a href="http://arduino.cc/en/Main/Software">Arduino Software</a></li>
+              <li><a href="http://www.arduino.cc/playground/Learning/TLC5940">Arduino TLC5940 Library</a></li>
+            </ol>
+          </div>
+          <div name="footer"><a class="prev post" is="x-a" type="button" href="/logs/establishing-communication-between-iphone-and-arduino/"><span class="prev" type="icon"></span><span type="label">prev</span></a><button class="arrow" is="x-button" type="button" name="top-button"><span class="up" type="icon"></span></button><a class="next post" is="x-a" type="button" href="/logs/implementing-the-factorial-function-in-objective-c/"><span class="next" type="icon"></span><span type="label">next</span></a></div>
+          <div name="related">
+            <div class="tags" name="tags"><button class="tag" is="x-button" type="button" disabled="disabled"><span type="label">related</span></button></div>
+            <div class="grid"><a type="button" is="log-entry" href="/logs/establishing-communication-between-iphone-and-arduino/" name="entry">
+                <div class="wrapper">
+                  <h2 class="title">Establishing Communication between iPhone and Arduino Ethernet Shield</h2><span class="date" type="label">Jun 24 11</span><span class="number" type="label">2</span>
+                </div>
+              </a><a type="button" is="log-entry" href="/logs/google-compute-engine-setup-for-django-app-with-uwsgi/" name="entry">
+                <div class="wrapper">
+                  <h2 class="title">Google Compute Engine Setup for Django App with uWSGI and Nginx</h2><span class="date" type="label">Jun 01 15</span><span class="number" type="label">12</span>
+                </div>
+              </a></div>
+          </div>
+        </div>
+      </page-log>
+    </main>
+    <script src="/assets/javascripts/polyfills-4df15158e5.js"></script>
+    <script src="/assets/javascripts/common-a589f09cab.js"></script>
+    <script src="/assets/javascripts/application-a1f774b4b0.js"></script>
+  </body>
+</html>

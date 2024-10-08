@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Push-Deploy a Django App with Bitnami Jenkins on Google Cloud Engine</title>
+    <meta charset="utf-8">
+    <meta name="description" content="Andrew Wei, codenamed mu, is a software engineer, experience designer and illustrator.">
+    <meta name="keywords" content="andrew,wei,andr,mu,engineer,designer,illustrator">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta property="og:url">
+    <meta property="og:image" content="/og-image-3c57fca1f2.png">
+    <meta property="og:title" content="Push-Deploy a Django App with Bitnami Jenkins on Google Cloud Engine">
+    <meta property="og:description" content="Andrew Wei, codenamed mu, is a software engineer, experience designer and illustrator.">
+    <link rel="shortcut icon" href="/favicon.png">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="Push-Deploy a Django App with Bitnami Jenkins on Google Cloud Engine">
+    <link href="/apple-touch-icon-180x180-precomposed-151af9722e.png" sizes="180x180" rel="apple-touch-icon">
+    <link href="/apple-touch-icon-152x152-precomposed-4d4481414b.png" sizes="152x152" rel="apple-touch-icon">
+    <link href="/apple-touch-icon-144x144-precomposed-c735943caf.png" sizes="144x144" rel="apple-touch-icon">
+    <link href="/apple-touch-icon-120x120-precomposed-81dd7e0ad6.png" sizes="120x120" rel="apple-touch-icon">
+    <link href="/apple-touch-icon-114x114-precomposed-1daf1d75d6.png" sizes="114x114" rel="apple-touch-icon">
+    <link href="/apple-touch-icon-76x76-precomposed-f49e287ced.png" sizes="76x76" rel="apple-touch-icon">
+    <link href="/apple-touch-icon-72x72-precomposed-a5412e18eb.png" sizes="72x72" rel="apple-touch-icon">
+    <link href="/apple-touch-icon-60x60-precomposed-55aaa7669c.png" sizes="60x60" rel="apple-touch-icon">
+    <link href="/apple-touch-icon-57x57-precomposed-e896f01ce1.png" sizes="57x57" rel="apple-touch-icon">
+    <link href="/apple-touch-icon-precomposed-609906461e.png" rel="apple-touch-icon">
+    <meta name="msapplication-config" content="/browserconfig.xml">
+    <meta name="application-name" content="Push-Deploy a Django App with Bitnami Jenkins on Google Cloud Engine">
+    <meta name="msapplication-tooltip" content="Get the latest updates!">
+    <meta name="msapplication-window" content="width=1024;height=768">
+    <meta name="msapplication-navbutton-color" content="#ff3300">
+    <meta name="msapplication-starturl" content="/">
+    <script type="text/javascript" src="https://unpkg.com/@webcomponents/webcomponentsjs@2.2.10/webcomponents-bundle.js"></script>
+    <script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-108117457-1"></script>
+    <script>window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag('js', new Date());
+      gtag('config', 'UA-108117457-1');
+    </script>
+    <link rel="stylesheet" href="/assets/stylesheets/application-7fc252c149.css">
+  </head>
+  <body><page-home id="home" name="home"><a class="down triangle" is="x-a" type="button" href="/logs/" name="down-button" style="display:none;"></a>
+      <div is="name-card" name="name-card">
+        <section class="logo"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 70 70" style="enable-background:new 0 0 70 70;" xml:space="preserve" preserveAspectRatio="xMidYMid">
+            <circle class="dot-1" cx="5.3" cy="49.8" r="5.3"></circle>
+            <circle class="dot-2" cx="5.3" cy="35" r="5.3"></circle>
+            <circle class="dot-3" cx="5.3" cy="20.2" r="5.3"></circle>
+            <circle class="dot-4" cx="20.2" cy="20.2" r="5.3"></circle>
+            <circle class="dot-5" cx="35" cy="20.2" r="5.3"></circle>
+            <circle class="dot-6" cx="35" cy="35" r="5.3"></circle>
+            <circle class="dot-7" cx="35" cy="49.8" r="5.3"></circle>
+            <circle class="dot-8" cx="49.8" cy="49.8" r="5.3"></circle>
+            <circle class="dot-9" cx="64.7" cy="49.8" r="5.3"></circle>
+            <circle class="dot-10" cx="64.7" cy="35" r="5.3"></circle>
+            <circle class="dot-11" cx="64.7" cy="20.2" r="5.3"></circle>
+          </svg></section>
+        <section class="name">
+          <h1 class="full-name">Andrew Wei</h1>
+        </section>
+        <section class="position"><span class="position" type="label">Engineer / Designer / Illustrator</span></section>
+        <section class="connect"><a is="x-a" type="button" href="mailto:andrewscwei@gmail.com"><span type="icon" style="background-image: url(/assets/images/logs%2F439f2919-b36c-4403-837e-257d6bbde80c_email-icon.svg?auto=compress,format)"></span></a><a is="x-a" type="button" href="https://github.com/andrewscwei"><span type="icon" style="background-image: url(/assets/images/logs%2F92b82402-ce51-49db-a8b2-d2c8924cdbe0_github-icon.svg?auto=compress,format)"></span></a><a is="x-a" type="button" href="https://twitter.com/andrewscwei"><span type="icon" style="background-image: url(/assets/images/logs%2F719d8066-6750-4a08-afb7-a860a10482bc_twitter-icon.svg?auto=compress,format)"></span></a><a is="x-a" type="button" href="https://calculator3.andr.mu"><span type="icon" style="background-image: url(/assets/images/logs%2Fa4f8b935-bf95-45ae-bf82-7fbee9b994be_calculator3-icon.svg?auto=compress,format)"></span></a><a class="inactive" is="x-a" type="button" href="https://www.variante.io"><span type="icon" style="background-image: url(/assets/images/logs%2F3781e233-b368-4800-bebb-17c5e47955d1_vaiante-icon.svg?auto=compress,format)"></span></a><a class="inactive" is="x-a" type="button" href="https://www.grubbb.co"><span type="icon" style="background-image: url(/assets/images/logs%2F698dcb27-4e5e-4f9c-8473-0e5bb46af2d1_grubbb-icon.svg?auto=compress,format)"></span></a><a is="x-a" type="button" href="https://www.verb.studio"><span type="icon" style="background-image: url(/assets/images/logs%2F6bf8145f-5ea8-41d6-8cdd-d9c199a97806_verb-icon.svg?auto=compress,format)"></span></a><a is="x-a" type="button" href="https://dice.andr.mu"><span type="icon" style="background-image: url(/assets/images/logs%2F6d5406b1-3ec0-4915-abdf-f39a8ee95801_dice-icon.svg?auto=compress,format)"></span></a><a is="x-a" type="button" href="https://monitor.andr.mu"><span type="icon" style="background-image: url(/assets/images/logs%2F7021ac91-7a57-4815-90e7-90cf2011cdf7_monitoring-test-icon.svg?auto=compress,format)"></span></a><a is="x-a" type="button" href="https://www.aristotl.io"><span type="icon" style="background-image: url(/assets/images/logs%2F0240039f-2372-4fa9-af5c-18880f192e4c_aristotl-icon.svg?auto=compress,format)"></span></a><a is="x-a" type="button" href="https://www.sybl.io"><span type="icon" style="background-image: url(/assets/images/logs%2F5e961282-d08e-433d-960b-1e114a2bbc12_sybl.svg?auto=compress,format)"></span></a></section>
+      </div>
+    </page-home>
+    <main id="page"><page-cover id="cover" name="cover">
+        <figure name="background" style="background-image:url(/assets/images/logs/3d5414a423071e7c8f1acba0499c87c9ef8a69eb_jenkins.png?auto=compress,format)"></figure>
+      </page-cover>
+      <nav is="global-nav" id="global-nav" name="global-nav"><a class="logs" is="x-a" type="button" href="/logs/" name="grid-button"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 70 70" style="enable-background:new 0 0 70 70;" xml:space="preserve" preserveAspectRatio="xMidYMid">
+            <path class="tl" d="M30,33H3c-1.7,0-3-1.3-3-3V3c0-1.7,1.3-3,3-3h27c1.7,0,3,1.3,3,3v27C33,31.7,31.7,33,30,33L30,33z M6,27h21V6H6V27L6,27z"></path>
+            <path class="tr" d="M67,33H40c-1.7,0-3-1.3-3-3V3c0-1.7,1.3-3,3-3h27c1.7,0,3,1.3,3,3v27C70,31.7,68.7,33,67,33L67,33z M43,27h21V6H43V27    L43,27z"></path>
+            <path class="bl" d="M30,70H3c-1.7,0-3-1.3-3-3V40c0-1.7,1.3-3,3-3h27c1.7,0,3,1.3,3,3v27C33,68.7,31.7,70,30,70L30,70z M6,64h21V43H6V64L6,64    z"></path>
+            <path class="br" d="M67,70H40c-1.7,0-3-1.3-3-3V40c0-1.7,1.3-3,3-3h27c1.7,0,3,1.3,3,3v27C70,68.7,68.7,70,67,70L67,70z M43,64h21V43H43V64    L43,64z"></path>
+          </svg></a></nav><page-log id="log" name="page">
+        <div id="inner-page">
+          <div name="header">
+            <div name="info">
+              <h1 name="title">Push-Deploy a Django App with Bitnami Jenkins on Google Cloud Engine</h1><span name="date" type="label">Jun 02 15</span>
+              <div name="tags"><a class="tag slug" is="x-a" type="button" href="/logs/tag/systems/"><span type="label">systems</span></a></div>
+            </div>
+          </div>
+          <div name="contents">
+            <p>This log demonstrates how to set up a push-deploy <a href="https://jenkins-ci.org">Jenkins</a> build system for a <a href="https://www.djangoproject.com">Django</a> app on <a href="https://cloud.google.com/compute/">Google Compute Engine</a>. This log assumes that you have already set up and served a Django app successfully on a GCE VM instance with Nginx and uWSGI running in emperor mode. Go <a href="/logs/google-compute-engine-setup-for-django-app-with-uwsgi/">here</a> for a step-by-step tutorial.</p>
+            <h2 id="overview">Overview</h2>
+            <p>The set up is as follows:</p>
+            <ol>
+              <li>
+                <p>There will be two instances on your GCE project:</p>
+                <ol>
+                  <li>An instance containing Jenkins.</li>
+                  <li>An instance that serves your Django app.</li>
+                </ol>
+              </li>
+              <li>
+                <p>The Jenkins instance will use Google's Bitnami Jenkins image. It will connect to your Google Cloud Repository which syncs with the GitHub repo that hosts your Django app source code. Every time you commit changes to your GitHub repo, your Cloud Repo will automatically sync up, and Jenkins will pick this up and start building the project. After the build, it will deploy the built files to your other VM instance which serves the Django app.</p>
+              </li>
+              <li>
+                <p>The VM instance responsible for hosting/serving the app will have Nginx installed and uWSGI set up to run in emperor mode, constantly watching the folder that contains the built Django app and serving it. Every time the Jenkins instance completes a build and deploys new built files to this instance, uWSGI will automatically serve the new files and end-users will see the changes live immediately.</p>
+              </li>
+            </ol>
+            <h2 id="pipeline">Pipeline</h2>
+            <p>This is a typical pipeline from committing a change to showing it to the world.</p>
+            <ol>
+              <li>You make a change locally and push it to GitHub master branch.</li>
+              <li>Google Cloud Repository, which is linked to your GitHub repo, syncs up and now has that change you commited.</li>
+              <li>Your Jenkins VM instance, which polls changes from the Cloud Repo every X minutes, detects changes and kicks off a build. This build process is summarized in a shell script, which:<ol>
+                  <li>Activates your Python virtual environment</li>
+                  <li>Installs Python dependencies through <code>pip</code> in case they were changed</li>
+                  <li>Reconciles <code>npm</code> packages (i.e. <code>npm prune</code>)</li>
+                  <li>Runs <code>npm install</code></li>
+                  <li>Runs <code>npm update</code></li>
+                  <li>Kicks off a Django migration</li>
+                  <li>Runs <code>gulp</code> to build the app</li>
+                </ol>
+              </li>
+              <li>After the build is completed successfully, Jenkins will:<ol>
+                  <li>SSH into your other VM instance which hosts the app</li>
+                  <li>Deletes the directory that stores the files from the previous build</li>
+                  <li>Copies the new build over</li>
+                </ol>
+              </li>
+              <li>Since the hosting VM instance has Nginx set up and uWSGI running in emperor mode, it will pick up the new files (they are still in the same directory that the emperor expects) and serve them immediately for the world to see.</li>
+            </ol>
+            <h2 id="walkthrough">Walkthrough</h2>
+            <h3 id="cloud-repo">Cloud Repo</h3>
+            <p>Assuming you already have a GitHub repo containing your app, you need to link it to your Google Cloud Repository. This can be achieved in the <a href="https://console.developers.google.com/">Developers Console</a>, under <em>Source Code</em>. This step should be trivial.</p>
+            <h3 id="jenkins-vm-instance-setup">Jenkins VM Instance Setup</h3>
+            <p>You will be using Bitnami Jenkins. See this <a href="https://cloud.google.com/tools/repo/push-to-deploy">official guide from Google</a> on how to create one. You just need to follow the guide up to the point where you can access the Jenkins app in the browser and log in successfully. Note that the default username is always <code>user</code> (pay attention to the metadata params in the command for creating the Bitnami image), so just leave it as <code>user</code>. Changing that can cause problems logging in later on.</p>
+            <p>After you've successfully created the instance, log in and configure your own user settings (i.e. resetting the password, adding your email, etc).</p>
+            <h4 id="install-required-plugins">Install Required Plugins</h4>
+            <p>The only plugin you need for Jenkins is <em>Publish Over SSH</em>, so do the following:</p>
+            <ol>
+              <li>Login to your Jenkins dashboard.</li>
+              <li>Go to <em>Manage Jenkins</em> &gt; <em>Manage Plugins</em> &gt; <em>Available</em>.</li>
+              <li>Find <em>Publish Over SSH</em> and install it.</li>
+              <li>Let Jenkins restart after the installation.</li>
+            </ol>
+            <h4 id="generate-ssh-key-for-jenkins-user">Generate SSH Key for Jenkins User</h4>
+            <p>This step is required so that Jenkins can later SSH into your app hosting instance and deploy the new build into it. First, SSH into the Jenkins instance.</p>
+            <ol>
+              <li>
+                <p>Log in as <code>tomcat</code>, which is the user that will be performing the build jobs.</p>
+                <pre class=" line-numbers language-bash"><code class=" language-bash">$ <span class="token function">sudo</span> <span class="token function">su</span> tomcat<span class="line-numbers-rows"><span></span></span></code></pre>
+              </li>
+              <li>
+                <p>Generate SSH key for <code>tomcat</code>. Leave the location as default (i.e. <code>/home/tomcat/.ssh/id_rsa</code>) and don't enter a passphrase.</p>
+                <pre class=" line-numbers language-bash"><code class=" language-bash">$ ssh-keygen<span class="line-numbers-rows"><span></span></span></code></pre>
+                <p>The SSH keys (private and public) are now generated in <code>/home/tomcat/.ssh</code>. Open up <code>/home/tomcat/.ssh/id_rsa.pub</code> and copy everything inside to somewhere (i.e. the clipboard). You will need this for the next step.</p>
+              </li>
+            </ol>
+            <h4 id="addng-the-generated-ssh-key-to-the-hosting-instance">Addng the Generated SSH Key to the Hosting Instance</h4>
+            <p>You will need to take the key you just copied and add it to the <code>authorized_keys</code> file of your hosting instance.</p>
+            <ol>
+              <li>
+                <p>Since Jenkins will use user <code>tomcat</code> to SSH into this instance, you need to create the same user for it. So create one.</p>
+                <pre class=" line-numbers language-bash"><code class=" language-bash">$ <span class="token function">sudo</span> <span class="token function">useradd</span> tomcat
+$ <span class="token function">sudo</span> <span class="token function">mkdir</span> /home/tomcat<span class="line-numbers-rows"><span></span><span></span></span></code></pre>
+              </li>
+              <li>
+                <p>Go to the home directory of <code>tomcat</code> and create the <code>authorized_keys</code> file.</p>
+                <pre class=" line-numbers language-bash"><code class=" language-bash">$ <span class="token function">sudo</span> <span class="token function">mkdir</span> /home/tomcat/.ssh
+$ <span class="token function">sudo</span> <span class="token function">touch</span> /home/tomcat/.ssh/authorized_keys<span class="line-numbers-rows"><span></span><span></span></span></code></pre>
+              </li>
+              <li>
+                <p>Open up <code>authorized_keys</code> and add the key you just copied. Beware of word wraps. Upon completing this step, <code>tomcat</code> user from the Jenkins instance should now be able to successfully SSH into your hosting instance.</p>
+              </li>
+            </ol>
+            <h4 id="configure-ssh-connection">Configure SSH Connection</h4>
+            <p>This step will configure the SSH connection on Jenkins.</p>
+            <ol>
+              <li>Go to your Jenkins dashboard.</li>
+              <li>Go to <em>Manage Jenkins</em> &gt; <em>Configure System</em> and scroll to where it says <em>Publish over SSH</em>.</li>
+              <li>Leave <em>Passphrase</em> as blank since we ignored it when we generated the SSH key for <code>tomcat</code>.</li>
+              <li>Set <em>Path to key</em> to the path of the generated key, which should be <code>/home/tomcat/.ssh/id_rsa</code>.</li>
+              <li>Leave <em>Key</em> as blank. If you didn't set the path, you can copy and paste the key here.</li>
+              <li>For <em>SSH Servers</em>...<ul>
+                  <li>Set <em>Name</em> to anything you want. I usually do <code>tomcat@hosting_instance_name</code>.</li>
+                  <li>Set <em>Hostname</em> to the external IP address of the hosting instance.</li>
+                  <li>Set <em>Username</em> to <code>tomcat</code>.</li>
+                  <li>Set <em>Remote Directory</em> to the absolute path of the directory in the hosting instance where Jenkins will deploy to after building. Normally I do <code>/srv/example.com</code>, with <code>example.com</code> being the name of your project. This guide assumes your Django app structure is the same as the one generated by <a href="https://github.com/andrewscwei/generator-vars-django">generator-vars-django</a>.</li>
+                </ul>
+              </li>
+              <li>Finally, test your configuration by clicking on the button that says 'Test Configuration'. You will see a spinner and then the word 'Success'. That indicates that user <code>tomcat</code> in your Jenkins instance is able to SSH into your hosting instance as <code>tomcat</code> as well.</li>
+            </ol>
+            <h4 id="create-a-new-build-job">Create a New Build Job</h4>
+            <p>This step creates the build job in Jenkins that will be responsible for building your app and deploying it after the build is successful.</p>
+            <ol>
+              <li>
+                <p>Go to your Jenkins dashboard.</p>
+              </li>
+              <li>
+                <p>Go to <em>New Item</em>.</p>
+              </li>
+              <li>
+                <p>Specify a name, select <em>Freestyle project</em> and then <em>OK</em>.</p>
+              </li>
+              <li>
+                <p>You should now be in the configuration page for the job. Set the following:</p>
+                <ol>
+                  <li>
+                    <p>Under <em>Source Code Management</em>, select Git. For your <em>Repository URL</em>, use the URL of your Cloud Repo, which is <code>https://source.developers.google.com/p/project-id</code>.</p>
+                  </li>
+                  <li>
+                    <p>For <em>Credentials</em>, select <code>{project-id} service account</code>. This is available because you are using a Bitnami Jenkins image, which comes with a bunch of plugins that takes care of Google OAuth stuff for you. If you don't see it, click on <em>Add</em> and add it manually:</p>
+                    <ul>
+                      <li>In the <em>Add Credentials</em> popup, select <em>Google Service Account from metadata</em>.</li>
+                      <li>Enter your project ID if it's not already populated.</li>
+                      <li>Click <em>Add</em>.</li>
+                    </ul>
+                  </li>
+                  <li>
+                    <p>Under <em>Build Triggers</em>, select <em>Poll SCM</em> to tell Jenkins to watch for repo changes every X minutes. Enter <code>H/5 * * * *</code> for <em>Schedule</em> to set the poll interval to 5 minutes.</p>
+                  </li>
+                  <li>
+                    <p>Under <em>Build</em>, select <em>Add build step</em> and pick <em>Execute shell</em>. Then add the shell commands needed to build your app. It should look something like this:</p>
+                    <pre class=" line-numbers language-bash"><code class=" language-bash"><span class="token shebang important">#!/bin/bash</span>
+
+<span class="token builtin class-name">echo</span> -n <span class="token string">'Starting Jenkins job in working directory: '</span><span class="token punctuation">;</span> <span class="token builtin class-name">pwd</span>
+
+<span class="token builtin class-name">echo</span> <span class="token string">'Activating Python virtual environment...'</span>
+<span class="token builtin class-name">source</span> <span class="token punctuation">..</span>/bin/activate
+
+<span class="token builtin class-name">echo</span> <span class="token string">'Installing Python dependencies...'</span>
+pip <span class="token function">install</span> -r requirements.txt
+<span class="token builtin class-name">echo</span> -n <span class="token string">'Installed directory of packages: '</span><span class="token punctuation">;</span> <span class="token function">which</span> django-admin
+
+<span class="token builtin class-name">echo</span> <span class="token string">'Installing Node dependencies...'</span>
+<span class="token function">npm</span> prune
+<span class="token function">npm</span> <span class="token function">install</span>
+<span class="token function">npm</span> update
+
+<span class="token builtin class-name">echo</span> <span class="token string">'Resolving database migrations...'</span>
+gulp migrate
+
+<span class="token builtin class-name">echo</span> <span class="token string">'Building the app...'</span>
+gulp<span class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+                    <p>This should be pretty self-explanatory if you already followed this <a href="/logs/google-compute-engine-setup-for-django-app-with-uwsgi/">guide</a> on how to set up a Django app on GCE.</p>
+                  </li>
+                  <li>
+                    <p>Under <em>Post-build actions</em>, click on <em>Add post-build action</em> and select <em>Send build artifacts over SSH</em> to tell Jenkins to deploy your built files to the hosting instance. Set the name of the SSH server to the name of the one you created for <code>tomcat</code>. Next, you need 2 transfer sets:</p>
+                    <ol>
+                      <li>
+                        <p>The first transfer will be responsible for removing any previous builds in your hosting instance. Assuming you are following the structure of <a href="https://github.com/andrewscwei/generator-vars-django">generator-vars-django</a>, your built files should be inside <code>example.com/build</code>. So all you need is an <em>Exec command</em> with:</p>
+                        <pre class=" line-numbers language-bash"><code class=" language-bash">$ <span class="token function">rm</span> -rf build<span class="line-numbers-rows"><span></span></span></code></pre>
+                        <p>This path is relative to the <em>Remote Directory</em> entry you set during the SSH configuration step.</p>
+                      </li>
+                      <li>
+                        <p>The second transfer will be responsible for copying the built files over. All you have to do is just set <em>Source files</em> to <code>build/**/*</code>. This path is relative to the default workspace directory of this Jenkins job. Typically it should be <code>/opt/bitnami/apps/jenkins/jenkins_home/jobs/job_name/workspace</code>.</p>
+                      </li>
+                    </ol>
+                  </li>
+                </ol>
+                <p>You now have a job configured, but don't execute it yet because it will fail at the moment. Since this VM instance will be responsible for doing all the building, you need to install all the dependencies needed to build your project, i.e. Node.js, Python, etc. You also need to set up your virtual environment, which this log assumes that it is located in <code>../bin/activate</code>, relative to the workspace directory of the job. Follow this <a href="/logs/google-compute-engine-setup-for-django-app-with-uwsgi/">guide</a> on how to install the dependencies. Just treat this like any other VM instance, SSH into it and do what you need to do.</p>
+              </li>
+            </ol>
+            <h3 id="hosting-instance-setup">Hosting Instance Setup</h3>
+            <p>This VM instance will be serving the app. It will receive the build from the Jenkins instance, and it will serve it using Nginx and uWSGI in emperor mode. Again, follow this <a href="/logs/google-compute-engine-setup-for-django-app-with-uwsgi/">guide</a> on how to set those up. Note that you do not need the dependencies for building the app itself because the Jenkins instance will be doing the building, but at the very least you need:</p>
+            <ol>
+              <li>Python dependencies in <code>requirements.txt</code> so your VM understands Django.</li>
+              <li>The database set up properly for the app to use.</li>
+              <li>Python virtual environment with all the required environment variables which your app depends on.</li>
+            </ol>
+            <p>Run Nginx, run uWSGI (assuming you got the conf/ini files all symlinked and stuff), and you should be all set.</p>
+          </div>
+          <div name="footer"><a class="prev post" is="x-a" type="button" href="/logs/migrating-an-ios-app-from-paid-to-freemium/"><span class="prev" type="icon"></span><span type="label">prev</span></a><button class="arrow" is="x-button" type="button" name="top-button"><span class="up" type="icon"></span></button><a class="next post" is="x-a" type="button" href="/logs/google-compute-engine-setup-for-django-app-with-uwsgi/"><span class="next" type="icon"></span><span type="label">next</span></a></div>
+          <div name="related">
+            <div class="tags" name="tags"><button class="tag" is="x-button" type="button" disabled="disabled"><span type="label">related</span></button></div>
+            <div class="grid"><a type="button" is="log-entry" href="/logs/the-shunting-yard-algorithm/" name="entry">
+                <div class="wrapper">
+                  <h2 class="title">The Shunting-Yard Algorithm</h2><span class="date" type="label">Oct 09 11</span><span class="number" type="label">5</span>
+                </div>
+              </a><a type="button" is="log-entry" href="/logs/as3-event-phases/" name="entry">
+                <div class="wrapper">
+                  <h2 class="title">AS3: Event Phases</h2><span class="date" type="label">Aug 07 11</span><span class="number" type="label">3</span>
+                </div>
+              </a><a type="button" is="log-entry" href="/logs/google-compute-engine-setup-for-django-app-with-uwsgi/" name="entry">
+                <div class="wrapper">
+                  <h2 class="title">Google Compute Engine Setup for Django App with uWSGI and Nginx</h2><span class="date" type="label">Jun 01 15</span><span class="number" type="label">12</span>
+                </div>
+              </a></div>
+          </div>
+        </div>
+      </page-log>
+    </main>
+    <script src="/assets/javascripts/polyfills-4df15158e5.js"></script>
+    <script src="/assets/javascripts/common-a589f09cab.js"></script>
+    <script src="/assets/javascripts/application-a1f774b4b0.js"></script>
+  </body>
+</html>

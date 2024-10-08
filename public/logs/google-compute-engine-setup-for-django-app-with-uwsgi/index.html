@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Google Compute Engine Setup for Django App with uWSGI and Nginx</title>
+        <meta charset="utf-8">
+        <meta name="description" content="Andrew Wei, codenamed mu, is a software engineer, experience designer and illustrator.">
+        <meta name="keywords" content="andrew,wei,andr,mu,engineer,designer,illustrator">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+        <meta property="og:url">
+        <meta property="og:image" content="/og-image-3c57fca1f2.png">
+        <meta property="og:title" content="Google Compute Engine Setup for Django App with uWSGI and Nginx">
+        <meta property="og:description" content="Andrew Wei, codenamed mu, is a software engineer, experience designer and illustrator.">
+        <link rel="shortcut icon" href="/favicon.png">
+        <link rel="manifest" href="/manifest.json">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-title" content="Google Compute Engine Setup for Django App with uWSGI and Nginx">
+        <link href="/apple-touch-icon-180x180-precomposed-151af9722e.png" sizes="180x180" rel="apple-touch-icon">
+        <link href="/apple-touch-icon-152x152-precomposed-4d4481414b.png" sizes="152x152" rel="apple-touch-icon">
+        <link href="/apple-touch-icon-144x144-precomposed-c735943caf.png" sizes="144x144" rel="apple-touch-icon">
+        <link href="/apple-touch-icon-120x120-precomposed-81dd7e0ad6.png" sizes="120x120" rel="apple-touch-icon">
+        <link href="/apple-touch-icon-114x114-precomposed-1daf1d75d6.png" sizes="114x114" rel="apple-touch-icon">
+        <link href="/apple-touch-icon-76x76-precomposed-f49e287ced.png" sizes="76x76" rel="apple-touch-icon">
+        <link href="/apple-touch-icon-72x72-precomposed-a5412e18eb.png" sizes="72x72" rel="apple-touch-icon">
+        <link href="/apple-touch-icon-60x60-precomposed-55aaa7669c.png" sizes="60x60" rel="apple-touch-icon">
+        <link href="/apple-touch-icon-57x57-precomposed-e896f01ce1.png" sizes="57x57" rel="apple-touch-icon">
+        <link href="/apple-touch-icon-precomposed-609906461e.png" rel="apple-touch-icon">
+        <meta name="msapplication-config" content="/browserconfig.xml">
+        <meta name="application-name" content="Google Compute Engine Setup for Django App with uWSGI and Nginx">
+        <meta name="msapplication-tooltip" content="Get the latest updates!">
+        <meta name="msapplication-window" content="width=1024;height=768">
+        <meta name="msapplication-navbutton-color" content="#ff3300">
+        <meta name="msapplication-starturl" content="/">
+        <script type="text/javascript" src="https://unpkg.com/@webcomponents/webcomponentsjs@2.2.10/webcomponents-bundle.js"></script>
+        <script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-108117457-1"></script>
+        <script>window.dataLayer = window.dataLayer || [];
+            function gtag() { dataLayer.push(arguments); }
+            gtag('js', new Date());
+            gtag('config', 'UA-108117457-1');
+        </script>
+        <link rel="stylesheet" href="/assets/stylesheets/application-7fc252c149.css">
+    </head>
+    <body><page-home id="home" name="home"><a class="down triangle" is="x-a" type="button" href="/logs/" name="down-button" style="display:none;"></a>
+            <div is="name-card" name="name-card">
+                <section class="logo"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 70 70" style="enable-background:new 0 0 70 70;" xml:space="preserve" preserveAspectRatio="xMidYMid">
+                        <circle class="dot-1" cx="5.3" cy="49.8" r="5.3"></circle>
+                        <circle class="dot-2" cx="5.3" cy="35" r="5.3"></circle>
+                        <circle class="dot-3" cx="5.3" cy="20.2" r="5.3"></circle>
+                        <circle class="dot-4" cx="20.2" cy="20.2" r="5.3"></circle>
+                        <circle class="dot-5" cx="35" cy="20.2" r="5.3"></circle>
+                        <circle class="dot-6" cx="35" cy="35" r="5.3"></circle>
+                        <circle class="dot-7" cx="35" cy="49.8" r="5.3"></circle>
+                        <circle class="dot-8" cx="49.8" cy="49.8" r="5.3"></circle>
+                        <circle class="dot-9" cx="64.7" cy="49.8" r="5.3"></circle>
+                        <circle class="dot-10" cx="64.7" cy="35" r="5.3"></circle>
+                        <circle class="dot-11" cx="64.7" cy="20.2" r="5.3"></circle>
+                    </svg></section>
+                <section class="name">
+                    <h1 class="full-name">Andrew Wei</h1>
+                </section>
+                <section class="position"><span class="position" type="label">Engineer / Designer / Illustrator</span></section>
+                <section class="connect"><a is="x-a" type="button" href="mailto:andrewscwei@gmail.com"><span type="icon" style="background-image: url(/assets/images/logs%2F439f2919-b36c-4403-837e-257d6bbde80c_email-icon.svg?auto=compress,format)"></span></a><a is="x-a" type="button" href="https://github.com/andrewscwei"><span type="icon" style="background-image: url(/assets/images/logs%2F92b82402-ce51-49db-a8b2-d2c8924cdbe0_github-icon.svg?auto=compress,format)"></span></a><a is="x-a" type="button" href="https://twitter.com/andrewscwei"><span type="icon" style="background-image: url(/assets/images/logs%2F719d8066-6750-4a08-afb7-a860a10482bc_twitter-icon.svg?auto=compress,format)"></span></a><a is="x-a" type="button" href="https://calculator3.andr.mu"><span type="icon" style="background-image: url(/assets/images/logs%2Fa4f8b935-bf95-45ae-bf82-7fbee9b994be_calculator3-icon.svg?auto=compress,format)"></span></a><a class="inactive" is="x-a" type="button" href="https://www.variante.io"><span type="icon" style="background-image: url(/assets/images/logs%2F3781e233-b368-4800-bebb-17c5e47955d1_vaiante-icon.svg?auto=compress,format)"></span></a><a class="inactive" is="x-a" type="button" href="https://www.grubbb.co"><span type="icon" style="background-image: url(/assets/images/logs%2F698dcb27-4e5e-4f9c-8473-0e5bb46af2d1_grubbb-icon.svg?auto=compress,format)"></span></a><a is="x-a" type="button" href="https://www.verb.studio"><span type="icon" style="background-image: url(/assets/images/logs%2F6bf8145f-5ea8-41d6-8cdd-d9c199a97806_verb-icon.svg?auto=compress,format)"></span></a><a is="x-a" type="button" href="https://dice.andr.mu"><span type="icon" style="background-image: url(/assets/images/logs%2F6d5406b1-3ec0-4915-abdf-f39a8ee95801_dice-icon.svg?auto=compress,format)"></span></a><a is="x-a" type="button" href="https://monitor.andr.mu"><span type="icon" style="background-image: url(/assets/images/logs%2F7021ac91-7a57-4815-90e7-90cf2011cdf7_monitoring-test-icon.svg?auto=compress,format)"></span></a><a is="x-a" type="button" href="https://www.aristotl.io"><span type="icon" style="background-image: url(/assets/images/logs%2F0240039f-2372-4fa9-af5c-18880f192e4c_aristotl-icon.svg?auto=compress,format)"></span></a><a is="x-a" type="button" href="https://www.sybl.io"><span type="icon" style="background-image: url(/assets/images/logs%2F5e961282-d08e-433d-960b-1e114a2bbc12_sybl.svg?auto=compress,format)"></span></a></section>
+            </div>
+        </page-home>
+        <main id="page"><page-cover id="cover" name="cover">
+                <figure name="background" style="background-image:url(/assets/images/logs/02876c2e87bb92113c866bb54a76e7293b735f6f_django.png?auto=compress,format)"></figure>
+            </page-cover>
+            <nav is="global-nav" id="global-nav" name="global-nav"><a class="logs" is="x-a" type="button" href="/logs/" name="grid-button"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 70 70" style="enable-background:new 0 0 70 70;" xml:space="preserve" preserveAspectRatio="xMidYMid">
+                        <path class="tl" d="M30,33H3c-1.7,0-3-1.3-3-3V3c0-1.7,1.3-3,3-3h27c1.7,0,3,1.3,3,3v27C33,31.7,31.7,33,30,33L30,33z M6,27h21V6H6V27L6,27z"></path>
+                        <path class="tr" d="M67,33H40c-1.7,0-3-1.3-3-3V3c0-1.7,1.3-3,3-3h27c1.7,0,3,1.3,3,3v27C70,31.7,68.7,33,67,33L67,33z M43,27h21V6H43V27    L43,27z"></path>
+                        <path class="bl" d="M30,70H3c-1.7,0-3-1.3-3-3V40c0-1.7,1.3-3,3-3h27c1.7,0,3,1.3,3,3v27C33,68.7,31.7,70,30,70L30,70z M6,64h21V43H6V64L6,64    z"></path>
+                        <path class="br" d="M67,70H40c-1.7,0-3-1.3-3-3V40c0-1.7,1.3-3,3-3h27c1.7,0,3,1.3,3,3v27C70,68.7,68.7,70,67,70L67,70z M43,64h21V43H43V64    L43,64z"></path>
+                    </svg></a></nav><page-log id="log" name="page">
+                <div id="inner-page">
+                    <div name="header">
+                        <div name="info">
+                            <h1 name="title">Google Compute Engine Setup for Django App with uWSGI and Nginx</h1><span name="date" type="label">Jun 01 15</span>
+                            <div name="tags"><a class="tag slug" is="x-a" type="button" href="/logs/tag/systems/"><span type="label">systems</span></a></div>
+                        </div>
+                    </div>
+                    <div name="contents">
+                        <p>This log demonstrates how to set up a <a href="https://www.djangoproject.com/">Django</a> app on <a href="https://cloud.google.com/compute/">Google Compute Engine</a> and serve it using <a href="https://uwsgi-docs.readthedocs.org">uWSGI</a> and <a href="http://wiki.nginx.org/Main">Nginx</a> from <strong>scratch</strong>. Assume the following:</p>
+                        <ol>
+                            <li>The app uses a VM instance on Debian OS. This log uses the <em>Debian GNU/Linux 7.8 (wheezy)</em> image on GCE.</li>
+                            <li>The name of the app is <code>example.com</code> and its base path on the VM instance is <code>/srv</code>.</li>
+                            <li>The app has a <a href="https://git-scm.com">Git</a> repo.</li>
+                            <li>The database which the app uses will be set up in the same VM instance as the app.</li>
+                            <li>The app is generated by <a href="https://github.com/andrewscwei/generator-vars-django">generator-vars-django</a>, which uses <a href="http://gulpjs.com">Gulp</a> as its asset pipeline, hence depends on <a href="https://nodejs.org">Node.js</a>.</li>
+                        </ol>
+                        <p>Let's begin. SSH into your instance and ensure you have <code>sudo</code> access.</p>
+                        <h2 id="installing-dependencies">Installing Dependencies</h2>
+                        <ol>
+                            <li>
+                                <p>Update APT packages, no explanations needed.</p>
+                                <pre class=" line-numbers language-bash"><code class=" language-bash">$ <span class="token function">sudo</span> <span class="token function">apt-get</span> update<span class="line-numbers-rows"><span></span></span></code></pre>
+                            </li>
+                            <li>
+                                <p>Install <a href="https://git-scm.com">Git</a> to pull down the app's source code.</p>
+                                <pre class=" line-numbers language-bash"><code class=" language-bash">$ <span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> git-core<span class="line-numbers-rows"><span></span></span></code></pre>
+                            </li>
+                            <li>
+                                <p>Install <a href="http://upstart.ubuntu.com">Upstart</a> if the system is still using <a href="https://wiki.archlinux.org/index.php/SysVinit">SysVinit</a>. This will make writing startup scripts much easier later on.</p>
+                                <pre class=" line-numbers language-bash"><code class=" language-bash">$ <span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> upstart<span class="line-numbers-rows"><span></span></span></code></pre>
+                                <p>When prompted, enter <em>'Yes, do as I say!'</em>.</p>
+                            </li>
+                            <li>
+                                <p>Install <code>nvm</code> so you have the freedom to juggle between different <code>npm</code> versions. Install it globally to save yourself from the trouble of managing global node packages later on. This allows you to run <code>nvm</code> with <code>sudo</code>. Follow this <a href="https://github.com/xtuple/nvm">GitHub repo</a> or simply run:</p>
+                                <pre class=" line-numbers language-bash"><code class=" language-bash">$ <span class="token function">sudo</span> <span class="token function">wget</span> -qO- https://raw.githubusercontent.com/xtuple/nvm/master/install.sh <span class="token operator">|</span> <span class="token function">sudo</span> <span class="token function">bash</span><span class="line-numbers-rows"><span></span></span></code></pre>
+                            </li>
+                            <li>
+                                <p>Install <code>node</code> via <code>nvm</code>. Pick the version of your choice.</p>
+                                <pre class=" line-numbers language-bash"><code class=" language-bash">$ <span class="token function">sudo</span> nvm ls-remote
+$ <span class="token function">sudo</span> nvm <span class="token function">install</span> x.xx.x<span class="line-numbers-rows"><span></span><span></span></span></code></pre>
+                            </li>
+                            <li>
+                                <p>Install <code>gulp</code> globally to build the app (assuming you have <a href="http://gulpjs.com">Gulp</a> setup, which comes with <a href="https://github.com/andrewscwei/generator-vars-django">generator-vars-django</a>:</p>
+                                <pre class=" line-numbers language-bash"><code class=" language-bash"><span class="token function">sudo</span> <span class="token function">npm</span> <span class="token function">install</span> -g gulp<span class="line-numbers-rows"><span></span></span></code></pre>
+                            </li>
+                            <li>
+                                <p>Install <code>python</code> and <code>pip</code> as needed by any Django app.</p>
+                                <pre class=" line-numbers language-bash"><code class=" language-bash">$ <span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> python-pip python-virtualenv python-dev build-essential<span class="line-numbers-rows"><span></span></span></code></pre>
+                            </li>
+                            <li>
+                                <p>Install database of your choice. Here are a couple examples:</p>
+                                <h4 id="mysql">MySQL</h4>
+                                <pre class=" line-numbers language-bash"><code class=" language-bash">$ <span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> mysql-server
+$ <span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> python-mysqldb<span class="line-numbers-rows"><span></span><span></span></span></code></pre>
+                                <h4 id="postgresql">PostgreSQL</h4>
+                                <pre class=" line-numbers language-bash"><code class=" language-bash">$ <span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> libpq-dev python-dev python-psycopg2
+$ <span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> postgresql postgresql-contrib<span class="line-numbers-rows"><span></span><span></span></span></code></pre>
+                            </li>
+                            <li>
+                                <p>Install uWSGI. Do it through <code>pip</code> instead of <code>apt-get</code> to get the most updated version.</p>
+                                <pre class=" line-numbers language-bash"><code class=" language-bash">$ <span class="token function">sudo</span> pip <span class="token function">install</span> uwsgi<span class="line-numbers-rows"><span></span></span></code></pre>
+                            </li>
+                            <li>
+                                <p>Install Nginx:</p>
+                                <pre class=" line-numbers language-bash"><code class=" language-bash">$ <span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> nginx<span class="line-numbers-rows"><span></span></span></code></pre>
+                            </li>
+                        </ol>
+                        <h2 id="database-configuration">Database Configuration</h2>
+                        <p>You will need to set up your database before you can run a Django app (if you are not using SQLite). Basically you need to create a new database with a new owner and password. Here's a quick guide for MySQL and PostgreSQL:</p>
+                        <h4 id="mysql-1">MySQL</h4>
+                        <pre class=" line-numbers language-bash"><code class=" language-bash">$ mysql_secure_installation
+$ mysql --user<span class="token operator">=</span>root --password<span class="token operator">=</span><span class="token punctuation">{</span>password<span class="token punctuation">}</span>
+$ mysql<span class="token operator">&gt;</span> create database <span class="token punctuation">{</span>db_name<span class="token punctuation">}</span><span class="token punctuation">;</span>
+$ mysql<span class="token operator">&gt;</span> quit<span class="token punctuation">;</span><span class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+                        <h4 id="postgresql-1">PostgreSQL</h4>
+                        <pre class=" line-numbers language-bash"><code class=" language-bash">$ <span class="token function">sudo</span> <span class="token function">su</span> postgres
+$ createuser -P
+$ createdb --owner username dbname
+$ <span class="token builtin class-name">exit</span><span class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+                        <h2 id="python-virtual-environment-setup">Python Virtual Environment Setup</h2>
+                        <p>Python packages required by the app will be installed into a virtual environment. Create one in <code>/srv</code>:</p>
+                        <pre class=" line-numbers language-bash"><code class=" language-bash">$ <span class="token function">sudo</span> virtualenv /srv<span class="line-numbers-rows"><span></span></span></code></pre>
+                        <p>Before sourcing it, add any environment variables your app needs to <code>/srv/bin/activate</code>, such as the Django secret key. Assuming the app is generated by <a href="https://github.com/andrewscwei/generator-vars-django">generator-vars-django</a>, all the database credentials need to go in there as well.</p>
+                        <pre class=" line-numbers language-bash"><code class=" language-bash">$ <span class="token function">sudo</span> <span class="token function">nano</span> /srv/bin/activate<span class="line-numbers-rows"><span></span></span></code></pre>
+                        <p>Add the following to the end of the file (replace <code>{xxxx}</code> with your own values):</p>
+                        <pre class=" line-numbers language-bash"><code class=" language-bash"><span class="token builtin class-name">export</span> <span class="token assign-left variable">DJANGO_SECRET_KEY</span><span class="token operator">=</span><span class="token string">"{django_secret_key}"</span>
+<span class="token builtin class-name">export</span> <span class="token assign-left variable">DJANGO_DB_NAME</span><span class="token operator">=</span><span class="token string">"{db_name}"</span>
+<span class="token builtin class-name">export</span> <span class="token assign-left variable">DJANGO_DB_USER</span><span class="token operator">=</span><span class="token string">"{db_user}"</span>
+<span class="token builtin class-name">export</span> <span class="token assign-left variable">DJANGO_DB_PASS</span><span class="token operator">=</span><span class="token string">"{db_password}"</span>
+<span class="token builtin class-name">export</span> <span class="token assign-left variable">DJANGO_DB_HOST</span><span class="token operator">=</span><span class="token string">"localhost"</span>
+<span class="token builtin class-name">export</span> <span class="token assign-left variable">DJANGO_DB_PORT</span><span class="token operator">=</span><span class="token string">"{db_port}"</span><span class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+                        <p>Finally, source it:</p>
+                        <pre class=" line-numbers language-bash"><code class=" language-bash">$ <span class="token builtin class-name">source</span> /srv/bin/activate<span class="line-numbers-rows"><span></span></span></code></pre>
+                        <h2 id="app-setup">App Setup</h2>
+                        <ol>
+                            <li>
+                                <p>Clone the source code to <code>/srv</code>. It is best to have the source code inside a folder like <code>example.com</code>. This should already be taken care of if the app is generated by <a href="https://github.com/andrewscwei/generator-vars-django">generator-vars-django</a>.</p>
+                            </li>
+                            <li>
+                                <p>Install Python dependencies. Remember to activate the virtual environment first.</p>
+                                <pre class=" line-numbers language-bash"><code class=" language-bash">$ <span class="token function">sudo</span> pip <span class="token function">install</span> -r requirements.txt<span class="line-numbers-rows"><span></span></span></code></pre>
+                                <p>Double check that the packages were installed to the virtual environment:</p>
+                                <pre class=" line-numbers language-bash"><code class=" language-bash">$ <span class="token function">which</span> django-admin<span class="line-numbers-rows"><span></span></span></code></pre>
+                                <p>If it's not, you should redo this step. It might be because the command was executed using <code>sudo</code>. In which case you will either need to give your account write permission for <code>/srv</code> so you can run <code>pip install</code> without <code>sudo</code>, or you can simply login as <code>root</code> by doing:</p>
+                                <pre class=" line-numbers language-bash"><code class=" language-bash">$ <span class="token function">sudo</span> <span class="token function">su</span> -<span class="line-numbers-rows"><span></span></span></code></pre>
+                            </li>
+                            <li>
+                                <p>Install Node modules:</p>
+                                <pre class=" line-numbers language-bash"><code class=" language-bash">$ <span class="token function">sudo</span> <span class="token function">npm</span> <span class="token function">install</span><span class="line-numbers-rows"><span></span></span></code></pre>
+                            </li>
+                            <li>
+                                <p>Do the initial Django migration:</p>
+                                <pre class=" line-numbers language-bash"><code class=" language-bash">$ gulp migrate<span class="line-numbers-rows"><span></span></span></code></pre>
+                            </li>
+                            <li>
+                                <p>Build it:</p>
+                                <pre class=" line-numbers language-bash"><code class=" language-bash">$ gulp<span class="line-numbers-rows"><span></span></span></code></pre>
+                                <p>You should now have the app built and deployed to the <code>build</code> directory.</p>
+                            </li>
+                        </ol>
+                        <h2 id="serving-the-app">Serving the App</h2>
+                        <h4 id="nginx-setup">Nginx Setup</h4>
+                        <p><a href="https://github.com/andrewscwei/generator-vars-django">generator-vars-django</a> comes with a default <code>example.com_nginx.conf</code> file. Symlink that so Nginx can see it.</p>
+                        <pre class=" line-numbers language-bash"><code class=" language-bash">$ <span class="token function">sudo</span> <span class="token function">ln</span> -s /srv/example.com_nginx.conf /etc/nginx/sites-enabled/<span class="line-numbers-rows"><span></span></span></code></pre>
+                        <p>Edit whatever you need in there. It should look like this:</p>
+                        <pre class=" line-numbers language-nginx"><code class=" language-nginx"><span class="token comment"># The upstream component nginx needs to connect to.</span>
+<span class="token keyword">upstream</span> django <span class="token punctuation">{</span>
+    <span class="token keyword">server</span> unix<span class="token punctuation">:</span><span class="token operator">/</span><span class="token operator">/</span><span class="token operator">/</span>srv<span class="token operator">/</span>variante<span class="token punctuation">.</span>io<span class="token operator">/</span>variante<span class="token punctuation">.</span>io<span class="token punctuation">.</span>sock<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment"># Configuration of the server.</span>
+<span class="token keyword">server</span> <span class="token punctuation">{</span>
+    <span class="token comment"># The port in which the site will be served on.</span>
+    <span class="token keyword">listen</span> <span class="token number">80</span><span class="token punctuation">;</span>
+
+    <span class="token comment"># The domain name it will serve for (or the external IP).</span>
+    <span class="token keyword">server_name</span> example<span class="token punctuation">.</span>com<span class="token punctuation">;</span>
+
+    <span class="token comment"># Character encoding.</span>
+    <span class="token keyword">charset</span> utf<span class="token operator">-</span><span class="token number">8</span><span class="token punctuation">;</span>
+
+    <span class="token comment"># Max upload size.</span>
+    <span class="token keyword">client_max_body_size</span> <span class="token number">75</span>M<span class="token punctuation">;</span>
+
+    <span class="token comment"># Django media path.</span>
+    <span class="token keyword">location</span> <span class="token operator">/</span>media <span class="token punctuation">{</span>
+        <span class="token keyword">alias</span> <span class="token operator">/</span>srv<span class="token operator">/</span>example<span class="token punctuation">.</span>com<span class="token operator">/</span>build<span class="token operator">/</span>media<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment"># Django static path.</span>
+    <span class="token keyword">location</span> <span class="token operator">/</span>static <span class="token punctuation">{</span>
+        <span class="token keyword">alias</span> <span class="token operator">/</span>srv<span class="token operator">/</span>example<span class="token punctuation">.</span>com<span class="token operator">/</span>build<span class="token operator">/</span>static<span class="token punctuation">;</span>
+        <span class="token keyword">expires</span> <span class="token number">90</span>d<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment"># Send all non-media requests to the Django server.</span>
+    <span class="token keyword">location</span> <span class="token operator">/</span> <span class="token punctuation">{</span>
+        uwsgi_pass django<span class="token punctuation">;</span>
+        <span class="token keyword">include</span> <span class="token operator">/</span>srv<span class="token operator">/</span>example<span class="token punctuation">.</span>com<span class="token operator">/</span>uwsgi_params<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+                        <p>Make sure that you also have the <code>uwsgi_params</code> file in the specified place. It also comes with <a href="https://github.com/andrewscwei/generator-vars-django">generator-vars-django</a>. If not, it looks like this:</p>
+                        <pre class=" line-numbers language-ini"><code class=" language-ini">uwsgi_param  QUERY_STRING       $query_string;
+uwsgi_param  REQUEST_METHOD     $request_method;
+uwsgi_param  CONTENT_TYPE       $content_type;
+uwsgi_param  CONTENT_LENGTH     $content_length;
+
+uwsgi_param  REQUEST_URI        $request_uri;
+uwsgi_param  PATH_INFO          $document_uri;
+uwsgi_param  DOCUMENT_ROOT      $document_root;
+uwsgi_param  SERVER_PROTOCOL    $server_protocol;
+uwsgi_param  HTTPS              $https if_not_empty;
+
+uwsgi_param  REMOTE_ADDR        $remote_addr;
+uwsgi_param  REMOTE_PORT        $remote_port;
+uwsgi_param  SERVER_PORT        $server_port;
+uwsgi_param  SERVER_NAME        $server_name;<span class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+                        <p>Restart Nginx:</p>
+                        <pre class=" line-numbers language-bash"><code class=" language-bash">$ <span class="token function">sudo</span> <span class="token function">service</span> nginx restart<span class="line-numbers-rows"><span></span></span></code></pre>
+                        <p>At this point you would probably see a 500 error if you try to access the site.</p>
+                        <h4 id="uwsgi-setup">uWSGI Setup</h4>
+                        <p>We will be setting uWSGI up in emperor mode which will be spawning instances for each vassal it finds.</p>
+                        <p>First create the directories for storing these vassals.</p>
+                        <pre class=" line-numbers language-bash"><code class=" language-bash">$ <span class="token function">sudo</span> <span class="token function">mkdir</span> /etc/uwsgi
+$ <span class="token function">sudo</span> <span class="token function">mkdir</span> /etc/uwsgi/vassals<span class="line-numbers-rows"><span></span><span></span></span></code></pre>
+                        <p>Symlink <code>example.com_uwsgi.ini</code> so the emperor can see it:</p>
+                        <pre class=" line-numbers language-bash"><code class=" language-bash">$ <span class="token function">sudo</span> <span class="token function">ln</span> -s /srv/example.com_uwsgi.ini /etc/uwsgi/vassals/<span class="line-numbers-rows"><span></span></span></code></pre>
+                        <p>You should tweak this file accordingly. The file looks like this:</p>
+                        <pre class=" line-numbers language-ini"><code class=" language-ini"><span class="token selector">[uwsgi]</span>
+
+<span class="token comment"># Variables.</span>
+<span class="token constant">base-path</span> <span class="token attr-value"><span class="token punctuation">=</span> /srv</span>
+<span class="token constant">app-name</span> <span class="token attr-value"><span class="token punctuation">=</span> example.com</span>
+<span class="token constant">app-path</span> <span class="token attr-value"><span class="token punctuation">=</span> %(base-path)/%(app-name)</span>
+<span class="token constant">env-path</span> <span class="token attr-value"><span class="token punctuation">=</span> %(base-path)</span>
+
+<span class="token comment"># Configurations.</span>
+<span class="token constant">chdir</span> <span class="token attr-value"><span class="token punctuation">=</span> %(app-path)/build</span>
+<span class="token constant">module</span> <span class="token attr-value"><span class="token punctuation">=</span> project.wsgi</span>
+<span class="token constant">home</span> <span class="token attr-value"><span class="token punctuation">=</span> %(env-path)</span>
+<span class="token constant">master</span> <span class="token attr-value"><span class="token punctuation">=</span> true</span>
+<span class="token constant">processes</span> <span class="token attr-value"><span class="token punctuation">=</span> 10</span>
+<span class="token constant">socket</span> <span class="token attr-value"><span class="token punctuation">=</span> %(app-path)/%(app-name).sock</span>
+<span class="token constant">chmod-socket</span> <span class="token attr-value"><span class="token punctuation">=</span> 666</span>
+<span class="token constant">vacuum</span> <span class="token attr-value"><span class="token punctuation">=</span> true</span><span class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+                        <p>This is the most basic configuration you need to get things up and running. Note that <code>chmod-socket</code> is set to <code>666</code>, which is very permissive. Tweak that accordingly. Also make sure that <code>env-path</code> matches the path to your <code>virtualenv</code>.</p>
+                        <p>Now try running uWSGI in emperor mode:</p>
+                        <pre class=" line-numbers language-bash"><code class=" language-bash">$ <span class="token function">sudo</span> uwsgi --emperor /etc/uwsgi/vassals<span class="line-numbers-rows"><span></span></span></code></pre>
+                        <p>You may encounter the following issues:</p>
+                        <ol>
+                            <li>
+                                <p>You get an error about permission issues with writing to the UDP socket. You might need to change the owner of <code>/srv/example.com</code> to the Nginx owner/group, which is probably <code>www-data:www-data</code>:</p>
+                                <pre class=" line-numbers language-bash"><code class=" language-bash">$ <span class="token function">sudo</span> <span class="token function">chown</span> -R www-data /srv/example.com
+$ <span class="token function">sudo</span> <span class="token function">chmod</span> -R <span class="token number">775</span> /srv/example.com<span class="line-numbers-rows"><span></span><span></span></span></code></pre>
+                            </li>
+                            <li>
+                                <p>You get a warning about running uWSGI in root. You can set the <code>gid</code> and <code>uid</code> to the Nginx user (probably <code>www-data</code>) either in the ini file or in the command, like so:</p>
+                                <pre class=" line-numbers language-bash"><code class=" language-bash">$ uwsgi --emperor /etc/uwsgi/vassals --uid www-data --gid www-data<span class="line-numbers-rows"><span></span></span></code></pre>
+                            </li>
+                        </ol>
+                        <p>The last step is to make sure that the emperor starts whenever the system reboots. <code>upstart</code> finally comes into play. Create a new file:</p>
+                        <pre class=" line-numbers language-bash"><code class=" language-bash">$ <span class="token function">sudo</span> <span class="token function">nano</span> /etc/init/uwsgi.conf<span class="line-numbers-rows"><span></span></span></code></pre>
+                        <p>Add the following:</p>
+                        <pre class=" line-numbers language-ini"><code class=" language-ini">description "uWSGI Emperor"
+
+start on runlevel [2345]
+stop on runlevel [!2345]
+
+script
+    . /srv/bin/activate
+    uwsgi --emperor /etc/uwsgi/vassals
+end script<span class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+                        <p>This script will execute everytime the system boots up and it basically first activates the virtual environment so that all the environment variables are loaded (i.e. the Django secret key), and then kickstarts the emperor.</p>
+                        <h2 id="verifying-the-live-site">Verifying the Live Site</h2>
+                        <p>Open up your browser and navigate to the site. It should be now be served properly with Nginx and uWSGI. You might encounter the following issues:</p>
+                        <ol>
+                            <li>
+                                <p>You are still getting a 500 error. The best thing to do is to check the Nginx logs. It's in <code>/var/log/nginx/error.log</code>.</p>
+                            </li>
+                            <li>
+                                <p>You are instead getting a 400 error. You can debug this using your browser console to see what is wrong. If you get a GET request fail on the domain itself, chances are you forgot to add your domain to the <code>ALLOWED_HOSTS</code> of your Django project settings.</p>
+                            </li>
+                        </ol>
+                        <h2 id="related-articles">Related Articles</h2>
+                        <ol>
+                            <li>
+                                <p><a href="http://www.datacommunitydc.org/blog/2013/12/a-tutorial-for-deploying-a-django-application-that-uses-numpy-and-scipy-to-google-compute-engine-using-apache2-and-modwsgi">A Tutorial for Deploying a Django Application that Uses Numpy and Scipy to Google Compute Engine Using Apache2 and modwsgi</a></p>
+                            </li>
+                            <li>
+                                <p><a href="http://www.denisigo.com/2013/07/nginx-uwsgi-python-on-compute-engine/">Installing Nginx, WWSGI and Python on Google Compute Engine</a></p>
+                            </li>
+                            <li>
+                                <p><a href="http://uwsgi-docs.readthedocs.org/en/latest/tutorials/Django_and_nginx.html">Setting up Django and your web server with uWSGI and Nginx</a></p>
+                            </li>
+                            <li>
+                                <p><a href="http://michal.karzynski.pl/blog/2013/06/09/django-nginx-gunicorn-virtualenv-supervisor/">Setting up Django with Nginx, Gunicorn, virtualenv, supervisor and PostgreSQL</a></p>
+                            </li>
+                            <li>
+                                <p><a href="http://guoqiao.farbox.com/post/2014/0416-use-uwsgi-the-right-way">Using uwsgi the right way</a></p>
+                            </li>
+                            <li>
+                                <p><a href="https://www.digitalocean.com/community/tutorials/how-to-set-up-uwsgi-and-nginx-to-serve-python-apps-on-ubuntu-14-04">How To Set Up uWSGI and Nginx to Serve Python Apps on Ubuntu 14.04</a></p>
+                            </li>
+                        </ol>
+                    </div>
+                    <div name="footer"><a class="prev post" is="x-a" type="button" href="/logs/push-deploy-a-django-app-with-bitnami-jenkins-on-google/"><span class="prev" type="icon"></span><span type="label">prev</span></a><button class="arrow" is="x-button" type="button" name="top-button"><span class="up" type="icon"></span></button><a class="next post" is="x-a" type="button" href="/logs/linux-user-management/"><span class="next" type="icon"></span><span type="label">next</span></a></div>
+                    <div name="related">
+                        <div class="tags" name="tags"><button class="tag" is="x-button" type="button" disabled="disabled"><span type="label">related</span></button></div>
+                        <div class="grid"><a type="button" is="log-entry" href="/logs/the-shunting-yard-algorithm/" name="entry">
+                                <div class="wrapper">
+                                    <h2 class="title">The Shunting-Yard Algorithm</h2><span class="date" type="label">Oct 09 11</span><span class="number" type="label">5</span>
+                                </div>
+                            </a><a type="button" is="log-entry" href="/logs/push-deploy-a-django-app-with-bitnami-jenkins-on-google/" name="entry">
+                                <div class="wrapper">
+                                    <h2 class="title">Push-Deploy a Django App with Bitnami Jenkins on Google Cloud Engine</h2><span class="date" type="label">Jun 02 15</span><span class="number" type="label">13</span>
+                                </div>
+                            </a><a type="button" is="log-entry" href="/logs/linux-user-management/" name="entry">
+                                <div class="wrapper">
+                                    <h2 class="title">Linux User Management</h2><span class="date" type="label">May 31 15</span><span class="number" type="label">11</span>
+                                </div>
+                            </a></div>
+                    </div>
+                </div>
+            </page-log>
+        </main>
+        <script src="/assets/javascripts/polyfills-4df15158e5.js"></script>
+        <script src="/assets/javascripts/common-a589f09cab.js"></script>
+        <script src="/assets/javascripts/application-a1f774b4b0.js"></script>
+    </body>
+</html>

@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Andrew Wei</title>
+    <title>Evaluating an RPN Stack</title>
     <meta charset="utf-8">
     <meta name="description" content="Andrew Wei, codenamed mu, is a software engineer, experience designer and illustrator.">
     <meta name="keywords" content="andrew,wei,andr,mu,engineer,designer,illustrator">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta property="og:url">
     <meta property="og:image" content="/og-image-3c57fca1f2.png">
-    <meta property="og:title" content="Andrew Wei">
+    <meta property="og:title" content="Evaluating an RPN Stack">
     <meta property="og:description" content="Andrew Wei, codenamed mu, is a software engineer, experience designer and illustrator.">
     <link rel="shortcut icon" href="/favicon.png">
     <link rel="manifest" href="/manifest.json">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-title" content="Andrew Wei">
+    <meta name="apple-mobile-web-app-title" content="Evaluating an RPN Stack">
     <link href="/apple-touch-icon-180x180-precomposed-151af9722e.png" sizes="180x180" rel="apple-touch-icon">
     <link href="/apple-touch-icon-152x152-precomposed-4d4481414b.png" sizes="152x152" rel="apple-touch-icon">
     <link href="/apple-touch-icon-144x144-precomposed-c735943caf.png" sizes="144x144" rel="apple-touch-icon">
@@ -26,13 +26,13 @@
     <link href="/apple-touch-icon-57x57-precomposed-e896f01ce1.png" sizes="57x57" rel="apple-touch-icon">
     <link href="/apple-touch-icon-precomposed-609906461e.png" rel="apple-touch-icon">
     <meta name="msapplication-config" content="/browserconfig.xml">
-    <meta name="application-name" content="Andrew Wei">
+    <meta name="application-name" content="Evaluating an RPN Stack">
     <meta name="msapplication-tooltip" content="Get the latest updates!">
     <meta name="msapplication-window" content="width=1024;height=768">
     <meta name="msapplication-navbutton-color" content="#ff3300">
     <meta name="msapplication-starturl" content="/">
     <script type="text/javascript" src="https://unpkg.com/@webcomponents/webcomponentsjs@2.2.10/webcomponents-bundle.js"></script>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108117457-1"></script>
+    <script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-108117457-1"></script>
     <script>window.dataLayer = window.dataLayer || [];
       function gtag() { dataLayer.push(arguments); }
       gtag('js', new Date());
@@ -42,7 +42,7 @@
   </head>
   <body><page-home id="home" name="home"><a class="down triangle" is="x-a" type="button" href="/logs/" name="down-button" style="display:none;"></a>
       <div is="name-card" name="name-card">
-        <section class="logo"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewbox="0 0 70 70" style="enable-background:new 0 0 70 70;" xml:space="preserve" preserveaspectratio="xMidYMid">
+        <section class="logo"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 70 70" style="enable-background:new 0 0 70 70;" xml:space="preserve" preserveAspectRatio="xMidYMid">
             <circle class="dot-1" cx="5.3" cy="49.8" r="5.3"></circle>
             <circle class="dot-2" cx="5.3" cy="35" r="5.3"></circle>
             <circle class="dot-3" cx="5.3" cy="20.2" r="5.3"></circle>
@@ -63,12 +63,61 @@
       </div>
     </page-home>
     <main id="page">
-      <nav is="global-nav" id="global-nav" name="global-nav"><a class="logs" is="x-a" type="button" href="/logs/" name="logs-button"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewbox="0 0 70 70" style="enable-background:new 0 0 70 70;" xml:space="preserve" preserveaspectratio="xMidYMid">
+      <nav is="global-nav" id="global-nav" name="global-nav"><a class="logs" is="x-a" type="button" href="/logs/2/" name="grid-button"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 70 70" style="enable-background:new 0 0 70 70;" xml:space="preserve" preserveAspectRatio="xMidYMid">
             <path class="tl" d="M30,33H3c-1.7,0-3-1.3-3-3V3c0-1.7,1.3-3,3-3h27c1.7,0,3,1.3,3,3v27C33,31.7,31.7,33,30,33L30,33z M6,27h21V6H6V27L6,27z"></path>
             <path class="tr" d="M67,33H40c-1.7,0-3-1.3-3-3V3c0-1.7,1.3-3,3-3h27c1.7,0,3,1.3,3,3v27C70,31.7,68.7,33,67,33L67,33z M43,27h21V6H43V27    L43,27z"></path>
             <path class="bl" d="M30,70H3c-1.7,0-3-1.3-3-3V40c0-1.7,1.3-3,3-3h27c1.7,0,3,1.3,3,3v27C33,68.7,31.7,70,30,70L30,70z M6,64h21V43H6V64L6,64    z"></path>
             <path class="br" d="M67,70H40c-1.7,0-3-1.3-3-3V40c0-1.7,1.3-3,3-3h27c1.7,0,3,1.3,3,3v27C70,68.7,68.7,70,67,70L67,70z M43,64h21V43H43V64    L43,64z"></path>
-          </svg></a></nav>
+          </svg></a></nav><page-log id="log" name="page">
+        <div id="inner-page">
+          <div name="header">
+            <div name="info">
+              <h1 name="title">Evaluating an RPN Stack</h1><span name="date" type="label">Oct 10 11</span>
+              <div name="tags"><a class="tag slug" is="x-a" type="button" href="/logs/tag/coding/"><span type="label">coding</span></a><a class="tag slug" is="x-a" type="button" href="/logs/tag/math/"><span type="label">math</span></a><a class="tag slug" is="x-a" type="button" href="/logs/tag/algorithms/"><span type="label">algorithms</span></a></div>
+            </div>
+          </div>
+          <div name="contents">
+            <h2 id="terms-used">Terms Used</h2>
+            <ol>
+              <li><strong>Operand</strong>: a fixed numerical value of some sort (i.e. a number, a constant like <code>π</code>, or an <code>ANS</code> in a calculator).</li>
+              <li><strong>Unary Postfix Operator</strong>: operators that appear <em>after</em> an operand and only require one operand to operate (i.e. <code>!</code>, <code>%</code>).</li>
+              <li><strong>Unary Prefix Operator</strong>: operators that appear <em>before</em> an operand and only require one operand to operate (i.e. <code>√</code>, <code>-</code>).</li>
+              <li><strong>Function</strong>: math functions like <code>sin</code>, <code>cos</code>, and <code>tan</code> that take in at least 1 parameter. In this context, only functions that take in exactly 1 parameter are considered.</li>
+            </ol>
+            <p>Given an RPN stack in the form of an array as input (i.e. derived using the <a href="/logs/the-shunting-yard-algorithm/">shunting-yard algorithm</a>), do the following to get the numerical output of the stack.</p>
+            <h2 id="verify-that-the-stack-is-valid">Verify that the stack is valid</h2>
+            <p>Before doing anything else, perform a few preliminary sanity checks:</p>
+            <ol>
+              <li>Assert that the input array is not <code>nil</code> (obviously).</li>
+              <li>Assert that the array contains at least 1 element. An RPN stack that contains only 1 element, which may be a number, is still a valid stack. In this case the number itself is the output.</li>
+            </ol>
+            <h2 id="process-each-element-in-the-stack-one-by-one">Process each element in the stack one-by-one</h2>
+            <p>Create a temporary empty array to store the processed elements of the original array containing the RPN stack. Starting from the bottom of the stack (i.e. the beginning of the array), process each element based on the following criteria:</p>
+            <ol>
+              <li>If the element is a number, push it into the temporary array.</li>
+              <li>If the element is a constant/variable, either look-up the value of the constant/variable by whatever means or use the symbol as is. Push the value/symbol into the temporary array.</li>
+              <li>If the element is a unary prefix/postfix operator or function, evaluate the operation with the last element in the temporary array and pop it from the array. Assert that the popped element is an operand. If it is not an operand or there does not exist a last element in the temporary array, the RPN stack is invalid. Push the result into the temporary array.</li>
+              <li>If the element is an operator (regular operator that expects two operands), pop the last 2 elements from the temporary array (assert that they are valid operands) and evaluate the operation using those 2 operands. Push the result into the temporary array.</li>
+              <li>If the element is a parenthesis, either ignore it (by ignoring it, users will not have to manually close the parenthesis), or handle it to check if there is a valid balance of left/right parenthesis. Parenthesis do not impact the elements in the temporary array.</li>
+            </ol>
+            <h2 id="analyze-the-temporary-array">Analyze the temporary array</h2>
+            <p>The temporary array should contain at least 1 element, in which case the last element is the output of the RPN expression. Assert that the last element of the temporary array is a valid numerical value. Depending on the use-case, there may exist more than 1 elements in the temporary array, which are most likely all numbers. This happens, for example, when the input is <code>["1", "2", "3", "+"]</code>, where the temporary array in this case is <code>["1", "5"]</code>. The last element is always the evaluated output. Whether or not to handle previous elements is dependent on context.</p>
+          </div>
+          <div name="footer"><a class="prev post" is="x-a" type="button" href="/logs/acquiring-samples-to-plot-a-math-function-adaptive/"><span class="prev" type="icon"></span><span type="label">prev</span></a><button class="arrow" is="x-button" type="button" name="top-button"><span class="up" type="icon"></span></button><a class="next post" is="x-a" type="button" href="/logs/the-shunting-yard-algorithm/"><span class="next" type="icon"></span><span type="label">next</span></a></div>
+          <div name="related">
+            <div class="tags" name="tags"><button class="tag" is="x-button" type="button" disabled="disabled"><span type="label">related</span></button></div>
+            <div class="grid"><a type="button" is="log-entry" href="/logs/acquiring-samples-to-plot-a-math-function-adaptive/" name="entry">
+                <div class="wrapper">
+                  <h2 class="title">Acquiring Samples to Plot a Math Function: Adaptive Sampling</h2><span class="date" type="label">Mar 04 14</span><span class="number" type="label">7</span>
+                </div>
+              </a><a type="button" is="log-entry" href="/logs/the-shunting-yard-algorithm/" name="entry">
+                <div class="wrapper">
+                  <h2 class="title">The Shunting-Yard Algorithm</h2><span class="date" type="label">Oct 09 11</span><span class="number" type="label">5</span>
+                </div>
+              </a></div>
+          </div>
+        </div>
+      </page-log>
     </main>
     <script src="/assets/javascripts/polyfills-4df15158e5.js"></script>
     <script src="/assets/javascripts/common-a589f09cab.js"></script>

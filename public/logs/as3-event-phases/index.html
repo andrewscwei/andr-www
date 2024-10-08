@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>AS3: Event Phases</title>
+    <meta charset="utf-8">
+    <meta name="description" content="Andrew Wei, codenamed mu, is a software engineer, experience designer and illustrator.">
+    <meta name="keywords" content="andrew,wei,andr,mu,engineer,designer,illustrator">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta property="og:url">
+    <meta property="og:image" content="/og-image-3c57fca1f2.png">
+    <meta property="og:title" content="AS3: Event Phases">
+    <meta property="og:description" content="Andrew Wei, codenamed mu, is a software engineer, experience designer and illustrator.">
+    <link rel="shortcut icon" href="/favicon.png">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="AS3: Event Phases">
+    <link href="/apple-touch-icon-180x180-precomposed-151af9722e.png" sizes="180x180" rel="apple-touch-icon">
+    <link href="/apple-touch-icon-152x152-precomposed-4d4481414b.png" sizes="152x152" rel="apple-touch-icon">
+    <link href="/apple-touch-icon-144x144-precomposed-c735943caf.png" sizes="144x144" rel="apple-touch-icon">
+    <link href="/apple-touch-icon-120x120-precomposed-81dd7e0ad6.png" sizes="120x120" rel="apple-touch-icon">
+    <link href="/apple-touch-icon-114x114-precomposed-1daf1d75d6.png" sizes="114x114" rel="apple-touch-icon">
+    <link href="/apple-touch-icon-76x76-precomposed-f49e287ced.png" sizes="76x76" rel="apple-touch-icon">
+    <link href="/apple-touch-icon-72x72-precomposed-a5412e18eb.png" sizes="72x72" rel="apple-touch-icon">
+    <link href="/apple-touch-icon-60x60-precomposed-55aaa7669c.png" sizes="60x60" rel="apple-touch-icon">
+    <link href="/apple-touch-icon-57x57-precomposed-e896f01ce1.png" sizes="57x57" rel="apple-touch-icon">
+    <link href="/apple-touch-icon-precomposed-609906461e.png" rel="apple-touch-icon">
+    <meta name="msapplication-config" content="/browserconfig.xml">
+    <meta name="application-name" content="AS3: Event Phases">
+    <meta name="msapplication-tooltip" content="Get the latest updates!">
+    <meta name="msapplication-window" content="width=1024;height=768">
+    <meta name="msapplication-navbutton-color" content="#ff3300">
+    <meta name="msapplication-starturl" content="/">
+    <script type="text/javascript" src="https://unpkg.com/@webcomponents/webcomponentsjs@2.2.10/webcomponents-bundle.js"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108117457-1"></script>
+    <script>window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag('js', new Date());
+      gtag('config', 'UA-108117457-1');
+    </script>
+    <link rel="stylesheet" href="/assets/stylesheets/application-7fc252c149.css">
+  </head>
+  <body><page-home id="home" name="home"><a class="down triangle" is="x-a" type="button" href="/logs/" name="down-button" style="display:none;"></a>
+      <div is="name-card" name="name-card">
+        <section class="logo"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewbox="0 0 70 70" style="enable-background:new 0 0 70 70;" xml:space="preserve" preserveaspectratio="xMidYMid">
+            <circle class="dot-1" cx="5.3" cy="49.8" r="5.3"></circle>
+            <circle class="dot-2" cx="5.3" cy="35" r="5.3"></circle>
+            <circle class="dot-3" cx="5.3" cy="20.2" r="5.3"></circle>
+            <circle class="dot-4" cx="20.2" cy="20.2" r="5.3"></circle>
+            <circle class="dot-5" cx="35" cy="20.2" r="5.3"></circle>
+            <circle class="dot-6" cx="35" cy="35" r="5.3"></circle>
+            <circle class="dot-7" cx="35" cy="49.8" r="5.3"></circle>
+            <circle class="dot-8" cx="49.8" cy="49.8" r="5.3"></circle>
+            <circle class="dot-9" cx="64.7" cy="49.8" r="5.3"></circle>
+            <circle class="dot-10" cx="64.7" cy="35" r="5.3"></circle>
+            <circle class="dot-11" cx="64.7" cy="20.2" r="5.3"></circle>
+          </svg></section>
+        <section class="name">
+          <h1 class="full-name">Andrew Wei</h1>
+        </section>
+        <section class="position"><span class="position" type="label">Engineer / Designer / Illustrator</span></section>
+        <section class="connect"><a is="x-a" type="button" href="mailto:andrewscwei@gmail.com"><span type="icon" style="background-image: url(/assets/images/logs%2F439f2919-b36c-4403-837e-257d6bbde80c_email-icon.svg?auto=compress,format)"></span></a><a is="x-a" type="button" href="https://github.com/andrewscwei"><span type="icon" style="background-image: url(/assets/images/logs%2F92b82402-ce51-49db-a8b2-d2c8924cdbe0_github-icon.svg?auto=compress,format)"></span></a><a is="x-a" type="button" href="https://twitter.com/andrewscwei"><span type="icon" style="background-image: url(/assets/images/logs%2F719d8066-6750-4a08-afb7-a860a10482bc_twitter-icon.svg?auto=compress,format)"></span></a><a is="x-a" type="button" href="https://calculator3.andr.mu"><span type="icon" style="background-image: url(/assets/images/logs%2Fa4f8b935-bf95-45ae-bf82-7fbee9b994be_calculator3-icon.svg?auto=compress,format)"></span></a><a class="inactive" is="x-a" type="button" href="https://www.variante.io"><span type="icon" style="background-image: url(/assets/images/logs%2F3781e233-b368-4800-bebb-17c5e47955d1_vaiante-icon.svg?auto=compress,format)"></span></a><a class="inactive" is="x-a" type="button" href="https://www.grubbb.co"><span type="icon" style="background-image: url(/assets/images/logs%2F698dcb27-4e5e-4f9c-8473-0e5bb46af2d1_grubbb-icon.svg?auto=compress,format)"></span></a><a is="x-a" type="button" href="https://www.verb.studio"><span type="icon" style="background-image: url(/assets/images/logs%2F6bf8145f-5ea8-41d6-8cdd-d9c199a97806_verb-icon.svg?auto=compress,format)"></span></a><a is="x-a" type="button" href="https://dice.andr.mu"><span type="icon" style="background-image: url(/assets/images/logs%2F6d5406b1-3ec0-4915-abdf-f39a8ee95801_dice-icon.svg?auto=compress,format)"></span></a><a is="x-a" type="button" href="https://monitor.andr.mu"><span type="icon" style="background-image: url(/assets/images/logs%2F7021ac91-7a57-4815-90e7-90cf2011cdf7_monitoring-test-icon.svg?auto=compress,format)"></span></a><a is="x-a" type="button" href="https://www.aristotl.io"><span type="icon" style="background-image: url(/assets/images/logs%2F0240039f-2372-4fa9-af5c-18880f192e4c_aristotl-icon.svg?auto=compress,format)"></span></a><a is="x-a" type="button" href="https://www.sybl.io"><span type="icon" style="background-image: url(/assets/images/logs%2F5e961282-d08e-433d-960b-1e114a2bbc12_sybl.svg?auto=compress,format)"></span></a></section>
+      </div>
+    </page-home>
+    <main id="page">
+      <nav is="global-nav" id="global-nav" name="global-nav"><a class="logs" is="x-a" type="button" href="/logs/2/" name="grid-button"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewbox="0 0 70 70" style="enable-background:new 0 0 70 70;" xml:space="preserve" preserveaspectratio="xMidYMid">
+            <path class="tl" d="M30,33H3c-1.7,0-3-1.3-3-3V3c0-1.7,1.3-3,3-3h27c1.7,0,3,1.3,3,3v27C33,31.7,31.7,33,30,33L30,33z M6,27h21V6H6V27L6,27z"></path>
+            <path class="tr" d="M67,33H40c-1.7,0-3-1.3-3-3V3c0-1.7,1.3-3,3-3h27c1.7,0,3,1.3,3,3v27C70,31.7,68.7,33,67,33L67,33z M43,27h21V6H43V27    L43,27z"></path>
+            <path class="bl" d="M30,70H3c-1.7,0-3-1.3-3-3V40c0-1.7,1.3-3,3-3h27c1.7,0,3,1.3,3,3v27C33,68.7,31.7,70,30,70L30,70z M6,64h21V43H6V64L6,64    z"></path>
+            <path class="br" d="M67,70H40c-1.7,0-3-1.3-3-3V40c0-1.7,1.3-3,3-3h27c1.7,0,3,1.3,3,3v27C70,68.7,68.7,70,67,70L67,70z M43,64h21V43H43V64    L43,64z"></path>
+          </svg></a></nav><page-log id="log" name="page">
+        <div id="inner-page">
+          <div name="header">
+            <div name="info">
+              <h1 name="title">AS3: Event Phases</h1><span name="date" type="label">Aug 07 11</span>
+              <div name="tags"><a class="tag slug" is="x-a" type="button" href="/logs/tag/coding/"><span type="label">coding</span></a><a class="tag slug" is="x-a" type="button" href="/logs/tag/as3/"><span type="label">as3</span></a></div>
+            </div>
+          </div>
+          <div name="contents">
+            <p>When an event is dispatched, it flows/propegates through the display tree starting from the topmost parent (the stage) down to the event target (the dispatcher instance which has a listener added to it via <code>addEventListener()</code>), then back up to the stage. Event propagation only takes place in the display tree, assuming all child nodes in the tree inherit <code>EventDispatcher</code> (i.e. <code>DisplayObject</code> inherits <code>EventDispatcher</code>). Events will not propegate to objects that are not on the display tree.</p>
+            <p>This event flow is divided into three phases:</p>
+            <ol>
+              <li><strong>Capture Phase</strong>: The flow of an event from the stage to the event target.</li>
+              <li><strong>Target Phase</strong>: The moment the event has arrived at the event target.</li>
+              <li><strong>Bubble Phase</strong>: The flow of an event from the event target back to the stage. In Flash terms, the event is &quot;bubbling&quot; back up to the stage from the target. This phase is optional, and most events have this property defaulted to <code>false</code>, meaning that the event will stop at its target and will not propegate, or &quot;bubble&quot;, back up to the stage. <code>MouseEvent</code> is an example which event bubbling is defaulted to <code>true</code>.</li>
+            </ol>
+            <p>Note that the event flow goes in one direction following the strict order of <em>capture</em>, <em>target</em>, and <em>bubble</em> phases. Event handlers are triggered in the very same order depending on what phase they are listening for.</p>
+            <h2 id="how-capture-and-target-phases-are-used">How Capture and Target Phases Are Used</h2>
+            <p>When an event listener is added to a dispatcher using <code>addEventListener()</code>, there is an option to specify whether the listener listens for the specified event in its <em>capture</em> phase or its <em>target</em> phase. This is the 3rd parameter <code>useCapture</code> of the <code>addEventListener()</code> method, which defaults to <code>false</code>, meaning the <em>target</em> phase is used instead. In other words, when the event is dispatched, the listener handler will not be triggered until the event propegates and arrives at the <em>target</em> phase, where <code>target</code> equals the dispatcher. On the other hand, if <code>useCapture</code> is set to <code>true</code>, the listener handler will not be triggered when the event arrives at the dispatcher in the <em>target</em> phase. Instead, it will be triggered when the event arrives at the dispatcher in the <em>capture</em> phase.</p>
+            <p>Let&#39;s look at this more closely. Recall that events flow through the display tree, from top to bottom (ignore the <em>bubble</em> phase for now). Imagine a <code>MouseEvent.CLICK</code> event listener being added to a display object that is added as a direct child of the stage root. Now, if <em>target</em> phase is used (i.e. <code>useCapture</code> is <code>false</code>), the listener handler will be triggered when the user clicks directly on the display object. The reason behind is trivial - the mouse click event propagates from the stage down to the display object and stops there (before it bubbles back up) because that is where the mouse click is applied. The listener is added to the same display object thus making it the target, marking it the <code>target</code> phase.</p>
+            <p>How will the same event listener with <code>useCapture</code> set to <code>true</code> behave differently? In the very same scenario above, if the <code>capture</code> phase is used instead, when the user clicks on the display object, nothing will happen. Precisely, the listener handler will not be triggered. Recall that the <code>capture</code> phase encapsulates the point of event propagation from the topmost parent (stage) to the event target, which, in this case, is the display object. The important thing to note is that arriving at the event target is <strong>NOT</strong> part of the <code>capture</code> phase. The click event flows and stops at where the mouse click is applied, which is the display object. Since <code>useCapture</code> is set to <code>true</code>, the listener handler will not be triggered because during the mouse click event flow, the event never arrived at the display object during its <em>capture</em> phase. So, how is the <em>capture</em> phase used? Imagine that the display object itself is a parent of another display object. When the user clicks on the parent display object, the event listener will not be triggered because it never got to the target during the <em>capture</em> phase. However, when the user clicks on the child of that display object, the event will be handled. The target in the <em>target</em> phase is now the child, and as a result the event will visit the parent at some point during the <em>capture</em> phase.</p>
+            <h2 id="event-bubbling">Event Bubbling</h2>
+            <p>The <em>bubble</em> phase is slightly different in nature from the <em>capture</em> and <em>target</em> phases. The <em>bubble</em> phase is optional, and it is entirely dependent on the nature of the event itself when it is instantiated. Mouse/keyboard events that are natively dispatched by Flash such as the common <code>MouseEvent.CLICK</code> event and the <code>KeyboardEvent.KEY_DOWN</code> event support bubbling by default, whereas <code>Event.ENTER_FRAME</code> et al. do not.</p>
+            <p>Event bubbling simply means that after an event has arrived at the <em>target</em> phase, instead of terminating the event flow instantly, it will continue to propegate in the reverse direction until it reaches the stage. Imagine the same scenario as above where there is a display object inside another display object that is placed on the stage, where each instance has a <code>MouseEvent.CLICK</code> listener. Assuming <code>useCapture</code> is left as default (<code>false</code>) for both listeners, when the inner display object is clicked, both event handlers will trigger due to event bubbling, with the child&#39;s listener being triggered before the parent&#39;s. If bubbling is ignored, the parent&#39;s listener will not be handled.</p>
+            <h2 id="target-vs-currenttarget"><code>target</code> vs. <code>currentTarget</code></h2>
+            <p>One can acquire a reference to the current node where the event is at in its event flow. This is commonly used inside event handlers via the <code>Event</code> paramenter which is the instance of the event being dispatched.</p>
+            <ul>
+              <li><code>target</code> - This is the node of which the event is currently at (aka the node that triggers the event). Most of the time it is the dispatcher of which the listener is being added to. However, the target can be different if, say, the event was bubbled from a child of a parent node that was originally listening for the event, or, the event was triggered by a child but was captured at the target during the <em>capture</em> phase.</li>
+              <li><code>currentTarget</code> - The node of which the event listener was added to, always.</li>
+            </ul>
+            <h2 id="stoppropagation-vs-stopimmediatepropagation"><code>stopPropagation()</code> vs. <code>stopImmediatePropagation()</code></h2>
+            <p>As events propagate through the 3 phases, two methods can be called to terminate this propagation immediately, often done in event handlers:</p>
+            <ol>
+              <li><code>stopPropagation()</code> - Stops the event from propagating to the next node, but allows the rest of the listeners added to the current node to be handled.</li>
+              <li><code>stopImmediatePropagation()</code> - Stops the event from propagating to the next node and also prevents the rest of the listeners added to the current node from being handled.</li>
+            </ol>
+          </div>
+          <div name="footer"><a class="prev post" is="x-a" type="button" href="/logs/as3-event-listeners/"><span class="prev" type="icon"></span><span type="label">prev</span></a><button class="arrow" is="x-button" type="button" name="top-button"><span class="up" type="icon"></span></button><a class="next post" is="x-a" type="button" href="/logs/establishing-communication-between-iphone-and-arduino/"><span class="next" type="icon"></span><span type="label">next</span></a></div>
+          <div name="related">
+            <div class="tags" name="tags"><button class="tag" is="x-button" type="button" disabled="disabled"><span type="label">related</span></button></div>
+            <div class="grid"><a type="button" is="log-entry" href="/logs/the-shunting-yard-algorithm/" name="entry">
+                <div class="wrapper">
+                  <h2 class="title">The Shunting-Yard Algorithm</h2><span class="date" type="label">Oct 09 11</span><span class="number" type="label">5</span>
+                </div>
+              </a><a type="button" is="log-entry" href="/logs/as3-event-listeners/" name="entry">
+                <div class="wrapper">
+                  <h2 class="title">AS3: Event Listeners</h2><span class="date" type="label">Aug 07 11</span><span class="number" type="label">4</span>
+                </div>
+              </a><a type="button" is="log-entry" href="/logs/google-compute-engine-setup-for-django-app-with-uwsgi/" name="entry">
+                <div class="wrapper">
+                  <h2 class="title">Google Compute Engine Setup for Django App with uWSGI and Nginx</h2><span class="date" type="label">Jun 01 15</span><span class="number" type="label">12</span>
+                </div>
+              </a></div>
+          </div>
+        </div>
+      </page-log>
+    </main>
+    <script src="/assets/javascripts/polyfills-4df15158e5.js"></script>
+    <script src="/assets/javascripts/common-a589f09cab.js"></script>
+    <script src="/assets/javascripts/application-a1f774b4b0.js"></script>
+  </body>
+</html>

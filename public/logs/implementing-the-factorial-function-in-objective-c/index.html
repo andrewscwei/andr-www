@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Implementing the Factorial Function in Objective-C Using the Gamma Function</title>
+        <meta charset="utf-8">
+        <meta name="description" content="Andrew Wei, codenamed mu, is a software engineer, experience designer and illustrator.">
+        <meta name="keywords" content="andrew,wei,andr,mu,engineer,designer,illustrator">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+        <meta property="og:url">
+        <meta property="og:image" content="/og-image-3c57fca1f2.png">
+        <meta property="og:title" content="Implementing the Factorial Function in Objective-C Using the Gamma Function">
+        <meta property="og:description" content="Andrew Wei, codenamed mu, is a software engineer, experience designer and illustrator.">
+        <link rel="shortcut icon" href="/favicon.png">
+        <link rel="manifest" href="/manifest.json">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-title" content="Implementing the Factorial Function in Objective-C Using the Gamma Function">
+        <link href="/apple-touch-icon-180x180-precomposed-151af9722e.png" sizes="180x180" rel="apple-touch-icon">
+        <link href="/apple-touch-icon-152x152-precomposed-4d4481414b.png" sizes="152x152" rel="apple-touch-icon">
+        <link href="/apple-touch-icon-144x144-precomposed-c735943caf.png" sizes="144x144" rel="apple-touch-icon">
+        <link href="/apple-touch-icon-120x120-precomposed-81dd7e0ad6.png" sizes="120x120" rel="apple-touch-icon">
+        <link href="/apple-touch-icon-114x114-precomposed-1daf1d75d6.png" sizes="114x114" rel="apple-touch-icon">
+        <link href="/apple-touch-icon-76x76-precomposed-f49e287ced.png" sizes="76x76" rel="apple-touch-icon">
+        <link href="/apple-touch-icon-72x72-precomposed-a5412e18eb.png" sizes="72x72" rel="apple-touch-icon">
+        <link href="/apple-touch-icon-60x60-precomposed-55aaa7669c.png" sizes="60x60" rel="apple-touch-icon">
+        <link href="/apple-touch-icon-57x57-precomposed-e896f01ce1.png" sizes="57x57" rel="apple-touch-icon">
+        <link href="/apple-touch-icon-precomposed-609906461e.png" rel="apple-touch-icon">
+        <meta name="msapplication-config" content="/browserconfig.xml">
+        <meta name="application-name" content="Implementing the Factorial Function in Objective-C Using the Gamma Function">
+        <meta name="msapplication-tooltip" content="Get the latest updates!">
+        <meta name="msapplication-window" content="width=1024;height=768">
+        <meta name="msapplication-navbutton-color" content="#ff3300">
+        <meta name="msapplication-starturl" content="/">
+        <script type="text/javascript" src="https://unpkg.com/@webcomponents/webcomponentsjs@2.2.10/webcomponents-bundle.js"></script>
+        <script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-108117457-1"></script>
+        <script>window.dataLayer = window.dataLayer || [];
+            function gtag() { dataLayer.push(arguments); }
+            gtag('js', new Date());
+            gtag('config', 'UA-108117457-1');
+        </script>
+        <link rel="stylesheet" href="/assets/stylesheets/application-7fc252c149.css">
+    </head>
+    <body>
+        <style type="text/css">
+            .mjpage .MJX-monospace {
+                font-family: monospace
+            }
+
+            .mjpage .MJX-sans-serif {
+                font-family: sans-serif
+            }
+
+            .mjpage {
+                display: inline;
+                font-style: normal;
+                font-weight: normal;
+                line-height: normal;
+                font-size: 100%;
+                font-size-adjust: none;
+                text-indent: 0;
+                text-align: left;
+                text-transform: none;
+                letter-spacing: normal;
+                word-spacing: normal;
+                word-wrap: normal;
+                white-space: nowrap;
+                float: none;
+                direction: ltr;
+                max-width: none;
+                max-height: none;
+                min-width: 0;
+                min-height: 0;
+                border: 0;
+                padding: 0;
+                margin: 0
+            }
+
+            .mjpage * {
+                transition: none;
+                -webkit-transition: none;
+                -moz-transition: none;
+                -ms-transition: none;
+                -o-transition: none
+            }
+
+            .mjx-svg-href {
+                fill: blue;
+                stroke: blue
+            }
+
+            .MathJax_SVG_LineBox {
+                display: table !important
+            }
+
+            .MathJax_SVG_LineBox span {
+                display: table-cell !important;
+                width: 10000em !important;
+                min-width: 0;
+                max-width: none;
+                padding: 0;
+                border: 0;
+                margin: 0
+            }
+
+            .mjpage__block {
+                text-align: center;
+                margin: 1em 0em;
+                position: relative;
+                display: block !important;
+                text-indent: 0;
+                max-width: none;
+                max-height: none;
+                min-width: 0;
+                min-height: 0;
+                width: 100%
+            }
+        </style><page-home id="home" name="home"><a class="down triangle" is="x-a" type="button" href="/logs/" name="down-button" style="display:none;"></a>
+            <div is="name-card" name="name-card">
+                <section class="logo"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 70 70" style="enable-background:new 0 0 70 70;" xml:space="preserve" preserveAspectRatio="xMidYMid">
+                        <circle class="dot-1" cx="5.3" cy="49.8" r="5.3"></circle>
+                        <circle class="dot-2" cx="5.3" cy="35" r="5.3"></circle>
+                        <circle class="dot-3" cx="5.3" cy="20.2" r="5.3"></circle>
+                        <circle class="dot-4" cx="20.2" cy="20.2" r="5.3"></circle>
+                        <circle class="dot-5" cx="35" cy="20.2" r="5.3"></circle>
+                        <circle class="dot-6" cx="35" cy="35" r="5.3"></circle>
+                        <circle class="dot-7" cx="35" cy="49.8" r="5.3"></circle>
+                        <circle class="dot-8" cx="49.8" cy="49.8" r="5.3"></circle>
+                        <circle class="dot-9" cx="64.7" cy="49.8" r="5.3"></circle>
+                        <circle class="dot-10" cx="64.7" cy="35" r="5.3"></circle>
+                        <circle class="dot-11" cx="64.7" cy="20.2" r="5.3"></circle>
+                    </svg></section>
+                <section class="name">
+                    <h1 class="full-name">Andrew Wei</h1>
+                </section>
+                <section class="position"><span class="position" type="label">Engineer / Designer / Illustrator</span></section>
+                <section class="connect"><a is="x-a" type="button" href="mailto:andrewscwei@gmail.com"><span type="icon" style="background-image: url(/assets/images/logs%2F439f2919-b36c-4403-837e-257d6bbde80c_email-icon.svg?auto=compress,format)"></span></a><a is="x-a" type="button" href="https://github.com/andrewscwei"><span type="icon" style="background-image: url(/assets/images/logs%2F92b82402-ce51-49db-a8b2-d2c8924cdbe0_github-icon.svg?auto=compress,format)"></span></a><a is="x-a" type="button" href="https://twitter.com/andrewscwei"><span type="icon" style="background-image: url(/assets/images/logs%2F719d8066-6750-4a08-afb7-a860a10482bc_twitter-icon.svg?auto=compress,format)"></span></a><a is="x-a" type="button" href="https://calculator3.andr.mu"><span type="icon" style="background-image: url(/assets/images/logs%2Fa4f8b935-bf95-45ae-bf82-7fbee9b994be_calculator3-icon.svg?auto=compress,format)"></span></a><a class="inactive" is="x-a" type="button" href="https://www.variante.io"><span type="icon" style="background-image: url(/assets/images/logs%2F3781e233-b368-4800-bebb-17c5e47955d1_vaiante-icon.svg?auto=compress,format)"></span></a><a class="inactive" is="x-a" type="button" href="https://www.grubbb.co"><span type="icon" style="background-image: url(/assets/images/logs%2F698dcb27-4e5e-4f9c-8473-0e5bb46af2d1_grubbb-icon.svg?auto=compress,format)"></span></a><a is="x-a" type="button" href="https://www.verb.studio"><span type="icon" style="background-image: url(/assets/images/logs%2F6bf8145f-5ea8-41d6-8cdd-d9c199a97806_verb-icon.svg?auto=compress,format)"></span></a><a is="x-a" type="button" href="https://dice.andr.mu"><span type="icon" style="background-image: url(/assets/images/logs%2F6d5406b1-3ec0-4915-abdf-f39a8ee95801_dice-icon.svg?auto=compress,format)"></span></a><a is="x-a" type="button" href="https://monitor.andr.mu"><span type="icon" style="background-image: url(/assets/images/logs%2F7021ac91-7a57-4815-90e7-90cf2011cdf7_monitoring-test-icon.svg?auto=compress,format)"></span></a><a is="x-a" type="button" href="https://www.aristotl.io"><span type="icon" style="background-image: url(/assets/images/logs%2F0240039f-2372-4fa9-af5c-18880f192e4c_aristotl-icon.svg?auto=compress,format)"></span></a><a is="x-a" type="button" href="https://www.sybl.io"><span type="icon" style="background-image: url(/assets/images/logs%2F5e961282-d08e-433d-960b-1e114a2bbc12_sybl.svg?auto=compress,format)"></span></a></section>
+            </div>
+        </page-home>
+        <main id="page">
+            <nav is="global-nav" id="global-nav" name="global-nav"><a class="logs" is="x-a" type="button" href="/logs/3/" name="grid-button"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 70 70" style="enable-background:new 0 0 70 70;" xml:space="preserve" preserveAspectRatio="xMidYMid">
+                        <path class="tl" d="M30,33H3c-1.7,0-3-1.3-3-3V3c0-1.7,1.3-3,3-3h27c1.7,0,3,1.3,3,3v27C33,31.7,31.7,33,30,33L30,33z M6,27h21V6H6V27L6,27z"></path>
+                        <path class="tr" d="M67,33H40c-1.7,0-3-1.3-3-3V3c0-1.7,1.3-3,3-3h27c1.7,0,3,1.3,3,3v27C70,31.7,68.7,33,67,33L67,33z M43,27h21V6H43V27    L43,27z"></path>
+                        <path class="bl" d="M30,70H3c-1.7,0-3-1.3-3-3V40c0-1.7,1.3-3,3-3h27c1.7,0,3,1.3,3,3v27C33,68.7,31.7,70,30,70L30,70z M6,64h21V43H6V64L6,64    z"></path>
+                        <path class="br" d="M67,70H40c-1.7,0-3-1.3-3-3V40c0-1.7,1.3-3,3-3h27c1.7,0,3,1.3,3,3v27C70,68.7,68.7,70,67,70L67,70z M43,64h21V43H43V64    L43,64z"></path>
+                    </svg></a></nav><page-log id="log" name="page">
+                <div id="inner-page">
+                    <div name="header">
+                        <div name="info">
+                            <h1 name="title">Implementing the Factorial Function in Objective-C Using the Gamma Function</h1><span name="date" type="label">Apr 25 11</span>
+                            <div name="tags"><a class="tag slug" is="x-a" type="button" href="/logs/tag/math/"><span type="label">math</span></a><a class="tag slug" is="x-a" type="button" href="/logs/tag/objc/"><span type="label">objc</span></a><a class="tag slug" is="x-a" type="button" href="/logs/tag/coding/"><span type="label">coding</span></a></div>
+                        </div>
+                    </div>
+                    <div name="contents">
+                        <p>A common way of implementing the factorial function uses recursion, which looks something like this:</p>
+                        <pre class=" line-numbers language-objectivec"><code class=" language-objectivec"><span class="token operator">-</span> <span class="token keyword">int</span> <span class="token function">factorial</span><span class="token punctuation">(</span><span class="token keyword">int</span> operand<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>operand <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span> <span class="token comment">// factorial of negative integer is invalid, -1 means invalid</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>operand <span class="token operator">&gt;</span> <span class="token number">1</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> operand <span class="token operator">*</span> <span class="token function">factorial</span><span class="token punctuation">(</span>operand<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">else</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token number">1</span><span class="token punctuation">;</span> <span class="token comment">// factorial of 0 or 1 yields 1</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+                        <p>This works most of the time, but there are a few cases when this would cause major performance issues.</p>
+                        <h5 id="case-1-working-with-large-numbers">Case 1: Working with large numbers</h5>
+                        <p>Imagine calculating the factorial of a 5-digit number with this implementation. The function calls itself at least 10,000 times. The output would be <code>inf</code>, but on runtime the program will crash because the recursions eat up too much memory unless you have an excess amount of RAM hanging around. Either way this is not memory-efficient.</p>
+                        <h5 id="case-2-reusing-this-function-in-other-contexts-where-more-than-1-factorial-function-is-needed-in-a-math-formula-ie-calculating-permutations-and-combinations">Case 2: Reusing this function in other contexts where more than 1 factorial function is needed in a math formula, i.e. calculating permutations and combinations</h5>
+                        <p>Recall:</p>
+                        <p><span class="mjpage mjpage__block"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="21.074ex" height="2.843ex" style="vertical-align: -0.838ex;" viewBox="0 -863.1 9073.7 1223.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-1-Title">
+                                    <title id="MathJax-SVG-1-Title">
+                                        P(n, r) = {n!}/{(n-r)!}
+                                    </title>
+                                    <defs aria-hidden="true">
+                                        <path stroke-width="1" id="E1-MJMATHI-50" d="M287 628Q287 635 230 637Q206 637 199 638T192 648Q192 649 194 659Q200 679 203 681T397 683Q587 682 600 680Q664 669 707 631T751 530Q751 453 685 389Q616 321 507 303Q500 302 402 301H307L277 182Q247 66 247 59Q247 55 248 54T255 50T272 48T305 46H336Q342 37 342 35Q342 19 335 5Q330 0 319 0Q316 0 282 1T182 2Q120 2 87 2T51 1Q33 1 33 11Q33 13 36 25Q40 41 44 43T67 46Q94 46 127 49Q141 52 146 61Q149 65 218 339T287 628ZM645 554Q645 567 643 575T634 597T609 619T560 635Q553 636 480 637Q463 637 445 637T416 636T404 636Q391 635 386 627Q384 621 367 550T332 412T314 344Q314 342 395 342H407H430Q542 342 590 392Q617 419 631 471T645 554Z"></path>
+                                        <path stroke-width="1" id="E1-MJMAIN-28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path>
+                                        <path stroke-width="1" id="E1-MJMATHI-6E" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path>
+                                        <path stroke-width="1" id="E1-MJMAIN-2C" d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z"></path>
+                                        <path stroke-width="1" id="E1-MJMATHI-72" d="M21 287Q22 290 23 295T28 317T38 348T53 381T73 411T99 433T132 442Q161 442 183 430T214 408T225 388Q227 382 228 382T236 389Q284 441 347 441H350Q398 441 422 400Q430 381 430 363Q430 333 417 315T391 292T366 288Q346 288 334 299T322 328Q322 376 378 392Q356 405 342 405Q286 405 239 331Q229 315 224 298T190 165Q156 25 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 114 189T154 366Q154 405 128 405Q107 405 92 377T68 316T57 280Q55 278 41 278H27Q21 284 21 287Z"></path>
+                                        <path stroke-width="1" id="E1-MJMAIN-29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path>
+                                        <path stroke-width="1" id="E1-MJMAIN-3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path>
+                                        <path stroke-width="1" id="E1-MJMAIN-21" d="M78 661Q78 682 96 699T138 716T180 700T199 661Q199 654 179 432T158 206Q156 198 139 198Q121 198 119 206Q118 209 98 431T78 661ZM79 61Q79 89 97 105T141 121Q164 119 181 104T198 61Q198 31 181 16T139 1Q114 1 97 16T79 61Z"></path>
+                                        <path stroke-width="1" id="E1-MJMAIN-2F" d="M423 750Q432 750 438 744T444 730Q444 725 271 248T92 -240Q85 -250 75 -250Q68 -250 62 -245T56 -231Q56 -221 230 257T407 740Q411 750 423 750Z"></path>
+                                        <path stroke-width="1" id="E1-MJMAIN-2212" d="M84 237T84 250T98 270H679Q694 262 694 250T679 230H98Q84 237 84 250Z"></path>
+                                    </defs>
+                                    <g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)" aria-hidden="true">
+                                        <use xlink:href="#E1-MJMATHI-50" x="0" y="0"></use>
+                                        <use xlink:href="#E1-MJMAIN-28" x="751" y="0"></use>
+                                        <use xlink:href="#E1-MJMATHI-6E" x="1141" y="0"></use>
+                                        <use xlink:href="#E1-MJMAIN-2C" x="1741" y="0"></use>
+                                        <use xlink:href="#E1-MJMATHI-72" x="2186" y="0"></use>
+                                        <use xlink:href="#E1-MJMAIN-29" x="2638" y="0"></use>
+                                        <use xlink:href="#E1-MJMAIN-3D" x="3305" y="0"></use>
+                                        <g transform="translate(4361,0)">
+                                            <use xlink:href="#E1-MJMATHI-6E" x="0" y="0"></use>
+                                            <use xlink:href="#E1-MJMAIN-21" x="600" y="0"></use>
+                                        </g>
+                                        <use xlink:href="#E1-MJMAIN-2F" x="5240" y="0"></use>
+                                        <g transform="translate(5741,0)">
+                                            <use xlink:href="#E1-MJMAIN-28" x="0" y="0"></use>
+                                            <use xlink:href="#E1-MJMATHI-6E" x="389" y="0"></use>
+                                            <use xlink:href="#E1-MJMAIN-2212" x="1212" y="0"></use>
+                                            <use xlink:href="#E1-MJMATHI-72" x="2212" y="0"></use>
+                                            <use xlink:href="#E1-MJMAIN-29" x="2664" y="0"></use>
+                                            <use xlink:href="#E1-MJMAIN-21" x="3053" y="0"></use>
+                                        </g>
+                                    </g>
+                                </svg></span></p>
+                        <p><span class="mjpage mjpage__block"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="22.791ex" height="2.843ex" style="vertical-align: -0.838ex;" viewBox="0 -863.1 9812.7 1223.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-2-Title">
+                                    <title id="MathJax-SVG-2-Title">
+                                        C(n, r) = {n!}/{r!(n-r)!}
+                                    </title>
+                                    <defs aria-hidden="true">
+                                        <path stroke-width="1" id="E2-MJMATHI-43" d="M50 252Q50 367 117 473T286 641T490 704Q580 704 633 653Q642 643 648 636T656 626L657 623Q660 623 684 649Q691 655 699 663T715 679T725 690L740 705H746Q760 705 760 698Q760 694 728 561Q692 422 692 421Q690 416 687 415T669 413H653Q647 419 647 422Q647 423 648 429T650 449T651 481Q651 552 619 605T510 659Q484 659 454 652T382 628T299 572T226 479Q194 422 175 346T156 222Q156 108 232 58Q280 24 350 24Q441 24 512 92T606 240Q610 253 612 255T628 257Q648 257 648 248Q648 243 647 239Q618 132 523 55T319 -22Q206 -22 128 53T50 252Z"></path>
+                                        <path stroke-width="1" id="E2-MJMAIN-28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path>
+                                        <path stroke-width="1" id="E2-MJMATHI-6E" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path>
+                                        <path stroke-width="1" id="E2-MJMAIN-2C" d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z"></path>
+                                        <path stroke-width="1" id="E2-MJMATHI-72" d="M21 287Q22 290 23 295T28 317T38 348T53 381T73 411T99 433T132 442Q161 442 183 430T214 408T225 388Q227 382 228 382T236 389Q284 441 347 441H350Q398 441 422 400Q430 381 430 363Q430 333 417 315T391 292T366 288Q346 288 334 299T322 328Q322 376 378 392Q356 405 342 405Q286 405 239 331Q229 315 224 298T190 165Q156 25 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 114 189T154 366Q154 405 128 405Q107 405 92 377T68 316T57 280Q55 278 41 278H27Q21 284 21 287Z"></path>
+                                        <path stroke-width="1" id="E2-MJMAIN-29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path>
+                                        <path stroke-width="1" id="E2-MJMAIN-3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path>
+                                        <path stroke-width="1" id="E2-MJMAIN-21" d="M78 661Q78 682 96 699T138 716T180 700T199 661Q199 654 179 432T158 206Q156 198 139 198Q121 198 119 206Q118 209 98 431T78 661ZM79 61Q79 89 97 105T141 121Q164 119 181 104T198 61Q198 31 181 16T139 1Q114 1 97 16T79 61Z"></path>
+                                        <path stroke-width="1" id="E2-MJMAIN-2F" d="M423 750Q432 750 438 744T444 730Q444 725 271 248T92 -240Q85 -250 75 -250Q68 -250 62 -245T56 -231Q56 -221 230 257T407 740Q411 750 423 750Z"></path>
+                                        <path stroke-width="1" id="E2-MJMAIN-2212" d="M84 237T84 250T98 270H679Q694 262 694 250T679 230H98Q84 237 84 250Z"></path>
+                                    </defs>
+                                    <g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)" aria-hidden="true">
+                                        <use xlink:href="#E2-MJMATHI-43" x="0" y="0"></use>
+                                        <use xlink:href="#E2-MJMAIN-28" x="760" y="0"></use>
+                                        <use xlink:href="#E2-MJMATHI-6E" x="1150" y="0"></use>
+                                        <use xlink:href="#E2-MJMAIN-2C" x="1750" y="0"></use>
+                                        <use xlink:href="#E2-MJMATHI-72" x="2195" y="0"></use>
+                                        <use xlink:href="#E2-MJMAIN-29" x="2647" y="0"></use>
+                                        <use xlink:href="#E2-MJMAIN-3D" x="3314" y="0"></use>
+                                        <g transform="translate(4370,0)">
+                                            <use xlink:href="#E2-MJMATHI-6E" x="0" y="0"></use>
+                                            <use xlink:href="#E2-MJMAIN-21" x="600" y="0"></use>
+                                        </g>
+                                        <use xlink:href="#E2-MJMAIN-2F" x="5249" y="0"></use>
+                                        <g transform="translate(5750,0)">
+                                            <use xlink:href="#E2-MJMATHI-72" x="0" y="0"></use>
+                                            <use xlink:href="#E2-MJMAIN-21" x="451" y="0"></use>
+                                            <use xlink:href="#E2-MJMAIN-28" x="730" y="0"></use>
+                                            <use xlink:href="#E2-MJMATHI-6E" x="1119" y="0"></use>
+                                            <use xlink:href="#E2-MJMAIN-2212" x="1942" y="0"></use>
+                                            <use xlink:href="#E2-MJMATHI-72" x="2942" y="0"></use>
+                                            <use xlink:href="#E2-MJMAIN-29" x="3394" y="0"></use>
+                                            <use xlink:href="#E2-MJMAIN-21" x="3783" y="0"></use>
+                                        </g>
+                                    </g>
+                                </svg></span></p>
+                        <p>Since the implementation is recursive and it is being used more than once in a formula, you will need to allocate even more memory to the application. Eventually you will hit a wall, especially when you start working with large numbers.</p>
+                        <h5 id="case-3-calculating-decimal-factorials">Case 3: Calculating decimal factorials</h5>
+                        <p>Digging deeper into the math, factorials can also apply to positive/negative non-integers. In this case, the above implementation will be restricted to calculating and yielding positive integers only.</p>
+                        <h5 id="solution-use-the-gamma-function">Solution: Use the gamma function</h5>
+                        <p>To solve all of the aforementioned issues, use the gamma function which is conveniently defined in <code>math.h</code>. By mathematical definition:</p>
+                        <p><span class="mjpage mjpage__block"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="22.523ex" height="2.843ex" style="vertical-align: -0.838ex;" viewBox="0 -863.1 9697.5 1223.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-3-Title">
+                                    <title id="MathJax-SVG-3-Title">
+                                        Gamma(n) = (n-1)!
+                                    </title>
+                                    <defs aria-hidden="true">
+                                        <path stroke-width="1" id="E3-MJMATHI-47" d="M50 252Q50 367 117 473T286 641T490 704Q580 704 633 653Q642 643 648 636T656 626L657 623Q660 623 684 649Q691 655 699 663T715 679T725 690L740 705H746Q760 705 760 698Q760 694 728 561Q692 422 692 421Q690 416 687 415T669 413H653Q647 419 647 422Q647 423 648 429T650 449T651 481Q651 552 619 605T510 659Q492 659 471 656T418 643T357 615T294 567T236 496T189 394T158 260Q156 242 156 221Q156 173 170 136T206 79T256 45T308 28T353 24Q407 24 452 47T514 106Q517 114 529 161T541 214Q541 222 528 224T468 227H431Q425 233 425 235T427 254Q431 267 437 273H454Q494 271 594 271Q634 271 659 271T695 272T707 272Q721 272 721 263Q721 261 719 249Q714 230 709 228Q706 227 694 227Q674 227 653 224Q646 221 643 215T629 164Q620 131 614 108Q589 6 586 3Q584 1 581 1Q571 1 553 21T530 52Q530 53 528 52T522 47Q448 -22 322 -22Q201 -22 126 55T50 252Z"></path>
+                                        <path stroke-width="1" id="E3-MJMATHI-61" d="M33 157Q33 258 109 349T280 441Q331 441 370 392Q386 422 416 422Q429 422 439 414T449 394Q449 381 412 234T374 68Q374 43 381 35T402 26Q411 27 422 35Q443 55 463 131Q469 151 473 152Q475 153 483 153H487Q506 153 506 144Q506 138 501 117T481 63T449 13Q436 0 417 -8Q409 -10 393 -10Q359 -10 336 5T306 36L300 51Q299 52 296 50Q294 48 292 46Q233 -10 172 -10Q117 -10 75 30T33 157ZM351 328Q351 334 346 350T323 385T277 405Q242 405 210 374T160 293Q131 214 119 129Q119 126 119 118T118 106Q118 61 136 44T179 26Q217 26 254 59T298 110Q300 114 325 217T351 328Z"></path>
+                                        <path stroke-width="1" id="E3-MJMATHI-6D" d="M21 287Q22 293 24 303T36 341T56 388T88 425T132 442T175 435T205 417T221 395T229 376L231 369Q231 367 232 367L243 378Q303 442 384 442Q401 442 415 440T441 433T460 423T475 411T485 398T493 385T497 373T500 364T502 357L510 367Q573 442 659 442Q713 442 746 415T780 336Q780 285 742 178T704 50Q705 36 709 31T724 26Q752 26 776 56T815 138Q818 149 821 151T837 153Q857 153 857 145Q857 144 853 130Q845 101 831 73T785 17T716 -10Q669 -10 648 17T627 73Q627 92 663 193T700 345Q700 404 656 404H651Q565 404 506 303L499 291L466 157Q433 26 428 16Q415 -11 385 -11Q372 -11 364 -4T353 8T350 18Q350 29 384 161L420 307Q423 322 423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 181Q151 335 151 342Q154 357 154 369Q154 405 129 405Q107 405 92 377T69 316T57 280Q55 278 41 278H27Q21 284 21 287Z"></path>
+                                        <path stroke-width="1" id="E3-MJMAIN-28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path>
+                                        <path stroke-width="1" id="E3-MJMATHI-6E" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path>
+                                        <path stroke-width="1" id="E3-MJMAIN-29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path>
+                                        <path stroke-width="1" id="E3-MJMAIN-3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path>
+                                        <path stroke-width="1" id="E3-MJMAIN-2212" d="M84 237T84 250T98 270H679Q694 262 694 250T679 230H98Q84 237 84 250Z"></path>
+                                        <path stroke-width="1" id="E3-MJMAIN-31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path>
+                                        <path stroke-width="1" id="E3-MJMAIN-21" d="M78 661Q78 682 96 699T138 716T180 700T199 661Q199 654 179 432T158 206Q156 198 139 198Q121 198 119 206Q118 209 98 431T78 661ZM79 61Q79 89 97 105T141 121Q164 119 181 104T198 61Q198 31 181 16T139 1Q114 1 97 16T79 61Z"></path>
+                                    </defs>
+                                    <g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)" aria-hidden="true">
+                                        <use xlink:href="#E3-MJMATHI-47" x="0" y="0"></use>
+                                        <use xlink:href="#E3-MJMATHI-61" x="786" y="0"></use>
+                                        <use xlink:href="#E3-MJMATHI-6D" x="1316" y="0"></use>
+                                        <use xlink:href="#E3-MJMATHI-6D" x="2194" y="0"></use>
+                                        <use xlink:href="#E3-MJMATHI-61" x="3073" y="0"></use>
+                                        <use xlink:href="#E3-MJMAIN-28" x="3602" y="0"></use>
+                                        <use xlink:href="#E3-MJMATHI-6E" x="3992" y="0"></use>
+                                        <use xlink:href="#E3-MJMAIN-29" x="4592" y="0"></use>
+                                        <use xlink:href="#E3-MJMAIN-3D" x="5259" y="0"></use>
+                                        <use xlink:href="#E3-MJMAIN-28" x="6316" y="0"></use>
+                                        <use xlink:href="#E3-MJMATHI-6E" x="6705" y="0"></use>
+                                        <use xlink:href="#E3-MJMAIN-2212" x="7528" y="0"></use>
+                                        <use xlink:href="#E3-MJMAIN-31" x="8529" y="0"></use>
+                                        <use xlink:href="#E3-MJMAIN-29" x="9029" y="0"></use>
+                                        <use xlink:href="#E3-MJMAIN-21" x="9419" y="0"></use>
+                                    </g>
+                                </svg></span></p>
+                        <p><code>math.h</code> provides two useful equivalents to the gamma function, which is <code>tgamma()</code> and <code>lgamma()</code>, where:</p>
+                        <p><span class="mjpage mjpage__block"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="22.652ex" height="2.843ex" style="vertical-align: -0.838ex;" viewBox="0 -863.1 9753 1223.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-4-Title">
+                                    <title id="MathJax-SVG-4-Title">
+                                        (n-1)! = tgamma(n)
+                                    </title>
+                                    <defs aria-hidden="true">
+                                        <path stroke-width="1" id="E4-MJMAIN-28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path>
+                                        <path stroke-width="1" id="E4-MJMATHI-6E" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path>
+                                        <path stroke-width="1" id="E4-MJMAIN-2212" d="M84 237T84 250T98 270H679Q694 262 694 250T679 230H98Q84 237 84 250Z"></path>
+                                        <path stroke-width="1" id="E4-MJMAIN-31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path>
+                                        <path stroke-width="1" id="E4-MJMAIN-29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path>
+                                        <path stroke-width="1" id="E4-MJMAIN-21" d="M78 661Q78 682 96 699T138 716T180 700T199 661Q199 654 179 432T158 206Q156 198 139 198Q121 198 119 206Q118 209 98 431T78 661ZM79 61Q79 89 97 105T141 121Q164 119 181 104T198 61Q198 31 181 16T139 1Q114 1 97 16T79 61Z"></path>
+                                        <path stroke-width="1" id="E4-MJMAIN-3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path>
+                                        <path stroke-width="1" id="E4-MJMATHI-74" d="M26 385Q19 392 19 395Q19 399 22 411T27 425Q29 430 36 430T87 431H140L159 511Q162 522 166 540T173 566T179 586T187 603T197 615T211 624T229 626Q247 625 254 615T261 596Q261 589 252 549T232 470L222 433Q222 431 272 431H323Q330 424 330 420Q330 398 317 385H210L174 240Q135 80 135 68Q135 26 162 26Q197 26 230 60T283 144Q285 150 288 151T303 153H307Q322 153 322 145Q322 142 319 133Q314 117 301 95T267 48T216 6T155 -11Q125 -11 98 4T59 56Q57 64 57 83V101L92 241Q127 382 128 383Q128 385 77 385H26Z"></path>
+                                        <path stroke-width="1" id="E4-MJMATHI-67" d="M311 43Q296 30 267 15T206 0Q143 0 105 45T66 160Q66 265 143 353T314 442Q361 442 401 394L404 398Q406 401 409 404T418 412T431 419T447 422Q461 422 470 413T480 394Q480 379 423 152T363 -80Q345 -134 286 -169T151 -205Q10 -205 10 -137Q10 -111 28 -91T74 -71Q89 -71 102 -80T116 -111Q116 -121 114 -130T107 -144T99 -154T92 -162L90 -164H91Q101 -167 151 -167Q189 -167 211 -155Q234 -144 254 -122T282 -75Q288 -56 298 -13Q311 35 311 43ZM384 328L380 339Q377 350 375 354T369 368T359 382T346 393T328 402T306 405Q262 405 221 352Q191 313 171 233T151 117Q151 38 213 38Q269 38 323 108L331 118L384 328Z"></path>
+                                        <path stroke-width="1" id="E4-MJMATHI-61" d="M33 157Q33 258 109 349T280 441Q331 441 370 392Q386 422 416 422Q429 422 439 414T449 394Q449 381 412 234T374 68Q374 43 381 35T402 26Q411 27 422 35Q443 55 463 131Q469 151 473 152Q475 153 483 153H487Q506 153 506 144Q506 138 501 117T481 63T449 13Q436 0 417 -8Q409 -10 393 -10Q359 -10 336 5T306 36L300 51Q299 52 296 50Q294 48 292 46Q233 -10 172 -10Q117 -10 75 30T33 157ZM351 328Q351 334 346 350T323 385T277 405Q242 405 210 374T160 293Q131 214 119 129Q119 126 119 118T118 106Q118 61 136 44T179 26Q217 26 254 59T298 110Q300 114 325 217T351 328Z"></path>
+                                        <path stroke-width="1" id="E4-MJMATHI-6D" d="M21 287Q22 293 24 303T36 341T56 388T88 425T132 442T175 435T205 417T221 395T229 376L231 369Q231 367 232 367L243 378Q303 442 384 442Q401 442 415 440T441 433T460 423T475 411T485 398T493 385T497 373T500 364T502 357L510 367Q573 442 659 442Q713 442 746 415T780 336Q780 285 742 178T704 50Q705 36 709 31T724 26Q752 26 776 56T815 138Q818 149 821 151T837 153Q857 153 857 145Q857 144 853 130Q845 101 831 73T785 17T716 -10Q669 -10 648 17T627 73Q627 92 663 193T700 345Q700 404 656 404H651Q565 404 506 303L499 291L466 157Q433 26 428 16Q415 -11 385 -11Q372 -11 364 -4T353 8T350 18Q350 29 384 161L420 307Q423 322 423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 181Q151 335 151 342Q154 357 154 369Q154 405 129 405Q107 405 92 377T69 316T57 280Q55 278 41 278H27Q21 284 21 287Z"></path>
+                                    </defs>
+                                    <g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)" aria-hidden="true">
+                                        <use xlink:href="#E4-MJMAIN-28" x="0" y="0"></use>
+                                        <use xlink:href="#E4-MJMATHI-6E" x="389" y="0"></use>
+                                        <use xlink:href="#E4-MJMAIN-2212" x="1212" y="0"></use>
+                                        <use xlink:href="#E4-MJMAIN-31" x="2212" y="0"></use>
+                                        <use xlink:href="#E4-MJMAIN-29" x="2713" y="0"></use>
+                                        <use xlink:href="#E4-MJMAIN-21" x="3102" y="0"></use>
+                                        <use xlink:href="#E4-MJMAIN-3D" x="3659" y="0"></use>
+                                        <use xlink:href="#E4-MJMATHI-74" x="4715" y="0"></use>
+                                        <use xlink:href="#E4-MJMATHI-67" x="5077" y="0"></use>
+                                        <use xlink:href="#E4-MJMATHI-61" x="5557" y="0"></use>
+                                        <use xlink:href="#E4-MJMATHI-6D" x="6087" y="0"></use>
+                                        <use xlink:href="#E4-MJMATHI-6D" x="6965" y="0"></use>
+                                        <use xlink:href="#E4-MJMATHI-61" x="7844" y="0"></use>
+                                        <use xlink:href="#E4-MJMAIN-28" x="8373" y="0"></use>
+                                        <use xlink:href="#E4-MJMATHI-6E" x="8763" y="0"></use>
+                                        <use xlink:href="#E4-MJMAIN-29" x="9363" y="0"></use>
+                                    </g>
+                                </svg></span></p>
+                        <p><span class="mjpage mjpage__block"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="20.438ex" height="3.343ex" style="vertical-align: -0.838ex;" viewBox="0 -1078.4 8799.5 1439.2" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-5-Title">
+                                    <title id="MathJax-SVG-5-Title">
+                                        (n-1)! = e^{lgamma(n)}
+                                    </title>
+                                    <defs aria-hidden="true">
+                                        <path stroke-width="1" id="E5-MJMAIN-28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path>
+                                        <path stroke-width="1" id="E5-MJMATHI-6E" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path>
+                                        <path stroke-width="1" id="E5-MJMAIN-2212" d="M84 237T84 250T98 270H679Q694 262 694 250T679 230H98Q84 237 84 250Z"></path>
+                                        <path stroke-width="1" id="E5-MJMAIN-31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path>
+                                        <path stroke-width="1" id="E5-MJMAIN-29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path>
+                                        <path stroke-width="1" id="E5-MJMAIN-21" d="M78 661Q78 682 96 699T138 716T180 700T199 661Q199 654 179 432T158 206Q156 198 139 198Q121 198 119 206Q118 209 98 431T78 661ZM79 61Q79 89 97 105T141 121Q164 119 181 104T198 61Q198 31 181 16T139 1Q114 1 97 16T79 61Z"></path>
+                                        <path stroke-width="1" id="E5-MJMAIN-3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path>
+                                        <path stroke-width="1" id="E5-MJMATHI-65" d="M39 168Q39 225 58 272T107 350T174 402T244 433T307 442H310Q355 442 388 420T421 355Q421 265 310 237Q261 224 176 223Q139 223 138 221Q138 219 132 186T125 128Q125 81 146 54T209 26T302 45T394 111Q403 121 406 121Q410 121 419 112T429 98T420 82T390 55T344 24T281 -1T205 -11Q126 -11 83 42T39 168ZM373 353Q367 405 305 405Q272 405 244 391T199 357T170 316T154 280T149 261Q149 260 169 260Q282 260 327 284T373 353Z"></path>
+                                        <path stroke-width="1" id="E5-MJMATHI-6C" d="M117 59Q117 26 142 26Q179 26 205 131Q211 151 215 152Q217 153 225 153H229Q238 153 241 153T246 151T248 144Q247 138 245 128T234 90T214 43T183 6T137 -11Q101 -11 70 11T38 85Q38 97 39 102L104 360Q167 615 167 623Q167 626 166 628T162 632T157 634T149 635T141 636T132 637T122 637Q112 637 109 637T101 638T95 641T94 647Q94 649 96 661Q101 680 107 682T179 688Q194 689 213 690T243 693T254 694Q266 694 266 686Q266 675 193 386T118 83Q118 81 118 75T117 65V59Z"></path>
+                                        <path stroke-width="1" id="E5-MJMATHI-67" d="M311 43Q296 30 267 15T206 0Q143 0 105 45T66 160Q66 265 143 353T314 442Q361 442 401 394L404 398Q406 401 409 404T418 412T431 419T447 422Q461 422 470 413T480 394Q480 379 423 152T363 -80Q345 -134 286 -169T151 -205Q10 -205 10 -137Q10 -111 28 -91T74 -71Q89 -71 102 -80T116 -111Q116 -121 114 -130T107 -144T99 -154T92 -162L90 -164H91Q101 -167 151 -167Q189 -167 211 -155Q234 -144 254 -122T282 -75Q288 -56 298 -13Q311 35 311 43ZM384 328L380 339Q377 350 375 354T369 368T359 382T346 393T328 402T306 405Q262 405 221 352Q191 313 171 233T151 117Q151 38 213 38Q269 38 323 108L331 118L384 328Z"></path>
+                                        <path stroke-width="1" id="E5-MJMATHI-61" d="M33 157Q33 258 109 349T280 441Q331 441 370 392Q386 422 416 422Q429 422 439 414T449 394Q449 381 412 234T374 68Q374 43 381 35T402 26Q411 27 422 35Q443 55 463 131Q469 151 473 152Q475 153 483 153H487Q506 153 506 144Q506 138 501 117T481 63T449 13Q436 0 417 -8Q409 -10 393 -10Q359 -10 336 5T306 36L300 51Q299 52 296 50Q294 48 292 46Q233 -10 172 -10Q117 -10 75 30T33 157ZM351 328Q351 334 346 350T323 385T277 405Q242 405 210 374T160 293Q131 214 119 129Q119 126 119 118T118 106Q118 61 136 44T179 26Q217 26 254 59T298 110Q300 114 325 217T351 328Z"></path>
+                                        <path stroke-width="1" id="E5-MJMATHI-6D" d="M21 287Q22 293 24 303T36 341T56 388T88 425T132 442T175 435T205 417T221 395T229 376L231 369Q231 367 232 367L243 378Q303 442 384 442Q401 442 415 440T441 433T460 423T475 411T485 398T493 385T497 373T500 364T502 357L510 367Q573 442 659 442Q713 442 746 415T780 336Q780 285 742 178T704 50Q705 36 709 31T724 26Q752 26 776 56T815 138Q818 149 821 151T837 153Q857 153 857 145Q857 144 853 130Q845 101 831 73T785 17T716 -10Q669 -10 648 17T627 73Q627 92 663 193T700 345Q700 404 656 404H651Q565 404 506 303L499 291L466 157Q433 26 428 16Q415 -11 385 -11Q372 -11 364 -4T353 8T350 18Q350 29 384 161L420 307Q423 322 423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 181Q151 335 151 342Q154 357 154 369Q154 405 129 405Q107 405 92 377T69 316T57 280Q55 278 41 278H27Q21 284 21 287Z"></path>
+                                    </defs>
+                                    <g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)" aria-hidden="true">
+                                        <use xlink:href="#E5-MJMAIN-28" x="0" y="0"></use>
+                                        <use xlink:href="#E5-MJMATHI-6E" x="389" y="0"></use>
+                                        <use xlink:href="#E5-MJMAIN-2212" x="1212" y="0"></use>
+                                        <use xlink:href="#E5-MJMAIN-31" x="2212" y="0"></use>
+                                        <use xlink:href="#E5-MJMAIN-29" x="2713" y="0"></use>
+                                        <use xlink:href="#E5-MJMAIN-21" x="3102" y="0"></use>
+                                        <use xlink:href="#E5-MJMAIN-3D" x="3659" y="0"></use>
+                                        <g transform="translate(4715,0)">
+                                            <use xlink:href="#E5-MJMATHI-65" x="0" y="0"></use>
+                                            <g transform="translate(466,412)">
+                                                <use transform="scale(0.707)" xlink:href="#E5-MJMATHI-6C" x="0" y="0"></use>
+                                                <use transform="scale(0.707)" xlink:href="#E5-MJMATHI-67" x="298" y="0"></use>
+                                                <use transform="scale(0.707)" xlink:href="#E5-MJMATHI-61" x="779" y="0"></use>
+                                                <use transform="scale(0.707)" xlink:href="#E5-MJMATHI-6D" x="1308" y="0"></use>
+                                                <use transform="scale(0.707)" xlink:href="#E5-MJMATHI-6D" x="2187" y="0"></use>
+                                                <use transform="scale(0.707)" xlink:href="#E5-MJMATHI-61" x="3065" y="0"></use>
+                                                <use transform="scale(0.707)" xlink:href="#E5-MJMAIN-28" x="3595" y="0"></use>
+                                                <use transform="scale(0.707)" xlink:href="#E5-MJMATHI-6E" x="3984" y="0"></use>
+                                                <use transform="scale(0.707)" xlink:href="#E5-MJMAIN-29" x="4585" y="0"></use>
+                                            </g>
+                                        </g>
+                                    </g>
+                                </svg></span></p>
+                        <p>The gamma function solves for any type of factorials (including decimals) and does the job fairly quickly. This creates an excellent yet simple alternative to the recursive approach. One thing to take note of is that the gamma function produces an approximated output, so it is important to monitor the decimals in the output especially in the case when we are using gamma to calculate the factorial of an integer which should theoretically yield an integer answer (not decimal). In this case, check to see if the input is an integer and round the output accordingly.</p>
+                        <h2 id="difference-between-lgamma-and-tgamma">Difference Between <code>lgamma()</code> and <code>tgamma()</code></h2>
+                        <p>An example of when you might prefer using <code>lgamma()</code> over <code>tgamma()</code> is when you are implementing a function that calculates permutations and combinations.</p>
+                        <p>Recall that:</p>
+                        <p><span class="mjpage mjpage__block"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="21.074ex" height="2.843ex" style="vertical-align: -0.838ex;" viewBox="0 -863.1 9073.7 1223.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-6-Title">
+                                    <title id="MathJax-SVG-6-Title">
+                                        P(n, r) = {n!}/{(n-r)!}
+                                    </title>
+                                    <defs aria-hidden="true">
+                                        <path stroke-width="1" id="E6-MJMATHI-50" d="M287 628Q287 635 230 637Q206 637 199 638T192 648Q192 649 194 659Q200 679 203 681T397 683Q587 682 600 680Q664 669 707 631T751 530Q751 453 685 389Q616 321 507 303Q500 302 402 301H307L277 182Q247 66 247 59Q247 55 248 54T255 50T272 48T305 46H336Q342 37 342 35Q342 19 335 5Q330 0 319 0Q316 0 282 1T182 2Q120 2 87 2T51 1Q33 1 33 11Q33 13 36 25Q40 41 44 43T67 46Q94 46 127 49Q141 52 146 61Q149 65 218 339T287 628ZM645 554Q645 567 643 575T634 597T609 619T560 635Q553 636 480 637Q463 637 445 637T416 636T404 636Q391 635 386 627Q384 621 367 550T332 412T314 344Q314 342 395 342H407H430Q542 342 590 392Q617 419 631 471T645 554Z"></path>
+                                        <path stroke-width="1" id="E6-MJMAIN-28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path>
+                                        <path stroke-width="1" id="E6-MJMATHI-6E" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path>
+                                        <path stroke-width="1" id="E6-MJMAIN-2C" d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z"></path>
+                                        <path stroke-width="1" id="E6-MJMATHI-72" d="M21 287Q22 290 23 295T28 317T38 348T53 381T73 411T99 433T132 442Q161 442 183 430T214 408T225 388Q227 382 228 382T236 389Q284 441 347 441H350Q398 441 422 400Q430 381 430 363Q430 333 417 315T391 292T366 288Q346 288 334 299T322 328Q322 376 378 392Q356 405 342 405Q286 405 239 331Q229 315 224 298T190 165Q156 25 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 114 189T154 366Q154 405 128 405Q107 405 92 377T68 316T57 280Q55 278 41 278H27Q21 284 21 287Z"></path>
+                                        <path stroke-width="1" id="E6-MJMAIN-29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path>
+                                        <path stroke-width="1" id="E6-MJMAIN-3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path>
+                                        <path stroke-width="1" id="E6-MJMAIN-21" d="M78 661Q78 682 96 699T138 716T180 700T199 661Q199 654 179 432T158 206Q156 198 139 198Q121 198 119 206Q118 209 98 431T78 661ZM79 61Q79 89 97 105T141 121Q164 119 181 104T198 61Q198 31 181 16T139 1Q114 1 97 16T79 61Z"></path>
+                                        <path stroke-width="1" id="E6-MJMAIN-2F" d="M423 750Q432 750 438 744T444 730Q444 725 271 248T92 -240Q85 -250 75 -250Q68 -250 62 -245T56 -231Q56 -221 230 257T407 740Q411 750 423 750Z"></path>
+                                        <path stroke-width="1" id="E6-MJMAIN-2212" d="M84 237T84 250T98 270H679Q694 262 694 250T679 230H98Q84 237 84 250Z"></path>
+                                    </defs>
+                                    <g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)" aria-hidden="true">
+                                        <use xlink:href="#E6-MJMATHI-50" x="0" y="0"></use>
+                                        <use xlink:href="#E6-MJMAIN-28" x="751" y="0"></use>
+                                        <use xlink:href="#E6-MJMATHI-6E" x="1141" y="0"></use>
+                                        <use xlink:href="#E6-MJMAIN-2C" x="1741" y="0"></use>
+                                        <use xlink:href="#E6-MJMATHI-72" x="2186" y="0"></use>
+                                        <use xlink:href="#E6-MJMAIN-29" x="2638" y="0"></use>
+                                        <use xlink:href="#E6-MJMAIN-3D" x="3305" y="0"></use>
+                                        <g transform="translate(4361,0)">
+                                            <use xlink:href="#E6-MJMATHI-6E" x="0" y="0"></use>
+                                            <use xlink:href="#E6-MJMAIN-21" x="600" y="0"></use>
+                                        </g>
+                                        <use xlink:href="#E6-MJMAIN-2F" x="5240" y="0"></use>
+                                        <g transform="translate(5741,0)">
+                                            <use xlink:href="#E6-MJMAIN-28" x="0" y="0"></use>
+                                            <use xlink:href="#E6-MJMATHI-6E" x="389" y="0"></use>
+                                            <use xlink:href="#E6-MJMAIN-2212" x="1212" y="0"></use>
+                                            <use xlink:href="#E6-MJMATHI-72" x="2212" y="0"></use>
+                                            <use xlink:href="#E6-MJMAIN-29" x="2664" y="0"></use>
+                                            <use xlink:href="#E6-MJMAIN-21" x="3053" y="0"></use>
+                                        </g>
+                                    </g>
+                                </svg></span></p>
+                        <p><span class="mjpage mjpage__block"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="22.791ex" height="2.843ex" style="vertical-align: -0.838ex;" viewBox="0 -863.1 9812.7 1223.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-7-Title">
+                                    <title id="MathJax-SVG-7-Title">
+                                        C(n, r) = {n!}/{r!(n-r)!}
+                                    </title>
+                                    <defs aria-hidden="true">
+                                        <path stroke-width="1" id="E7-MJMATHI-43" d="M50 252Q50 367 117 473T286 641T490 704Q580 704 633 653Q642 643 648 636T656 626L657 623Q660 623 684 649Q691 655 699 663T715 679T725 690L740 705H746Q760 705 760 698Q760 694 728 561Q692 422 692 421Q690 416 687 415T669 413H653Q647 419 647 422Q647 423 648 429T650 449T651 481Q651 552 619 605T510 659Q484 659 454 652T382 628T299 572T226 479Q194 422 175 346T156 222Q156 108 232 58Q280 24 350 24Q441 24 512 92T606 240Q610 253 612 255T628 257Q648 257 648 248Q648 243 647 239Q618 132 523 55T319 -22Q206 -22 128 53T50 252Z"></path>
+                                        <path stroke-width="1" id="E7-MJMAIN-28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path>
+                                        <path stroke-width="1" id="E7-MJMATHI-6E" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path>
+                                        <path stroke-width="1" id="E7-MJMAIN-2C" d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z"></path>
+                                        <path stroke-width="1" id="E7-MJMATHI-72" d="M21 287Q22 290 23 295T28 317T38 348T53 381T73 411T99 433T132 442Q161 442 183 430T214 408T225 388Q227 382 228 382T236 389Q284 441 347 441H350Q398 441 422 400Q430 381 430 363Q430 333 417 315T391 292T366 288Q346 288 334 299T322 328Q322 376 378 392Q356 405 342 405Q286 405 239 331Q229 315 224 298T190 165Q156 25 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 114 189T154 366Q154 405 128 405Q107 405 92 377T68 316T57 280Q55 278 41 278H27Q21 284 21 287Z"></path>
+                                        <path stroke-width="1" id="E7-MJMAIN-29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path>
+                                        <path stroke-width="1" id="E7-MJMAIN-3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path>
+                                        <path stroke-width="1" id="E7-MJMAIN-21" d="M78 661Q78 682 96 699T138 716T180 700T199 661Q199 654 179 432T158 206Q156 198 139 198Q121 198 119 206Q118 209 98 431T78 661ZM79 61Q79 89 97 105T141 121Q164 119 181 104T198 61Q198 31 181 16T139 1Q114 1 97 16T79 61Z"></path>
+                                        <path stroke-width="1" id="E7-MJMAIN-2F" d="M423 750Q432 750 438 744T444 730Q444 725 271 248T92 -240Q85 -250 75 -250Q68 -250 62 -245T56 -231Q56 -221 230 257T407 740Q411 750 423 750Z"></path>
+                                        <path stroke-width="1" id="E7-MJMAIN-2212" d="M84 237T84 250T98 270H679Q694 262 694 250T679 230H98Q84 237 84 250Z"></path>
+                                    </defs>
+                                    <g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)" aria-hidden="true">
+                                        <use xlink:href="#E7-MJMATHI-43" x="0" y="0"></use>
+                                        <use xlink:href="#E7-MJMAIN-28" x="760" y="0"></use>
+                                        <use xlink:href="#E7-MJMATHI-6E" x="1150" y="0"></use>
+                                        <use xlink:href="#E7-MJMAIN-2C" x="1750" y="0"></use>
+                                        <use xlink:href="#E7-MJMATHI-72" x="2195" y="0"></use>
+                                        <use xlink:href="#E7-MJMAIN-29" x="2647" y="0"></use>
+                                        <use xlink:href="#E7-MJMAIN-3D" x="3314" y="0"></use>
+                                        <g transform="translate(4370,0)">
+                                            <use xlink:href="#E7-MJMATHI-6E" x="0" y="0"></use>
+                                            <use xlink:href="#E7-MJMAIN-21" x="600" y="0"></use>
+                                        </g>
+                                        <use xlink:href="#E7-MJMAIN-2F" x="5249" y="0"></use>
+                                        <g transform="translate(5750,0)">
+                                            <use xlink:href="#E7-MJMATHI-72" x="0" y="0"></use>
+                                            <use xlink:href="#E7-MJMAIN-21" x="451" y="0"></use>
+                                            <use xlink:href="#E7-MJMAIN-28" x="730" y="0"></use>
+                                            <use xlink:href="#E7-MJMATHI-6E" x="1119" y="0"></use>
+                                            <use xlink:href="#E7-MJMAIN-2212" x="1942" y="0"></use>
+                                            <use xlink:href="#E7-MJMATHI-72" x="2942" y="0"></use>
+                                            <use xlink:href="#E7-MJMAIN-29" x="3394" y="0"></use>
+                                            <use xlink:href="#E7-MJMAIN-21" x="3783" y="0"></use>
+                                        </g>
+                                    </g>
+                                </svg></span></p>
+                        <p>If you use <code>tgamma()</code> to compute the factorials in <span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="7.053ex" height="2.843ex" style="vertical-align: -0.838ex;" viewBox="0 -863.1 3036.7 1223.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-8-Title">
+                                    <title id="MathJax-SVG-8-Title">C(n,r)</title>
+                                    <defs aria-hidden="true">
+                                        <path stroke-width="1" id="E8-MJMATHI-43" d="M50 252Q50 367 117 473T286 641T490 704Q580 704 633 653Q642 643 648 636T656 626L657 623Q660 623 684 649Q691 655 699 663T715 679T725 690L740 705H746Q760 705 760 698Q760 694 728 561Q692 422 692 421Q690 416 687 415T669 413H653Q647 419 647 422Q647 423 648 429T650 449T651 481Q651 552 619 605T510 659Q484 659 454 652T382 628T299 572T226 479Q194 422 175 346T156 222Q156 108 232 58Q280 24 350 24Q441 24 512 92T606 240Q610 253 612 255T628 257Q648 257 648 248Q648 243 647 239Q618 132 523 55T319 -22Q206 -22 128 53T50 252Z"></path>
+                                        <path stroke-width="1" id="E8-MJMAIN-28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path>
+                                        <path stroke-width="1" id="E8-MJMATHI-6E" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path>
+                                        <path stroke-width="1" id="E8-MJMAIN-2C" d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z"></path>
+                                        <path stroke-width="1" id="E8-MJMATHI-72" d="M21 287Q22 290 23 295T28 317T38 348T53 381T73 411T99 433T132 442Q161 442 183 430T214 408T225 388Q227 382 228 382T236 389Q284 441 347 441H350Q398 441 422 400Q430 381 430 363Q430 333 417 315T391 292T366 288Q346 288 334 299T322 328Q322 376 378 392Q356 405 342 405Q286 405 239 331Q229 315 224 298T190 165Q156 25 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 114 189T154 366Q154 405 128 405Q107 405 92 377T68 316T57 280Q55 278 41 278H27Q21 284 21 287Z"></path>
+                                        <path stroke-width="1" id="E8-MJMAIN-29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path>
+                                    </defs>
+                                    <g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)" aria-hidden="true">
+                                        <use xlink:href="#E8-MJMATHI-43" x="0" y="0"></use>
+                                        <use xlink:href="#E8-MJMAIN-28" x="760" y="0"></use>
+                                        <use xlink:href="#E8-MJMATHI-6E" x="1150" y="0"></use>
+                                        <use xlink:href="#E8-MJMAIN-2C" x="1750" y="0"></use>
+                                        <use xlink:href="#E8-MJMATHI-72" x="2195" y="0"></use>
+                                        <use xlink:href="#E8-MJMAIN-29" x="2647" y="0"></use>
+                                    </g>
+                                </svg></span>, you might produce inaccurate results or crash the program when dealing with larger numbers (i.e. if <span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1.695ex" height="2.176ex" style="vertical-align: -0.338ex;" viewBox="0 -791.3 730 936.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-9-Title">
+                                    <title id="MathJax-SVG-9-Title">r!</title>
+                                    <defs aria-hidden="true">
+                                        <path stroke-width="1" id="E9-MJMATHI-72" d="M21 287Q22 290 23 295T28 317T38 348T53 381T73 411T99 433T132 442Q161 442 183 430T214 408T225 388Q227 382 228 382T236 389Q284 441 347 441H350Q398 441 422 400Q430 381 430 363Q430 333 417 315T391 292T366 288Q346 288 334 299T322 328Q322 376 378 392Q356 405 342 405Q286 405 239 331Q229 315 224 298T190 165Q156 25 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 114 189T154 366Q154 405 128 405Q107 405 92 377T68 316T57 280Q55 278 41 278H27Q21 284 21 287Z"></path>
+                                        <path stroke-width="1" id="E9-MJMAIN-21" d="M78 661Q78 682 96 699T138 716T180 700T199 661Q199 654 179 432T158 206Q156 198 139 198Q121 198 119 206Q118 209 98 431T78 661ZM79 61Q79 89 97 105T141 121Q164 119 181 104T198 61Q198 31 181 16T139 1Q114 1 97 16T79 61Z"></path>
+                                    </defs>
+                                    <g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)" aria-hidden="true">
+                                        <use xlink:href="#E9-MJMATHI-72" x="0" y="0"></use>
+                                        <use xlink:href="#E9-MJMAIN-21" x="451" y="0"></use>
+                                    </g>
+                                </svg></span> produces a large number, multiplying that by <span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="7.74ex" height="2.843ex" style="vertical-align: -0.838ex;" viewBox="0 -863.1 3332.4 1223.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-10-Title">
+                                    <title id="MathJax-SVG-10-Title">(n-r)!</title>
+                                    <defs aria-hidden="true">
+                                        <path stroke-width="1" id="E10-MJMAIN-28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path>
+                                        <path stroke-width="1" id="E10-MJMATHI-6E" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path>
+                                        <path stroke-width="1" id="E10-MJMAIN-2212" d="M84 237T84 250T98 270H679Q694 262 694 250T679 230H98Q84 237 84 250Z"></path>
+                                        <path stroke-width="1" id="E10-MJMATHI-72" d="M21 287Q22 290 23 295T28 317T38 348T53 381T73 411T99 433T132 442Q161 442 183 430T214 408T225 388Q227 382 228 382T236 389Q284 441 347 441H350Q398 441 422 400Q430 381 430 363Q430 333 417 315T391 292T366 288Q346 288 334 299T322 328Q322 376 378 392Q356 405 342 405Q286 405 239 331Q229 315 224 298T190 165Q156 25 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 114 189T154 366Q154 405 128 405Q107 405 92 377T68 316T57 280Q55 278 41 278H27Q21 284 21 287Z"></path>
+                                        <path stroke-width="1" id="E10-MJMAIN-29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path>
+                                        <path stroke-width="1" id="E10-MJMAIN-21" d="M78 661Q78 682 96 699T138 716T180 700T199 661Q199 654 179 432T158 206Q156 198 139 198Q121 198 119 206Q118 209 98 431T78 661ZM79 61Q79 89 97 105T141 121Q164 119 181 104T198 61Q198 31 181 16T139 1Q114 1 97 16T79 61Z"></path>
+                                    </defs>
+                                    <g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)" aria-hidden="true">
+                                        <use xlink:href="#E10-MJMAIN-28" x="0" y="0"></use>
+                                        <use xlink:href="#E10-MJMATHI-6E" x="389" y="0"></use>
+                                        <use xlink:href="#E10-MJMAIN-2212" x="1212" y="0"></use>
+                                        <use xlink:href="#E10-MJMATHI-72" x="2212" y="0"></use>
+                                        <use xlink:href="#E10-MJMAIN-29" x="2664" y="0"></use>
+                                        <use xlink:href="#E10-MJMAIN-21" x="3053" y="0"></use>
+                                    </g>
+                                </svg></span> can yield <code>inf</code>). In this case, the <code>lgamma()</code> is preferred because the formula can be rewritten using logarithmic properties.</p>
+                        <p>Sample implementations for <span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="2.042ex" height="2.176ex" style="vertical-align: -0.338ex;" viewBox="0 -791.3 879 936.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-11-Title">
+                                    <title id="MathJax-SVG-11-Title">n!</title>
+                                    <defs aria-hidden="true">
+                                        <path stroke-width="1" id="E11-MJMATHI-6E" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path>
+                                        <path stroke-width="1" id="E11-MJMAIN-21" d="M78 661Q78 682 96 699T138 716T180 700T199 661Q199 654 179 432T158 206Q156 198 139 198Q121 198 119 206Q118 209 98 431T78 661ZM79 61Q79 89 97 105T141 121Q164 119 181 104T198 61Q198 31 181 16T139 1Q114 1 97 16T79 61Z"></path>
+                                    </defs>
+                                    <g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)" aria-hidden="true">
+                                        <use xlink:href="#E11-MJMATHI-6E" x="0" y="0"></use>
+                                        <use xlink:href="#E11-MJMAIN-21" x="600" y="0"></use>
+                                    </g>
+                                </svg></span>, <span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="7.032ex" height="2.843ex" style="vertical-align: -0.838ex;" viewBox="0 -863.1 3027.7 1223.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-12-Title">
+                                    <title id="MathJax-SVG-12-Title">P(n,r)</title>
+                                    <defs aria-hidden="true">
+                                        <path stroke-width="1" id="E12-MJMATHI-50" d="M287 628Q287 635 230 637Q206 637 199 638T192 648Q192 649 194 659Q200 679 203 681T397 683Q587 682 600 680Q664 669 707 631T751 530Q751 453 685 389Q616 321 507 303Q500 302 402 301H307L277 182Q247 66 247 59Q247 55 248 54T255 50T272 48T305 46H336Q342 37 342 35Q342 19 335 5Q330 0 319 0Q316 0 282 1T182 2Q120 2 87 2T51 1Q33 1 33 11Q33 13 36 25Q40 41 44 43T67 46Q94 46 127 49Q141 52 146 61Q149 65 218 339T287 628ZM645 554Q645 567 643 575T634 597T609 619T560 635Q553 636 480 637Q463 637 445 637T416 636T404 636Q391 635 386 627Q384 621 367 550T332 412T314 344Q314 342 395 342H407H430Q542 342 590 392Q617 419 631 471T645 554Z"></path>
+                                        <path stroke-width="1" id="E12-MJMAIN-28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path>
+                                        <path stroke-width="1" id="E12-MJMATHI-6E" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path>
+                                        <path stroke-width="1" id="E12-MJMAIN-2C" d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z"></path>
+                                        <path stroke-width="1" id="E12-MJMATHI-72" d="M21 287Q22 290 23 295T28 317T38 348T53 381T73 411T99 433T132 442Q161 442 183 430T214 408T225 388Q227 382 228 382T236 389Q284 441 347 441H350Q398 441 422 400Q430 381 430 363Q430 333 417 315T391 292T366 288Q346 288 334 299T322 328Q322 376 378 392Q356 405 342 405Q286 405 239 331Q229 315 224 298T190 165Q156 25 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 114 189T154 366Q154 405 128 405Q107 405 92 377T68 316T57 280Q55 278 41 278H27Q21 284 21 287Z"></path>
+                                        <path stroke-width="1" id="E12-MJMAIN-29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path>
+                                    </defs>
+                                    <g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)" aria-hidden="true">
+                                        <use xlink:href="#E12-MJMATHI-50" x="0" y="0"></use>
+                                        <use xlink:href="#E12-MJMAIN-28" x="751" y="0"></use>
+                                        <use xlink:href="#E12-MJMATHI-6E" x="1141" y="0"></use>
+                                        <use xlink:href="#E12-MJMAIN-2C" x="1741" y="0"></use>
+                                        <use xlink:href="#E12-MJMATHI-72" x="2186" y="0"></use>
+                                        <use xlink:href="#E12-MJMAIN-29" x="2638" y="0"></use>
+                                    </g>
+                                </svg></span>, and <span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="7.053ex" height="2.843ex" style="vertical-align: -0.838ex;" viewBox="0 -863.1 3036.7 1223.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-13-Title">
+                                    <title id="MathJax-SVG-13-Title">C(n,r)</title>
+                                    <defs aria-hidden="true">
+                                        <path stroke-width="1" id="E13-MJMATHI-43" d="M50 252Q50 367 117 473T286 641T490 704Q580 704 633 653Q642 643 648 636T656 626L657 623Q660 623 684 649Q691 655 699 663T715 679T725 690L740 705H746Q760 705 760 698Q760 694 728 561Q692 422 692 421Q690 416 687 415T669 413H653Q647 419 647 422Q647 423 648 429T650 449T651 481Q651 552 619 605T510 659Q484 659 454 652T382 628T299 572T226 479Q194 422 175 346T156 222Q156 108 232 58Q280 24 350 24Q441 24 512 92T606 240Q610 253 612 255T628 257Q648 257 648 248Q648 243 647 239Q618 132 523 55T319 -22Q206 -22 128 53T50 252Z"></path>
+                                        <path stroke-width="1" id="E13-MJMAIN-28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path>
+                                        <path stroke-width="1" id="E13-MJMATHI-6E" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path>
+                                        <path stroke-width="1" id="E13-MJMAIN-2C" d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z"></path>
+                                        <path stroke-width="1" id="E13-MJMATHI-72" d="M21 287Q22 290 23 295T28 317T38 348T53 381T73 411T99 433T132 442Q161 442 183 430T214 408T225 388Q227 382 228 382T236 389Q284 441 347 441H350Q398 441 422 400Q430 381 430 363Q430 333 417 315T391 292T366 288Q346 288 334 299T322 328Q322 376 378 392Q356 405 342 405Q286 405 239 331Q229 315 224 298T190 165Q156 25 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 114 189T154 366Q154 405 128 405Q107 405 92 377T68 316T57 280Q55 278 41 278H27Q21 284 21 287Z"></path>
+                                        <path stroke-width="1" id="E13-MJMAIN-29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path>
+                                    </defs>
+                                    <g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)" aria-hidden="true">
+                                        <use xlink:href="#E13-MJMATHI-43" x="0" y="0"></use>
+                                        <use xlink:href="#E13-MJMAIN-28" x="760" y="0"></use>
+                                        <use xlink:href="#E13-MJMATHI-6E" x="1150" y="0"></use>
+                                        <use xlink:href="#E13-MJMAIN-2C" x="1750" y="0"></use>
+                                        <use xlink:href="#E13-MJMATHI-72" x="2195" y="0"></use>
+                                        <use xlink:href="#E13-MJMAIN-29" x="2647" y="0"></use>
+                                    </g>
+                                </svg></span> are as follows:</p>
+                        <pre class=" line-numbers language-objectivec"><code class=" language-objectivec"><span class="token operator">-</span> <span class="token keyword">double</span> <span class="token function">fact</span><span class="token punctuation">(</span><span class="token keyword">double</span> __n<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>__n <span class="token operator">==</span> <span class="token number">0.0</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token number">1.0</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>__n <span class="token operator">&lt;</span> <span class="token number">0.0</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token comment">// negative integer</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">fmod</span><span class="token punctuation">(</span>__n<span class="token punctuation">,</span> <span class="token function">floor</span><span class="token punctuation">(</span>__n<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0.0</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> NAN<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token comment">// negative non-integer</span>
+        <span class="token keyword">else</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> <span class="token function">tgamma</span><span class="token punctuation">(</span>__n <span class="token operator">+</span> <span class="token number">1.0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">else</span>
+    <span class="token punctuation">{</span>
+        <span class="token comment">// positive integer</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">fmod</span><span class="token punctuation">(</span>__n<span class="token punctuation">,</span> <span class="token function">floor</span><span class="token punctuation">(</span>__n<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0.0</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> <span class="token function">round</span><span class="token punctuation">(</span><span class="token function">exp</span><span class="token punctuation">(</span><span class="token function">lgamma</span><span class="token punctuation">(</span>__n <span class="token operator">+</span> <span class="token number">1.0</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token comment">// positive non-integer</span>
+        <span class="token keyword">else</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> <span class="token function">tgamma</span><span class="token punctuation">(</span>__n <span class="token operator">+</span> <span class="token number">1.0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">double</span> <span class="token function">ncr</span><span class="token punctuation">(</span><span class="token keyword">double</span> __n<span class="token punctuation">,</span> <span class="token keyword">double</span> __r<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">double</span> o <span class="token operator">=</span> <span class="token function">exp</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token function">lgamma</span><span class="token punctuation">(</span>__n<span class="token operator">+</span><span class="token number">1.0</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token punctuation">(</span><span class="token function">lgamma</span><span class="token punctuation">(</span>__r<span class="token operator">+</span><span class="token number">1.0</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token function">lgamma</span><span class="token punctuation">(</span>__n<span class="token operator">-</span>__r<span class="token operator">+</span><span class="token number">1.0</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token function">fmod</span><span class="token punctuation">(</span>__n<span class="token punctuation">,</span> <span class="token function">floor</span><span class="token punctuation">(</span>__n<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0.0</span><span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> <span class="token punctuation">(</span><span class="token function">fmod</span><span class="token punctuation">(</span>__n<span class="token punctuation">,</span> <span class="token function">floor</span><span class="token punctuation">(</span>__r<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0.0</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token function">round</span><span class="token punctuation">(</span>o<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">else</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> o<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">double</span> <span class="token function">npr</span><span class="token punctuation">(</span><span class="token keyword">double</span> __n<span class="token punctuation">,</span> <span class="token keyword">double</span> __r<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">double</span> o <span class="token operator">=</span> <span class="token function">exp</span><span class="token punctuation">(</span><span class="token function">lgamma</span><span class="token punctuation">(</span>__n<span class="token operator">+</span><span class="token number">1.0</span><span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token function">lgamma</span><span class="token punctuation">(</span>__n<span class="token operator">-</span>__r<span class="token operator">+</span><span class="token number">1.0</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token function">fmod</span><span class="token punctuation">(</span>__n<span class="token punctuation">,</span> <span class="token function">floor</span><span class="token punctuation">(</span>__n<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0.0</span><span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> <span class="token punctuation">(</span><span class="token function">fmod</span><span class="token punctuation">(</span>__n<span class="token punctuation">,</span> <span class="token function">floor</span><span class="token punctuation">(</span>__r<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0.0</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token function">round</span><span class="token punctuation">(</span>o<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">else</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> o<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+                    </div>
+                    <div name="footer"><a class="prev post" is="x-a" type="button" href="/logs/using-the-arduino-ethernet-shield-with-tlc5940/"><span class="prev" type="icon"></span><span type="label">prev</span></a><button class="arrow" is="x-button" type="button" name="top-button"><span class="up" type="icon"></span></button><button class="next post" is="x-button" type="button" style="visibility:hidden;"><span class="next" type="icon"></span><span type="label">next</span></button></div>
+                    <div name="related">
+                        <div class="tags" name="tags"><button class="tag" is="x-button" type="button" disabled="disabled"><span type="label">related</span></button></div>
+                        <div class="grid"><a type="button" is="log-entry" href="/logs/acquiring-samples-to-plot-a-math-function-adaptive/" name="entry">
+                                <div class="wrapper">
+                                    <h2 class="title">Acquiring Samples to Plot a Math Function: Adaptive Sampling</h2><span class="date" type="label">Mar 04 14</span><span class="number" type="label">7</span>
+                                </div>
+                            </a><a type="button" is="log-entry" href="/logs/migrating-an-ios-app-from-paid-to-freemium/" name="entry">
+                                <div class="wrapper">
+                                    <h2 class="title">Migrating an iOS App From Paid to Freemium</h2><span class="date" type="label">Jun 10 15</span><span class="number" type="label">14</span>
+                                </div>
+                            </a></div>
+                    </div>
+                </div>
+            </page-log>
+        </main>
+        <script src="/assets/javascripts/polyfills-4df15158e5.js"></script>
+        <script src="/assets/javascripts/common-a589f09cab.js"></script>
+        <script src="/assets/javascripts/application-a1f774b4b0.js"></script>
+    </body>
+</html>
