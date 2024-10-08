@@ -1,0 +1,58 @@
+{
+  "id": "V34WYSEAAB0ATy5I",
+  "uid": "establishing-communication-between-iphone-and-arduino",
+  "url": null,
+  "type": "log",
+  "href": "https://andr-mu.cdn.prismic.io/api/v2/documents/search?ref=ZwSajRAAACIA6x5O&q=%5B%5B%3Ad+%3D+at%28document.id%2C+%22V34WYSEAAB0ATy5I%22%29+%5D%5D",
+  "tags": [
+    "arduino",
+    "c++",
+    "ios",
+    "mobile"
+  ],
+  "first_publication_date": null,
+  "last_publication_date": "2017-08-31T02:07:54+0000",
+  "slugs": [
+    "establishing-communication-between-iphone-and-arduino-ethernet-shield",
+    "establishing-communication-between-iphoneipad-and-arduino-ethernet-shield"
+  ],
+  "linked_documents": [],
+  "lang": "en-us",
+  "alternate_languages": [],
+  "data": {
+    "title": [
+      {
+        "type": "heading1",
+        "text": "Establishing Communication between iPhone and Arduino Ethernet Shield",
+        "spans": []
+      }
+    ],
+    "synopsis": [],
+    "cover": {
+      "dimensions": {
+        "width": 1920,
+        "height": 1080
+      },
+      "alt": null,
+      "copyright": null,
+      "url": "https://images.prismic.io/andr-mu/4994ca1e345807fd805fc5f4dab1f2fba5e932e1_arduino-cover.jpg?auto=compress,format",
+      "id": "V34WICEAAB4ATyy7",
+      "edit": {
+        "x": 0,
+        "y": -60,
+        "zoom": 1,
+        "background": "#fff"
+      }
+    },
+    "markdown": [
+      {
+        "type": "preformatted",
+        "text": "This log demonstrates the concept behind establishing communication between an iOS device (iPhone, iPad, or iPod Touch) and an Arduino I/O board with the Ethernet Shield mounted. I will describe a method I used to successfully establish this communication.\n\nThe basic idea is to make sure both the iOS device and the Ethernet Shield are under the same network. You can do this by hooking both of them up to the same router. You will also need to assign a dedicated IP address to the Ethernet Shield so the iOS device can place an HTTP request to that IP.\n\n## On the Arduino I/O Board\n\nDownload the Arduino-based web server library [Webduino](http://code.google.com/p/webduino/). Use the following code snippet as a reference on how to parse captured HTTP requests received by the Ethernet Shield. In this particular example the Ethernet Shield picks up local HTTP requests and assigns a digital HIGH/LOW value to the corresponding pin.\n\n```c\n#include \"Ethernet.h\"\n#include \"SPI.h\"\n#include \"WebServer.h\"\n\n// Reset Definitions\n#define PREFIX \"/web\"\n#define NAMELEN 32\n#define VALUELEN 32\n\n// Assign MAC Address\nstatic uint8_t mac[] = { 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF };\n\n// Assign IP Addres\nstatic uint8_t ip[] = { 0, 0, 0, 0 };\n\nWebServer webserver(PREFIX, 80);\n\nvoid response(WebServer &amp;server, WebServer::ConnectionType type, char *, bool)\n{\n    // This line sends the standard \"we're all OK\" headers back to the browser.\n    server.httpSuccess();\n\n    // If we're handling a GET or POST, we can output our data here.\n    // For a HEAD request, we just stop after outputting headers.\n    if (type != WebServer::HEAD)\n    {\n        // This defines some HTML text in read-only memory aka PROGMEM.\n        // This is needed to avoid having the string copied to our limited\n        // amount of RAM.\n        P(responseHTML) = \"Thanks for playing.\";\n\n        // This is a special form of print that outputs from PROGMEM.\n        server.printP(responseHTML);\n    }\n}\n\nvoid activate(WebServer &amp;server, WebServer::ConnectionType type, char *url_tail, bool tail_complete)\n{\n    URLPARAM_RESULT rc;\n    char name[NAMELEN];\n    int  name_len;\n    char value[VALUELEN];\n    int value_len;\n\n    server.httpSuccess();\n\n    if (type == WebServer::GET)\n    {\n        if (strlen(url_tail))\n        {\n            while (strlen(url_tail))\n            {\n                rc = server.nextURLparam(&amp;url_tail, name, NAMELEN, value, VALUELEN);\n                if (rc != URLPARAM_EOS)\n                {\n                    if (name[0] == 'p')\n                    {\n                        int pin = strtoul(value, NULL, 10);\n\n                        digitalWrite(pin, HIGH);\n\n                        P(responseHTML) = \"Pin is HIGH.\";\n                        server.printP(responseHTML);\n                    }\n                }\n            }\n        }\n    }\n}\n\nvoid deactivate(WebServer &amp;server, WebServer::ConnectionType type, char *url_tail, bool tail_complete)\n{\n    char name[NAMELEN];\n    int  name_len;\n    char value[VALUELEN];\n    int value_len;\n    URLPARAM_RESULT rc;\n    server.httpSuccess();\n\n    if (type == WebServer::GET)\n    {\n        if (strlen(url_tail))\n        {\n            while (strlen(url_tail))\n            {\n                rc = server.nextURLparam(&amp;url_tail, name, NAMELEN, value, VALUELEN);\n\n                if (rc != URLPARAM_EOS)\n                {\n                    if (name[0] == 'p')\n                    {\n                        int pin = strtoul(value, NULL, 10);\n\n                        digitalWrite(pin, LOW);\n\n                        P(responseHTML) = \"Pin is LOW.\";\n                        server.printP(responseHTML);\n                    }\n                }\n            }\n        }\n    }\n}\n\nvoid setup()\n{\n    Ethernet.begin(mac, ip);\n\n    webserver.begin();\n    webserver.setDefaultCommand(&amp;response);\n    webserver.addCommand(\"PIN_ACTIVATE\", &amp;activate);\n    webserver.addCommand(\"PIN_DEACTIVATE\", &amp;deactivate);\n}\n\nvoid loop()\n{\n    // Process incoming connections one at a time forever.\n    webserver.processConnection();\n}\n```\n\nMake sure that the correct IP address is specified in the code (`ip[]` variable). Configure the router to assign a dedicated IP address to the Ethernet Shield to make things easier. Enter an unused MAC address to `mac[]`. Flash the code onto the Arduino I/O board. If necessary, you can test the code by sending an HTTP request (i.e. in a browser or something) from a computer that is connected to the same router as the Ethernet Shield. An example would be: `http://{ip address of Ethernet Shield}/web/PIN_ACTIVATE?p=4`. `/web/` is the prefix I set in the code for clarity purposes. `PIN_ACTIVATE` is the function name (also specified in the code) and `p=4` is the parameter. This should set pin 4 on the Arduino to HIGH.\n\n## On the iOS Device\n\nConnect the iOS device to the router which the Ethernet Shield is using. Create an app that sends HTTP requests using the specified format (i.e. `http://{ip address of Ethernet Shield}/web/PIN_ACTIVATE?p=4`). If everything is hooked up correctly, the Ethernet Shield should be able to pick up the request sent by the iOS device. In my project, I simply placed a `UIWebView` in my app and used JavaScript to send formatted HTTP requests. A simple JavaScript code like this would do:\n\n```javascript\nreq = new XMLHttpRequest();\nreq.open('GET', 'http://{ip address of Ethernet Shield}/web/PIN_ACTIVATE?p=4', true);\nreq.send();\n```\n\nThe rest is open for implementation.\n\n## Source(s)\n\n1.  [Webduino Library](http://code.google.com/p/webduino/)",
+        "spans": []
+      }
+    ],
+    "date": "2011-06-24",
+    "mathjax": null,
+    "prism": "Yes"
+  }
+}

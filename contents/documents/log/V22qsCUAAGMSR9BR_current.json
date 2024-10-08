@@ -1,0 +1,55 @@
+{
+  "id": "V22qsCUAAGMSR9BR",
+  "uid": "data-structure-alignment-alignment-class-members",
+  "url": null,
+  "type": "log",
+  "href": "https://andr-mu.cdn.prismic.io/api/v2/documents/search?ref=ZwSajRAAACIA6x5O&q=%5B%5B%3Ad+%3D+at%28document.id%2C+%22V22qsCUAAGMSR9BR%22%29+%5D%5D",
+  "tags": [
+    "coding",
+    "c++"
+  ],
+  "first_publication_date": null,
+  "last_publication_date": "2017-08-31T02:10:48+0000",
+  "slugs": [
+    "data-structure-alignment-alignment-class-members"
+  ],
+  "linked_documents": [],
+  "lang": "en-us",
+  "alternate_languages": [],
+  "data": {
+    "title": [
+      {
+        "type": "heading1",
+        "text": "Data Structure Alignment: Alignment Class Members",
+        "spans": []
+      }
+    ],
+    "synopsis": [],
+    "cover": {
+      "dimensions": {
+        "width": 1920,
+        "height": 1080
+      },
+      "alt": null,
+      "copyright": null,
+      "url": "https://images.prismic.io/andr-mu/3e41668398da27f76f40d3494bb35944bb1c3546_data-structure-alignment-cover.jpg?auto=compress,format",
+      "id": "V22qmyUAALkOR8_P",
+      "edit": {
+        "x": 0,
+        "y": -60,
+        "zoom": 1,
+        "background": "#fff"
+      }
+    },
+    "markdown": [
+      {
+        "type": "preformatted",
+        "text": "Suppose there are two C++ classes, A and B, with the following structures in a 64-bit system:\n\n```cpp\nclass A\n{\npublic:\n    bool b1;\n    double x1;\n    bool b2;\n    double x2;\n};\n\nclass B\n{\npublic:\n    double x1;\n    double x2;\n    bool b1;\n    bool b2;\n};\n```\n\nTheir members are identical, except their order of declaration is different. So what’s the deal here? If you do a `sizeof()` for both classes, class `A` will have a size of 32 (bytes) and class `B` will have a size of 24 (bytes). This is due to the compiler performing type/class alignment as it reads/writes these members to computer memory. The compiler will attempt to do this in chunks of the computer’s word size, i.e. in a 64-bit system that would be 8 bytes, whereas in a 32-bit system that would be 4 bytes. During this process the compiler will insert byte paddings in between members so they can fit in word chunks. This is what the classes look like after the compiler is done (again, this example refers to a 64-bit system where the word size is 8 bytes):\n\n```cpp\nclass A\n{\npublic:\n    bool b1;            // this is 1 byte\n    char padding1[7];   // since the next member is a double (8 bytes), compiler will add 7 bytes to fill the gap and fit the previous bool in a word chunk\n    double x1;\n    bool b2;\n    char padding2[7];   // same as above\n    double x2;\n};\n\nclass B\n{\npublic:\n    double x1;\n    double x2;\n    bool b1;\n    bool b2;\n    char padding2[6];   // adding 6 bytes to fill the gap\n};\n```\n\nIn conclusion, the rule of thumb is to always order members from largest to smallest and group same types together. For more info about data structure alignment, visit this Wikipedia article: [Data Structure Alignment](http://en.wikipedia.org/wiki/Data_structure_alignment).",
+        "spans": []
+      }
+    ],
+    "date": "2014-03-24",
+    "mathjax": null,
+    "prism": "Yes"
+  }
+}

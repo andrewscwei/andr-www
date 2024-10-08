@@ -1,0 +1,55 @@
+{
+  "id": "V22qdyUAAGMSR87z",
+  "uid": "xcode-custom-key-bindings",
+  "url": null,
+  "type": "log",
+  "href": "https://andr-mu.cdn.prismic.io/api/v2/documents/search?ref=ZwSajRAAACIA6x5O&q=%5B%5B%3Ad+%3D+at%28document.id%2C+%22V22qdyUAAGMSR87z%22%29+%5D%5D",
+  "tags": [
+    "hacks",
+    "coding"
+  ],
+  "first_publication_date": null,
+  "last_publication_date": "2017-08-31T02:11:41+0000",
+  "slugs": [
+    "xcode-custom-key-bindings"
+  ],
+  "linked_documents": [],
+  "lang": "en-us",
+  "alternate_languages": [],
+  "data": {
+    "title": [
+      {
+        "type": "heading1",
+        "text": "Xcode Custom Key Bindings",
+        "spans": []
+      }
+    ],
+    "synopsis": [],
+    "cover": {
+      "dimensions": {
+        "width": 1920,
+        "height": 1080
+      },
+      "alt": null,
+      "copyright": null,
+      "url": "https://images.prismic.io/andr-mu/9d5c15c74c121be977098279da96e593186ca747_xcode-custom-key-bindings.jpg?auto=compress,format",
+      "id": "V22qZiUAALkOR86M",
+      "edit": {
+        "x": 0,
+        "y": -60,
+        "zoom": 1,
+        "background": "#fff"
+      }
+    },
+    "markdown": [
+      {
+        "type": "preformatted",
+        "text": "## Adding Custom Commands\n\nOpen this file: `Xcode.app/Contents/Frameworks/IDEKit.framework/Resources/IDETextKeyBindingSet.plist`\n\nAt the bottom create a new entry and add any custom commands. Below is an example of the custom commands `Delete Line` and `Duplicate Line`:\n\n```markup\n<key>Custom</key>\n<dict>\n    <key>Delete Line</key>\n    <string>selectLine:, delete:</string>\n    <key>Duplicate Line</key>\n    <string>moveToBeginningOfLine:, deleteToEndOfLine:, yank:, insertNewline:, moveToBeginningOfLine:, yank:</string>\n</dict>\n```\n\n## Exporting Key Bindings\n\nKey binding sets are stored in ```~/Library/Developer/Xcode/UserData/KeyBindings/```. A new set can be created via Xcode preferences in the *Key Bindings* tab. These sets are immediately available to all installed Xcode versions. Simply copy these sets to import them into another Xcode on another machine.\n",
+        "spans": []
+      }
+    ],
+    "date": "2014-09-08",
+    "mathjax": null,
+    "prism": "Yes"
+  }
+}

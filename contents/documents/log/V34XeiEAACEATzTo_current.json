@@ -1,0 +1,41 @@
+{
+  "id": "V34XeiEAACEATzTo",
+  "uid": "implementing-the-factorial-function-in-objective-c",
+  "url": null,
+  "type": "log",
+  "href": "https://andr-mu.cdn.prismic.io/api/v2/documents/search?ref=ZwSajRAAACIA6x5O&q=%5B%5B%3Ad+%3D+at%28document.id%2C+%22V34XeiEAACEATzTo%22%29+%5D%5D",
+  "tags": [
+    "math",
+    "objc",
+    "coding"
+  ],
+  "first_publication_date": null,
+  "last_publication_date": "2017-08-31T02:08:47+0000",
+  "slugs": [
+    "implementing-the-factorial-function-in-objective-c-using-the-gamma-function"
+  ],
+  "linked_documents": [],
+  "lang": "en-us",
+  "alternate_languages": [],
+  "data": {
+    "title": [
+      {
+        "type": "heading1",
+        "text": "Implementing the Factorial Function in Objective-C Using the Gamma Function",
+        "spans": []
+      }
+    ],
+    "synopsis": [],
+    "cover": {},
+    "markdown": [
+      {
+        "type": "preformatted",
+        "text": "A common way of implementing the factorial function uses recursion, which looks something like this:\n\n```objectivec\n- int factorial(int operand)\n{\n    if (operand < 0)\n    {\n        return -1; // factorial of negative integer is invalid, -1 means invalid\n    }\n    else if (operand > 1)\n    {\n        return operand * factorial(operand-1);\n    }\n    else\n    {\n        return 1; // factorial of 0 or 1 yields 1\n    }\n}\n```\n\nThis works most of the time, but there are a few cases when this would cause major performance issues.\n\n##### Case 1: Working with large numbers\n\nImagine calculating the factorial of a 5-digit number with this implementation. The function calls itself at least 10,000 times. The output would be `inf`, but on runtime the program will crash because the recursions eat up too much memory unless you have an excess amount of RAM hanging around. Either way this is not memory-efficient.\n\n##### Case 2: Reusing this function in other contexts where more than 1 factorial function is needed in a math formula, i.e. calculating permutations and combinations\n\nRecall:\n\n$$\nP(n, r) = {n!}/{(n-r)!}\n$$\n\n$$\nC(n, r) = {n!}/{r!(n-r)!}\n$$\n\nSince the implementation is recursive and it is being used more than once in a formula, you will need to allocate even more memory to the application. Eventually you will hit a wall, especially when you start working with large numbers.\n\n##### Case 3: Calculating decimal factorials\n\nDigging deeper into the math, factorials can also apply to positive/negative non-integers. In this case, the above implementation will be restricted to calculating and yielding positive integers only.\n\n##### Solution: Use the gamma function\n\nTo solve all of the aforementioned issues, use the gamma function which is conveniently defined in `math.h`. By mathematical definition:\n\n$$\nGamma(n) = (n-1)!\n$$\n\n`math.h` provides two useful equivalents to the gamma function, which is `tgamma()` and `lgamma()`, where:\n\n$$\n(n-1)! = tgamma(n)\n$$\n\n$$\n(n-1)! = e^{lgamma(n)}\n$$\n\nThe gamma function solves for any type of factorials (including decimals) and does the job fairly quickly. This creates an excellent yet simple alternative to the recursive approach. One thing to take note of is that the gamma function produces an approximated output, so it is important to monitor the decimals in the output especially in the case when we are using gamma to calculate the factorial of an integer which should theoretically yield an integer answer (not decimal). In this case, check to see if the input is an integer and round the output accordingly.\n\n## Difference Between `lgamma()` and `tgamma()`\n\nAn example of when you might prefer using `lgamma()` over `tgamma()` is when you are implementing a function that calculates permutations and combinations.\n\nRecall that:\n\n$$\nP(n, r) = {n!}/{(n-r)!}\n$$\n\n$$\nC(n, r) = {n!}/{r!(n-r)!}\n$$\n\nIf you use `tgamma()` to compute the factorials in \\\\(C(n,r)\\\\), you might produce inaccurate results or crash the program when dealing with larger numbers (i.e. if \\\\(r!\\\\) produces a large number, multiplying that by \\\\((n-r)!\\\\) can yield `inf`). In this case, the `lgamma()` is preferred because the formula can be rewritten using logarithmic properties.\n\nSample implementations for \\\\(n!\\\\), \\\\(P(n,r)\\\\), and \\\\(C(n,r)\\\\) are as follows:\n\n```objectivec\n- double fact(double __n)\n{\n    if (__n == 0.0)\n    {\n        return 1.0;\n    }\n    else if (__n < 0.0)\n    {\n        // negative integer\n        if (fmod(__n, floor(__n)) == 0.0)\n        {\n            return NAN;\n        }\n        // negative non-integer\n        else\n        {\n            return tgamma(__n + 1.0);\n        }\n    }\n    else\n    {\n        // positive integer\n        if (fmod(__n, floor(__n)) == 0.0)\n        {\n            return round(exp(lgamma(__n + 1.0)));\n        }\n        // positive non-integer\n        else\n        {\n            return tgamma(__n + 1.0);\n        }\n    }\n}\n\ndouble ncr(double __n, double __r)\n{\n    double o = exp((lgamma(__n+1.0)) - (lgamma(__r+1.0) + lgamma(__n-__r+1.0)));\n\n    if ((fmod(__n, floor(__n)) == 0.0) && (fmod(__n, floor(__r)) == 0.0))\n    {\n        return round(o);\n    }\n    else\n    {\n        return o;\n    }\n}\n\ndouble npr(double __n, double __r)\n{\n    double o = exp(lgamma(__n+1.0) - lgamma(__n-__r+1.0));\n\n    if ((fmod(__n, floor(__n)) == 0.0) && (fmod(__n, floor(__r)) == 0.0))\n    {\n        return round(o);\n    }\n    else\n    {\n        return o;\n    }\n}\n```",
+        "spans": []
+      }
+    ],
+    "date": "2011-04-25",
+    "mathjax": "Yes",
+    "prism": "Yes"
+  }
+}

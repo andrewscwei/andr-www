@@ -1,0 +1,54 @@
+{
+  "id": "V22qQSUAAGMSR82h",
+  "uid": "linux-user-management",
+  "url": null,
+  "type": "log",
+  "href": "https://andr-mu.cdn.prismic.io/api/v2/documents/search?ref=ZwSajRAAACIA6x5O&q=%5B%5B%3Ad+%3D+at%28document.id%2C+%22V22qQSUAAGMSR82h%22%29+%5D%5D",
+  "tags": [
+    "systems"
+  ],
+  "first_publication_date": null,
+  "last_publication_date": "2017-08-31T02:11:51+0000",
+  "slugs": [
+    "linux-user-management"
+  ],
+  "linked_documents": [],
+  "lang": "en-us",
+  "alternate_languages": [],
+  "data": {
+    "title": [
+      {
+        "type": "heading1",
+        "text": "Linux User Management",
+        "spans": []
+      }
+    ],
+    "synopsis": [],
+    "cover": {
+      "dimensions": {
+        "width": 1920,
+        "height": 1080
+      },
+      "alt": null,
+      "copyright": null,
+      "url": "https://images.prismic.io/andr-mu/c3d6eb514e50209be3f92bb51f35e44a0e122519_linux.png?auto=compress,format",
+      "id": "V3IJhSUAAPEbU3kf",
+      "edit": {
+        "x": 0,
+        "y": 0,
+        "zoom": 1,
+        "background": "transparent"
+      }
+    },
+    "markdown": [
+      {
+        "type": "preformatted",
+        "text": "## Where User Info Are Stored\n\n1.\t`/etc/passwd`: List of users.\n2.\t`/etc/shadow`: Users' encrypted password.\n3.\t`/etc/group`: List of groups.\n4.\t`/etc/default/useradd`: Value for the default group if none is specified by the `useradd` command.\n5.\t`/etc/login.defs`: Defines site-specific configurations for the shadow passwords stored in the `/etc/shadow` file.\n\n## Managing Users\n\nA user can belong to 1 primary group and muliple secondary groups.\n\n#### To add a new user (by default this creates a new group with the same name and assigns this new user's primary group to the new group):\n\n```bash\n$ useradd username\n```\n\n#### To add a new user and assign its primary group to an existing group:\n\n```bash\n$ useradd -g {primary_group_name} {username}\n```\n\n#### To add a new user and assign its secondary group to an existing group (primary group is still the same as the username):\n\n```bash\n$ useradd -G {secondary_group_name, secondary_group_name, ...} {username}\n```\n\n#### To create a new home directory and assign its ownership to the new user:\n\n```bash\n$ mkdir /home/username\n$ chown {username} /home/username\n```\n\n#### To create/change a password:\n\n```bash\n$ passwd {username}\n```\n\n#### To delete a user:\n\n```bash\n$ userdel {username}\n```\n\n#### To delete a user along with its home directory and mail spool:\n\n```bash\n$ userdel -r {username}\n```\n\n#### To check the status of a user:\n\n```bash\n$ id {username}\n```\n\n#### To check the secondary groups which a user belongs to:\n\n```bash\n$ id -nG {username}\n```\n\n#### To change an existing user's primary group:\n\n```bash\n$ usermod -g {primary_group_name} {username}\n```\n\n#### To overwrite an existing user's secondary groups:\n\n```bash\n$ usermod -G {secondary_group_name, secondary_group_name, ...} {username}\n```\n\n#### To add a secondary group to an existing user:\n\n```bash\n$ usermod -a -G {secondary_group_name} {username}\n```\n\n#### To change a user's default shell (to bash, for example):\n\n```bash\n$ usermod -s /bin/bash {username}\n```\n\n## Managing User Groups\n\nThere are two types of user groups in the Linux system: primary and secondary. Groups are defined in `/etc/group`.\n\n#### To create a new group:\n\n```bash\n$ groupadd {group_name}\n```\n\n#### To delete an existing group:\n\n```bash\n$ groupdel {group_name}\n```\n\n#### To check the status of a group:\n\n```bash\n$ grep {group_name} /etc/group\n```",
+        "spans": []
+      }
+    ],
+    "date": "2015-05-31",
+    "mathjax": null,
+    "prism": "Yes"
+  }
+}

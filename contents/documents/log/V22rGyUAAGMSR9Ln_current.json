@@ -1,0 +1,54 @@
+{
+  "id": "V22rGyUAAGMSR9Ln",
+  "uid": "mac-single-user-mode",
+  "url": null,
+  "type": "log",
+  "href": "https://andr-mu.cdn.prismic.io/api/v2/documents/search?ref=ZwSajRAAACIA6x5O&q=%5B%5B%3Ad+%3D+at%28document.id%2C+%22V22rGyUAAGMSR9Ln%22%29+%5D%5D",
+  "tags": [
+    "hacks"
+  ],
+  "first_publication_date": null,
+  "last_publication_date": "2017-08-31T02:11:26+0000",
+  "slugs": [
+    "mac-single-user-mode"
+  ],
+  "linked_documents": [],
+  "lang": "en-us",
+  "alternate_languages": [],
+  "data": {
+    "title": [
+      {
+        "type": "heading1",
+        "text": "Mac: Single-User Mode",
+        "spans": []
+      }
+    ],
+    "synopsis": [],
+    "cover": {
+      "dimensions": {
+        "width": 1920,
+        "height": 1080
+      },
+      "alt": null,
+      "copyright": null,
+      "url": "https://images.prismic.io/andr-mu/40c5326d0be5d9c6d4df7664a3c97ea5d070c706_single-user-mode-cover.jpg?auto=compress,format",
+      "id": "V22rCSUAAB8PR9J6",
+      "edit": {
+        "x": 0,
+        "y": -60,
+        "zoom": 1,
+        "background": "#fff"
+      }
+    },
+    "markdown": [
+      {
+        "type": "preformatted",
+        "text": "## How to boot into Single-User Mode on a Mac\n\nOn bootup, hold down ⌘S until the screen turns black.\n\n## Tricks\n\n1. The filesystem is by default read-only in Single-User Mode, which prevents writing files in case you need to put important system files back into their original place. To make the filesystem writable, execute the following command:\n\n    ```bash\n    $ mount -uw /\n    ```\n",
+        "spans": []
+      }
+    ],
+    "date": "2014-03-17",
+    "mathjax": null,
+    "prism": "Yes"
+  }
+}

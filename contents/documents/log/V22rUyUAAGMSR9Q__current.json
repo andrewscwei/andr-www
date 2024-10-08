@@ -1,0 +1,56 @@
+{
+  "id": "V22rUyUAAGMSR9Q_",
+  "uid": "acquiring-samples-to-plot-a-math-function-adaptive",
+  "url": null,
+  "type": "log",
+  "href": "https://andr-mu.cdn.prismic.io/api/v2/documents/search?ref=ZwSajRAAACIA6x5O&q=%5B%5B%3Ad+%3D+at%28document.id%2C+%22V22rUyUAAGMSR9Q_%22%29+%5D%5D",
+  "tags": [
+    "coding",
+    "math",
+    "algorithms"
+  ],
+  "first_publication_date": null,
+  "last_publication_date": "2017-08-31T01:39:28+0000",
+  "slugs": [
+    "acquiring-samples-to-plot-a-math-function-adaptive-sampling"
+  ],
+  "linked_documents": [],
+  "lang": "en-us",
+  "alternate_languages": [],
+  "data": {
+    "title": [
+      {
+        "type": "heading1",
+        "text": "Acquiring Samples to Plot a Math Function: Adaptive Sampling",
+        "spans": []
+      }
+    ],
+    "synopsis": [],
+    "cover": {
+      "dimensions": {
+        "width": 1920,
+        "height": 1080
+      },
+      "alt": null,
+      "copyright": null,
+      "url": "https://images.prismic.io/andr-mu/37fdc9bde9a7f49eb0249ae5c0f8d6b535000f68_adaptive-sampling-cover.jpg?auto=compress,format",
+      "id": "V22rRSUAALkOR9Pq",
+      "edit": {
+        "x": 0,
+        "y": -162,
+        "zoom": 1,
+        "background": "#fff"
+      }
+    },
+    "markdown": [
+      {
+        "type": "preformatted",
+        "text": "Plotting graphs involves acquiring a set of samples (points) of the function \\\\(f(x)\\\\) between two finite \\\\(x\\\\)-boundaries (\\\\(x\\_{min}\\\\) and \\\\(x\\_{max}\\\\) usually corresponding to the fixed width of the display), drawing these points on the display as dots and then connecting them with lines. More samples imply a higher precision of the graph, but that also imposes a direct impact on the performance since acquiring more samples means doing more calculation work. This log demonstrates an efficient way to collect enough samples while yielding an accurate representation of the function plot where the level of precision can be easily adjusted through a variable. This method is commonly known as the *adaptive sampling* routine.\n\n## Linear Sampling\n\nBefore exploring the *adaptive sampling* routine, let’s first take a look at the most commonly used sampling algorithm – *linear sampling*. This method predetermines a fixed \\\\(x\\_{delta}\\\\), and evaluates \\\\(f(x)\\\\) for each \\\\(x\\\\)-interval uniformly separated by \\\\(x\\_{delta}\\\\) between \\\\(x\\_{min}\\\\) and \\\\(x\\_{max}\\\\). The \\\\(x\\_{delta}\\\\) can be easily derived from the desired number of samples. For example:\n\n$$\nx\\_{delta} = \\frac{x\\_{max}-x\\_{min}}{n\\_{samples}}\n$$\n\nThis method will evaluate \\\\(f(x)\\\\) \\\\(n\\_{samples}\\\\) times, yielding \\\\(n\\_{samples}\\\\) \\\\(y\\\\)-values, thus completing the entire sampling routine. The result is a set of samples available to be plotted on the display to form a graph. The number of samples can be easily tweaked to adjust the precision of the graph, but again, it will require more resources to sample. While linear sampling may suffice for most cases (when precision is not a factor), it does not account for rapid oscillations. Since each sample is taken at an \\\\(x\\\\)-interval that uniformly increases by \\\\(x\\_{delta}\\\\), it has no way of knowing what is in between each point. *Adaptive sampling* attempts to solve this problem.\n\n## Adaptive Sampling\n\nIn a nutshell, the *adaptive sampling* routine works by recursively evaluating and splitting intervals in half until a certain precision threshold is met (think binary search algorithm), and until the provided function \\\\(f(x)\\\\) is well approximated. There are criteria in which a given interval requires further splitting, and the depth of binary splittings can be adjusted through a parameter to easily customize the level of precision. Like any other sampling routines, this method yields a set of points available for direct plotting.\n\n### Procedure\n\nTake note that the following variables will be involved: `max_depth`, `depth`, and `tolerance`.\n\n1.  Decide on a maximum recursion depth - `max_depth`. This number varies depending on how large the display is and the specs of the machine. For starters, use 8 as the magical number and play around with it accordingly. At the start of the routine, let `depth = max_depth = 8`. `depth` is the current depth.\n\n2.  Decide on a `tolerance` value. A good tolerance value is \\\\(\\frac{1}{n\\_{pixels}}\\\\). If not, `DBL_EPSILON` will do. This will be used later as a threshold to measure precision against computed samples.\n\n3.  Determine the \\\\(x\\_{min}\\\\) and \\\\(x\\_{max}\\\\) values. Typically this corresponds to the width of the display where the graph will be drawn.\n\n4.  Begin with \\\\(x\\_{min}\\\\) and \\\\(x\\_{max}\\\\) as the starting points \\\\(x\\_a\\\\) and \\\\(x\\_c\\\\). Split them into 3 points: \\\\(x\\_a \\equiv x\\_{min}\\\\), \\\\(x\\_b \\equiv \\frac{x\\_c-x\\_a}{2}\\\\), and \\\\(x\\_c \\equiv x\\_{max}\\\\).\n\n5.  Further split the above 3 points into 5 points: \\\\(x\\_a\\\\), \\\\(x\\_{ab} \\equiv \\frac{x\\_b-x\\_a}{2}\\\\), \\\\(x\\_b, x\\_{bc} \\equiv \\frac{x\\_c-x\\_b}{2}\\\\), and \\\\(x\\_c\\\\).\n\n6.  Evaluate \\\\(f(x)\\\\) at all 5 \\\\(x\\\\)-intervals: \\\\(x\\_a\\\\), \\\\(x\\_{ab}\\\\), \\\\(x\\_b\\\\), \\\\(x\\_{bc}\\\\), and \\\\(x\\_c\\\\), and store these points in an array.\n\n7.  If `depth <= 0`, return the array as is.\n\n8.  Otherwise walk through each point in the array to determine if there are rapid oscillations. Use an integer `count` defaulted to 0 to measure the result: either there exists rapid oscillations and requires further refinements or there aren’t any. Here are the steps to determine:\n\n    1.  Iterate through each point, starting from the second point and ending at the fourth point (the first and last points are omitted in this iteration).\n\n    2.  At each point, examine the \\\\(y\\\\)-value of the previous, current, and next points. For example, if the current point is \\\\(x\\_{ab}\\\\), then the previous and next points are \\\\(x\\_a\\\\) and \\\\(x\\_b\\\\) respectively. If any of these values are invalid (i.e. `NAN`, `infinity`, etc), meaning that there are irregularities, increment `count` and continue to the next point. Otherwise, analyze the values to determine if there is high fluctuation, i.e. the current value is larger than both the previous and next values, or the current value is less than both the previous and next values. If any of these situations are true, fluctuation is detected, increment `count` and continue to the next point. Repeat until all 3 points of interest are examined. At the end of the iteration, `count` will determine the next steps of refinement.\n\n    3.  Evaluate `count`:\n        1.  If `count > 2`, that means further splittings are needed to produce more accurate samples. Two sets of samples are required, each computed by recursively invoking *step 1* again, except with `depth--`, `tolerance *= 2` and starting points are \\\\(x\\_a\\\\) and \\\\(x\\_b\\\\) for the first set and \\\\(x\\_b\\\\) and \\\\(x\\_c\\\\) for the second set. Return the combined results of set 1 and set 2.\n\n        2.  Otherwise if `count <= 2`, that means this sample pool is accurate enough. But before returning these samples as the final output, perform one last check to ensure that the graph is smooth enough. This is done by computing and comparing the area under the graph:\n\n            $$\n            g(x) \\equiv f(x){-}f_0\n            $$\n\n            where:\n\n            -   \\\\(f_0\\\\) is the minimum of the values of \\\\((x)\\\\) between \\\\(x\\_a\\\\) and \\\\(x\\_c\\\\)\n            -   \\\\(g(x)\\\\) is nonnegative and has the mimimum value of 0\n\n            To approximate the area:\n\n            $$\n            \\int\\_{x\\_0}^{x\\_1} g(x)dx\n            $$\n\n            use *Newton-Cotes quadratures*. Compute two *Newton-Cotes quadratures* using the 5 points: 1 quadrature using \\\\(x\\_a\\\\), \\\\(x\\_{ab}\\\\), \\\\(x\\_b\\\\), and \\\\(x\\_{bc}\\\\) and the other using \\\\(x\\_b\\\\), \\\\(x\\_{bc}\\\\), and \\\\(x\\_c\\\\) with coefficients \\\\((\\frac{3}{8}, \\frac{19}{24}, -\\frac{5}{24}, \\frac{1}{24})\\\\) and \\\\((\\frac{5}{12}, \\frac{2}{3}, -\\frac{1}{12})\\\\) respectively:\n\n            $$\n            f_1(x) \\approx \\frac{3}{8}f(x\\_a) + \\frac{19}{24}f(x\\_{ab}) - \\frac{5}{24}f(x\\_b) + \\frac{1}{24}f(x\\_{bc})\n            $$\n\n            $$\n            f_2(x) \\approx \\frac{5}{12}f(x\\_b) + \\frac{2}{3}f(x\\_{bc}) - \\frac{1}{12}f(x\\_c)\n            $$\n\n            Determine if the graph is smooth by evaluating:\n\n            $$\n            abs(f_1(x){-}f_2(x)) \\lt tolerance*f_2(x)\n            $$\n\n            If `true`, routine is complete and the final array of samples can be returned. If `false`, split the intervals further as if the `count > 2`.\n\nFreely adjust `max_depth` and `tolerance` as desired to acquire optimal precision-performance balance.\n\n## Sources\n\n1.  [Numerical algorithms I: basic methods](http://yacas.sourceforge.net/Algochapter4.html)",
+        "spans": []
+      }
+    ],
+    "date": "2014-03-04",
+    "mathjax": "Yes",
+    "prism": null
+  }
+}
