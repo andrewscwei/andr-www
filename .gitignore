@@ -29,7 +29,6 @@ pids
 *.exe
 *.o
 *.so
-public/
 package/
 dist/
 build/
