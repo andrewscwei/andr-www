@@ -1,8 +1,8 @@
 <script lang="ts">
-  import type { ActionList } from '../actions/compose'
-  import SVG from './SVG.svelte'
+  import type { ActionList } from "../actions/compose";
+  import SVG from "./SVG.svelte";
 
-  export let actions: ActionList = []
+  export let actions: ActionList = [];
 </script>
 
 <SVG {actions}>
@@ -18,19 +18,19 @@
       <g>
         <path
           d="M62.8,60.4L7.2,60.4C3.2,60.4 0,57.2 0,53.2L0,16.8C0,12.8 3.2,9.6 7.2,9.6L62.8,9.6C66.8,9.6 70,12.8 70,16.8L70,53.2C70,57.2 66.8,60.4 62.8,60.4ZM7.2,15.7C6.6,15.7 6.1,16.2 6.1,16.8L6.1,53.2C6.1,53.8 6.6,54.3 7.2,54.3L62.8,54.3C63.4,54.3 63.9,53.8 63.9,53.2L63.9,16.8C63.9,16.2 63.4,15.7 62.8,15.7L7.2,15.7Z"
-          style="fill:white;fill-rule:nonzero;"
+          style="fill:#fff;fill-rule:nonzero;"
         />
       </g>
       <g>
         <path
           d="M62.8,58.9L7.2,58.9C4.9,58.9 2.7,57.4 1.9,55.2C1.7,54.6 1.8,53.9 2.3,53.5L24,34.2C24.6,33.6 25.6,33.7 26.2,34.3C26.8,34.9 26.7,35.9 26.1,36.5L5.3,54.9C5.8,55.4 6.5,55.8 7.2,55.8L62.8,55.8C63.5,55.8 64.2,55.5 64.7,55L43.7,36.3C43.1,35.7 43,34.8 43.6,34.1C44.2,33.5 45.1,33.4 45.8,34L67.7,53.6C68.2,54 68.3,54.7 68.1,55.3C67.3,57.4 65.1,58.9 62.8,58.9Z"
-          style="fill:white;fill-rule:nonzero;"
+          style="fill:#fff;fill-rule:nonzero;"
         />
       </g>
       <g>
         <path
           d="M35,45.1C34.6,45.1 34.3,45 34,44.7L2.3,16.5C1.8,16.1 1.7,15.4 1.9,14.8C2.7,12.6 4.9,11.1 7.2,11.1L62.8,11.1C65.1,11.1 67.3,12.6 68.1,14.8C68.3,15.4 68.2,16.1 67.7,16.5L36,44.7C35.7,45 35.4,45.1 35,45.1ZM5.3,15.1L35,41.5L64.7,15C64.2,14.5 63.5,14.2 62.8,14.2L7.2,14.2C6.5,14.2 5.8,14.5 5.3,15.1Z"
-          style="fill:white;fill-rule:nonzero;"
+          style="fill:#fff;fill-rule:nonzero;"
         />
       </g>
     </g>
