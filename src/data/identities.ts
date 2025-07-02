@@ -56,6 +56,6 @@ export default [{
 }, {
   name: '8423',
   type: 'project',
-  url: 'https://8423.party',
+  url: 'https://8423.party/?access=demo',
   accessCode: true,
 }]
